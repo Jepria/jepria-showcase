@@ -39,7 +39,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
     <!-- Jepria obsolete runtime dependencies -->
@@ -113,19 +113,6 @@
       <version>${jakartajsonbindapi.version}</version>
     </dependency>
     <!-- Jersey -->
-    <!--dependency>
-      <groupId>org.glassfish.jersey.bundles</groupId>
-      <artifactId>jaxrs-ri</artifactId>
-      <version>${jersey.version}</version>
-      <scope>compile</scope>
-    </dependency-->
-    <!-- ant-contrib -->
-    <!--dependency>
-      <groupId>ant-contrib</groupId>
-      <artifactId>ant-contrib</artifactId>
-      <version>${antcontrib.version}</version>
-      <scope>compile</scope>
-    </dependency-->
     <!-- Log4j -->
     <dependency>
       <groupId>log4j</groupId>
@@ -141,12 +128,6 @@
       <scope>compile</scope>
     </dependency>
     <!-- JepRia Toolkit -->
-    <!--dependency>
-      <groupId>com.technology.jep.jepria</groupId>
-      <artifactId>jepria-toolkit</artifactId>
-      <version>${jepriatoolkit.version}</version>
-      <scope>compile</scope>
-    </dependency-->
     <!-- javax needs for compilation -->
     <dependency>
       <groupId>org.apache.tomcat</groupId>
@@ -179,7 +160,12 @@
       <version>1.7.21</version>
       <scope>compile</scope>
     </dependency>
-
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>4.1.2</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -203,6 +189,9 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
+          <configuration>
+            <skipTests>true</skipTests>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
