@@ -1,0 +1,40 @@
+-- table: jrs_feature_status
+-- Статус запроса на функционал.
+create table
+  jrs_feature_status
+(
+  feature_status_code             varchar2(10)                        not null
+  , feature_status_name           varchar2(255)                       not null
+  , feature_status_name_en        varchar2(255)                       not null
+  , status_order                  integer             default 0       not null
+  , date_ins                      date                default sysdate not null
+  , operator_id                   integer                             not null
+  , constraint jrs_feature_status_pk primary key
+    ( feature_status_code)
+    using index tablespace &indexTablespace
+)
+/
+
+
+
+comment on table jrs_feature_status is
+  'Статус запроса на функционал [ SVN root: JEP/Module/JepRiaShowcase]'
+/
+comment on column jrs_feature_status.feature_status_code is
+  'Код статуса запроса на функционал'
+/
+comment on column jrs_feature_status.feature_status_name is
+  'Наименование статуса запроса на языке по-умолчанию'
+/
+comment on column jrs_feature_status.feature_status_name_en is
+  'Наименование статуса запроса на языке по-умолчанию'
+/
+comment on column jrs_feature_status.status_order is
+  'Поле для упорядочивания выборки статусов (в общем случае — порядок следования статусов)'
+/
+comment on column jrs_feature_status.date_ins is
+  'Дата добавления записи'
+/
+comment on column jrs_feature_status.operator_id is
+  'Id оператора, добавившего запись'
+/

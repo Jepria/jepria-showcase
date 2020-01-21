@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent"> 
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" 
+             xmlns:g="urn:import:com.google.gwt.user.client.ui" > 
+    <g:VerticalPanel>
+        <g:Label ui:field="_someLabel"/> 
+        <g:Button ui:field="_someButton"/>
+        <g:Label ui:field="_extLabel"/> 
+        <g:Label>Статичный текст</g:Label> 
+    </g:VerticalPanel> 
+</ui:UiBinder> 

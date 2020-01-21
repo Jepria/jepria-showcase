@@ -1,0 +1,64 @@
+-- table: jrs_feature_process
+-- Обработка запроса на функционал.
+create table
+  jrs_feature_process
+(
+  feature_process_id              integer                             not null
+  , feature_id                    integer                             not null
+  , feature_status_code           varchar2(10)                        not null
+  , is_last                       number(1,0)
+  , date_ins                      date                default sysdate not null
+  , operator_id                   integer                             not null
+  -- Вычисляемые поля
+  , last_process_feature_id       integer             as (
+      case when
+        is_last = 1
+      then
+        feature_id
+      end
+    )
+  , constraint jrs_feature_process_pk primary key
+    ( feature_process_id)
+    using index tablespace &indexTablespace
+  -- Обеспечение единственности последней записи обработки для запроса
+  , constraint jrs_feature_process_uk unique
+    ( last_process_feature_id)
+    using index tablespace &indexTablespace
+  , constraint jrs_feature_process_ck_last check
+    ( is_last is null or is_last = 1)
+)
+/
+
+-- index: jrs_feature_process_ix_feature
+-- Индекс по запросу функционала. Индекс для внешнего ключа.
+create index
+  jrs_feature_process_ix_feature
+on
+  jrs_feature_process (
+    feature_id
+  )
+tablespace &indexTablespace
+/
+
+
+comment on table jrs_feature_process is
+  'Обработка запроса на функционал [ SVN root: JEP/Module/JepRiaShowcase]'
+/
+comment on column jrs_feature_process.feature_process_id is
+  'Id записи обработки запроса на функционал'
+/
+comment on column jrs_feature_process.feature_id is
+  'Id запроса на функционал'
+/
+comment on column jrs_feature_process.feature_status_code is
+  'Статус запроса на функционал'
+/
+comment on column jrs_feature_process.last_process_feature_id is
+  'Id записи запроса на функционал для последней записи обработки'
+/
+comment on column jrs_feature_process.date_ins is
+  'Дата добавления записи'
+/
+comment on column jrs_feature_process.operator_id is
+  'Id оператора, добавившего запись'
+/

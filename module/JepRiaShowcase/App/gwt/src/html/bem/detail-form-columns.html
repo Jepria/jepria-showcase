@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="page">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script><![endif]-->
+  <title>Пример верстки. Стандартная детальная форма.</title>
+  
+  <!-- Все файлы css объединяются сборщиков в один bundle -->
+  <link href="normalize.css" rel="stylesheet">
+  
+  <link href="page.css" rel="stylesheet">
+  
+  <link href="header/header.css" rel="stylesheet">
+  <link href="header/_theme_blue/header_theme_blue.css" rel="stylesheet">
+  
+  <link href="content.css" rel="stylesheet">
+  <link href="toolbar/toolbar.css" rel="stylesheet">
+  
+  <link href="button/button.css" rel="stylesheet">
+  <link href="text.css" rel="stylesheet">
+  <link href="field/field.css" rel="stylesheet">
+  <link href="flow-panel.css" rel="stylesheet">
+</head>
+<body class="page__body">
+    <header class="header header_theme_blue">
+      <ul class="header__module-list">
+        <li class="header__module-item header__module-item_selected">
+          <span class="text text_size_s">Запрос функционала</span>
+        </li>
+      </ul>
+      <div class="header__toolbar toolbar toolbar_theme_blue">
+        <div class="toolbar__button-list">
+          <button class="toolbar__button button">
+            <img src="button/add.png" />
+          </button>
+          <button disabled class="toolbar__button button">
+            <img src="button/save.png" />
+          </button>
+          <button disabled class="toolbar__button button">
+            <img src="button/edit.png" />
+          </button>
+          <button disabled class="toolbar__button button">
+            <img src="button/delete.png" />
+          </button>          
+          <button disabled class="toolbar__button button">
+            <img src="button/view.png" />
+          </button>
+          <div class="toobar__separator"></div>
+          <button disabled class="toolbar__button button">
+            <span class="text text_size_s">Список</span>
+          </button>
+          <button disabled class="toolbar__button button">
+            <img src="button/search.png" />
+          </button>
+          <button class="toolbar__button button">
+            <span class="text text_size_s">Найти</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="content">
+      <div class="content__item">
+        <strong class="text text_strong">Панграмма:</strong><br />
+        <span class="text">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+        </span>
+      </div>
+      <div class="float-panel">
+        <div class="float-panel__item">
+          <div class="field content__item">
+            <label class="field__label label">Наименование:</label>
+            <input class="field__input input input_text" type="text"/>
+          </div>        
+          <div class="field content__item">
+            <label class="field__label label">Наименование английское:</label>
+            <input class="field__input input input_text" type="text"/>
+          </div>        
+        </div>
+        <div class="float-panel__item">
+          <div class="field content__item">
+            <label class="field__label label">Порядок выполнения «От»:</label>
+            <input class="field__input input input_text" type="text"/>
+          </div>        
+          <div class="field content__item">
+            <label class="field__label label">Порядок выполнения «До»:</label>
+            <input class="field__input input input_text" type="text"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer toolbar toolbar_theme_blue">
+      <div class="text text_size_s">Поиск</div>
+    </footer>
+</body>
+<!-- У блоков должна быть простая тема по-умолчанию, *_theme_blue кастомизация -->
+</html>

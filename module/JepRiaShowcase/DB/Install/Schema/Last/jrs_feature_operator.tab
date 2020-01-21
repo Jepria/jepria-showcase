@@ -1,0 +1,28 @@
+-- table: jrs_feature_operator
+-- Пользователи запроса на функционал.
+create table
+  jrs_feature_operator
+(
+  feature_operator_id             integer                             not null
+  , date_ins                      date                default sysdate not null
+  , operator_id                   integer                             not null
+  , constraint jrs_feature_operator_pk primary key
+    ( feature_operator_id)
+    using index tablespace &indexTablespace
+)
+/
+
+
+
+comment on table jrs_feature_operator is
+  'Пользователи запроса на функционал [ SVN root: JEP/Module/JepRiaShowcase]'
+/
+comment on column jrs_feature_operator.feature_operator_id is
+  'Id пользователя запроса на функционал'
+/
+comment on column jrs_feature_operator.date_ins is
+  'Дата добавления записи'
+/
+comment on column jrs_feature_operator.operator_id is
+  'Id оператора, добавившего запись'
+/

@@ -1,0 +1,9 @@
+alter table
+  jrs_feature_status
+add constraint
+  jrs_feature_status_fk_operator
+foreign key
+  ( operator_id)
+references
+  op_operator ( operator_id)
+/

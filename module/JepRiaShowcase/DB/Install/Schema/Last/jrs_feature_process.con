@@ -1,0 +1,30 @@
+alter table
+  jrs_feature_process
+add constraint
+  jrs_feature_process_fk_feature
+foreign key
+  ( feature_id)
+references
+  jrs_feature( feature_id)
+/
+
+alter table
+  jrs_feature_process
+add constraint
+  jrs_feature_process_fk_status
+foreign key
+  ( feature_status_code)
+references
+  jrs_feature_status( feature_status_code)
+/
+
+
+alter table
+  jrs_feature_process
+add constraint
+  jrs_feature_process_fk_oper
+foreign key
+  ( operator_id)
+references
+  op_operator ( operator_id)
+/

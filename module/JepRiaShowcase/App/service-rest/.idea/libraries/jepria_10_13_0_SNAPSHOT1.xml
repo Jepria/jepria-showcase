@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="jepria-10.13.0-SNAPSHOT1">
+    <CLASSES>
+      <root url="jar://D:/jep-sf-repo/svn/Bin/deploy/com/technology/jep/jepria/jepria/10.13.0-SNAPSHOT/jepria-10.13.0-SNAPSHOT.jar!/" />
+      <root url="jar://D:/jep-sf-repo/svn/Bin/deploy/com/technology/jep/jepria/jepria/10.13.0-SNAPSHOT/jepria-auto-10.13.0-SNAPSHOT.jar!/" />
+      <root url="jar://D:/jep-sf-repo/svn/Bin/deploy/com/technology/jep/jepria/jepria/10.13.0-SNAPSHOT/jepria-test-10.13.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/jep-sf-repo/svn/Bin/deploy/com/technology/jep/jepria/jepria/10.13.0-SNAPSHOT/jepria-10.13.0-SNAPSHOT.jar!/" />
+    </SOURCES>
+  </library>
+</component>

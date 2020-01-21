@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="Windows-1251"?>
+<map>
+  <map_version>1.3</map_version>
+  <name>JepRiaShowcase</name>
+  <description>Функционал, являющийся примером использования компонентов, библиотек и подходов</description>
+  <version>10.2.0</version>
+  <prefix>jrs</prefix>
+  <team>
+    <programmerDB>Мартьянов А.</programmerDB>
+    <programmerDB>Адамчук И.Ю.</programmerDB>
+    <programmerDB>Булатов Н.А.</programmerDB>
+    <programmerAPP>Савенков А.В.</programmerAPP>
+    <analyst>Талышев В.</analyst>
+  </team>
+  <request>
+    <msp></msp>
+  </request>
+  <path>JEP/Module/JepRiaShowcase</path>
+  <initialPath>JEP/Module/JepRiaShowcase@5626</initialPath>
+  <db>
+    <database>
+      <instance></instance>
+      <table>jrs_bic_bank</table>
+      <table>jrs_feature</table>
+      <table>jrs_feature_operator</table>
+      <table>jrs_feature_process</table>
+      <table>jrs_feature_status</table>
+      <table>jrs_goods</table>
+      <table>jrs_goods_catalog</table>
+      <table>jrs_goods_catalog_link</table>
+      <table>jrs_goods_segment</table>
+      <table>jrs_goods_segment_link</table>
+      <table>jrs_goods_type</table>
+      <table>jrs_motivation_type</table>
+      <table>jrs_request</table>
+      <table>jrs_request_process</table>
+      <table>jrs_request_status</table>
+      <table>jrs_shop</table>
+      <table>jrs_shop_goods</table>
+      <table>jrs_supplier</table>
+      <table>jrs_unit</table>
+      <package>pkg_JepRiaShowcase</package>
+    </database>
+  </db>
+  <app>
+  </app>
+  <batchSpec></batchSpec>
+  <diagram>
+    <database></database>
+    <process></process>
+    <infrastructure></infrastructure>
+  </diagram>
+  <depend>
+    <module>Oracle/Module/Common</module>
+    <module>Oracle/Module/DynamicSql</module>
+    <module>Oracle/Module/Logging</module>
+    <module>Oracle/Module/TextParser</module>
+    <module>RusFinanceInfo/Module/AccessOperator</module>
+    <link></link>
+  </depend>
+  <image></image>
+</map>

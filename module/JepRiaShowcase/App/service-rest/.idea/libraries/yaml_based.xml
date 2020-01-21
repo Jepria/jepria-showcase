@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="yaml-based">
+    <CLASSES>
+      <root url="file://D:/tmp/190919/ica-sf-mobile-web/lib/ext/yaml-based" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/tmp/190919/ica-sf-mobile-web/lib/ext/yaml-based" recursive="false" />
+  </library>
+</component>

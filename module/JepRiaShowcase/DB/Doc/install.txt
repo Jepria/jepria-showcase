@@ -1,0 +1,220 @@
+title: Установка
+
+
+
+group: Общие замечания
+
+Реализуется с помощью целей сборки модуля из make-целей <Установка модуля в БД>.
+Для корректной установки должна быть установлена актуальная версия OMS
+( см. <Версия OMS-файлов>).
+
+Параметры установки:
+INSTALL_VERSION               - устанавливаемая версия модуля ( Last при
+                                первоначальной установке или номер при
+                                обновлении)
+LOAD_OPERATORID               - логин и пароль оператора, выполняющего установку
+                                ( формат: login/password)
+LOAD_USERID                   - основной пользователь для установки в БД
+                                ( формат: username/password@dbName)
+LOAD_USERID2                  - пользователь с привилегией DBA ( например,
+                                sys);
+LOAD_USERID3                  - пользователь для проливки ролей;
+
+
+
+group: 10.2.0
+(<Версии::10.2.0 ( 2017-12-15)>)
+
+Порядок установки:
+
+- установка в основную схему;
+
+(code)
+
+make install INSTALL_VERSION=10.2.0 LOAD_USERID=???/???@??? LOAD_OPERATORID=???/??? SKIP_FILE_MASK=Install/Data/10.2.0/upd_jrs_feature_process.sql
+
+(end code)
+
+- Скрипт установки статусов запросов;
+
+(code)
+
+make install-data INSTALL_VERSION=10.2.0 LOAD_USERID=???/???@??? LOAD_OPERATORID=???/??? FILE_MASK=Install/Data/10.2.0/upd_jrs_feature_process.sql
+
+(end code)
+
+
+
+group: 10.1.1
+(<Версии::10.1.1 ( 2017-05-12)>)
+
+Порядок установки:
+
+- установка в основную схему;
+> make install INSTALL_VERSION=10.1.1 LOAD_USERID=???/???@??? LOAD_OPERATORID=???/??? FILE_MASK=pkg*.pk?
+
+
+group: 10.1.0
+(<Версии::10.1.0 ( 2017-04-13)>)
+
+Порядок установки:
+
+- установка в основную схему;
+> make install INSTALL_VERSION=10.1.0 LOAD_USERID=???/???@??? LOAD_OPERATORID=???/???
+
+- установка в схему для проливки ролей;
+> make install INSTALL_VERSION=10.1.0 LOAD_USERID3=???/???@??? LOAD_OPERATORID=???/???
+
+
+group: 9.3.1
+(<Версии::9.3.1 ( 2016-12-21)>)
+
+- установка в основную схему;
+
+(code)
+
+make install INSTALL_VERSION=9.3.1 LOAD_USERID=???/???@??? LOAD_OPERATORID=???/???
+
+(end code)
+
+
+
+group: 9.2.0
+(<Версии::9.2.0 ( 2016-10-17)>)
+
+Предварительные требования:
+
+- AccessOperator, 3.15.0;
+- Option, 3.3.0;
+- Scheduler, 4.3.5;
+
+Порядок установки:
+
+- установка в основную схему;
+
+(code)
+
+$ make install INSTALL_VERSION=9.2.0 LOAD_USERID=itm/???@??? LOAD_OPERATORID=???/???
+
+(end code)
+
+- установка в схему для проливки ролей;
+
+(code)
+
+$ make install INSTALL_VERSION=9.2.0 LOAD_USERID3=???/???@??? LOAD_OPERATORID=???/???
+
+(end code)
+
+
+
+group: 9.1.0
+
+Команда для создания пользователей itm, itm_user в произвольной БД:
+
+(code)
+
+$ make install INSTALL_VERSION=Last LOAD_USERID2=sys/???@??? LOAD_OPERATORID=???/???
+
+(end)
+
+Замечание:
+- вместо команды можно выполнить скрипт
+  <Install/Schema/Last/Dba/run.sql>;
+
+Команда для установки:
+
+(code)
+
+$ make install INSTALL_VERSION=9.1.0 LOAD_USERID=itm/???@??? LOAD_OPERATORID=???/???
+
+(end)
+
+Команда выдачи прав пользователю itm_user:
+
+(code)
+
+$ make grant LOAD_USERID=itm/???@??? TO_USERNAME=itm_user LOAD_OPERATORID=???/???
+
+(end)
+
+
+
+group: 8.6.0
+
+Команда для установки:
+
+(code)
+
+$ make install INSTALL_VERSION=8.6.0 LOAD_USERID=itm/???@??? LOAD_OPERATORID=???/???
+
+(end)
+
+
+
+group: 8.3.0
+
+Команда для установки:
+
+(code)
+
+$ make install INSTALL_VERSION=8.3.0 LOAD_USERID=itm/???@??? LOAD_OPERATORID=???/???
+
+(end)
+
+
+
+group: Первоначальная установка
+
+
+Команда для создания пользователей itm, itm_user в произвольной БД:
+
+(code)
+
+$ make install INSTALL_VERSION=Last LOAD_USERID2=sys/???@??? LOAD_OPERATORID=???/???
+
+(end)
+
+Замечание:
+- вместо команды можно выполнить скрипт
+  <Install/Schema/Last/Dba/create_user.sql>;
+
+Команда для установки:
+
+(code)
+
+$ make install INSTALL_VERSION=Last LOAD_USERID=itm/???@??? LOAD_OPERATORID=???/???
+
+(end)
+
+Команда выдачи прав пользовалею itm_user:
+
+(code)
+
+$ make grant LOAD_USERID=itm/???@??? TO_USERNAME=itm_user LOAD_OPERATORID=???/???
+
+(end)
+
+
+
+group: Тестирование
+
+Выполнение всех тестов модуля:
+
+(code)
+
+$ make test LOAD_USERID=itm/???@??? LOAD_OPERATORID=???/???
+
+(end)
+
+
+
+group: Удаление модуля из БД
+
+Команда для удаления модуля из БД:
+
+(code)
+
+$ make uninstall INSTALL_VERSION=Last LOAD_USERID=???/???@??? LOAD_OPERATORID=???/???
+
+(end)

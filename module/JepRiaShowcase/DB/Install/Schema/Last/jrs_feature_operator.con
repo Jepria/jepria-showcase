@@ -1,0 +1,19 @@
+alter table
+  jrs_feature_operator
+add constraint
+  jrs_feature_operator_fk_ft_op
+foreign key
+  ( feature_operator_id)
+references
+  op_operator ( operator_id)
+/
+
+alter table
+  jrs_feature_operator
+add constraint
+  jrs_feature_operator_fk_oper
+foreign key
+  ( operator_id)
+references
+  op_operator ( operator_id)
+/

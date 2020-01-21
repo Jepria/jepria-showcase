@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="windows-1251" standalone="no"?>
+<application defaultDatasource="RFInfoDS" name="JepRiaShowcase" projectPackage="jep">
+    <modules>
+        <module id="Goods" isBuild="false" name="Товар" nameEn="Goods">
+            <roles>
+                <role>JrsEditGoods</role>
+            </roles>
+            <db package="pkg_jepriashowcase">
+                <find parameters="GOODS_ID, SUPPLIER_ID, GOODS_NAME, GOODS_TYPE_CODE, GOODS_SEGMENT_CODE_LIST, GOODS_CATALOG_ID_LIST"/>
+                <create parameters="SUPPLIER_ID, GOODS_NAME, GOODS_TYPE_CODE, UNIT_CODE, PURCHASING_PRICE, MOTIVATION_TYPE_CODE, GOODS_PHOTO_MIME_TYPE, GOODS_PHOTO_EXTENSION, GOODS_PORTFOLIO_MIME_TYPE, GOODS_PORTFOLIO_EXTENSION"/>
+                <update parameters="GOODS_ID, SUPPLIER_ID, GOODS_NAME, GOODS_TYPE_CODE, UNIT_CODE, PURCHASING_PRICE, MOTIVATION_TYPE_CODE, GOODS_PHOTO_MIME_TYPE, GOODS_PHOTO_EXTENSION, GOODS_PORTFOLIO_MIME_TYPE, GOODS_PORTFOLIO_EXTENSION"/>
+            </db>
+            <record primaryKey="GOODS_ID" table="jrs_goods">
+                <field id="GOODS_ID" name="ID товара" nameEn="" type="INTEGER"/>
+                <field id="SUPPLIER_ID" name="ID поставщика" nameEn="" type="INTEGER"/>
+                <field id="GOODS_NAME" name="Наименование товара" nameEn="" type="STRING"/>
+                <field id="GOODS_TYPE_CODE" name="Код типа товара" nameEn="" type="OPTION"/>
+                <field id="GOODS_TYPE_NAME" name="Наименование типа товара" nameEn="" type="STRING"/>
+                <field id="GOODS_SEGMENT_CODE_LIST" name="Код сегмента товара" nameEn="" type="STRING"/>
+                <field id="GOODS_CATALOG_ID_LIST" name="ID раздела каталога" nameEn="" type="STRING"/>
+                <field id="UNIT_CODE" name="Код единицы измерения" nameEn="" type="OPTION"/>
+                <field id="UNIT_NAME" name="Наименование единицы измерения" nameEn="" type="STRING"/>
+                <field id="PURCHASING_PRICE" name="Закупочная цена" nameEn="" type="BIGDECIMAL"/>
+                <field id="MOTIVATION_TYPE_CODE" name="Код типа мотивации" nameEn="" type="OPTION"/>
+                <field id="MOTIVATION_TYPE_NAME" name="Наименование типа мотивации" nameEn="" type="STRING"/>
+                <field id="GOODS_PHOTO" name="Фотография товара" nameEn="" type="BINARY_FILE"/>
+                <field id="GOODS_PHOTO_MIME_TYPE" name="MIME-тип файла с фотографией товара" nameEn="" type="STRING"/>
+                <field id="GOODS_PHOTO_EXTENSION" name="Расширение файла с фотографией товара" nameEn="" type="STRING"/>
+                <field id="GOODS_PORTFOLIO" name="Cпецификация товара" nameEn="" type="BINARY_FILE"/>
+                <field id="GOODS_PORTFOLIO_MIME_TYPE" name="MIME-тип файла со спецификацией товара" nameEn="" type="STRING"/>
+                <field id="GOODS_PORTFOLIO_EXTENSION" name="Расширение файла со спецификацией товара" nameEn="" type="STRING"/>
+            </record>
+            <forms>
+                <form-detail>
+                    <field id="GOODS_ID" widget="JepLongField"/>
+                    <field id="GOODS_NAME" like="CONTAINS" widget="JepMaskedTextField"/>
+                    <field editableWorkstates="" id="GOODS_TYPE_CODE" widget="JepComboBoxField"/>
+                    <field editableWorkstates="SEARCH" id="GOODS_SEGMENT_CODE_LIST" widget="JepListField"/>
+                    <field editableWorkstates="CREATE" id="PURCHASING_PRICE" widget="JepNumberField"/>
+                </form-detail>
+                <form-list dblClick="off">
+                    <field id="SUPPLIER_ID"/>
+                    <field id="GOODS_ID"/>
+                    <field id="GOODS_NAME"/>
+                    <field id="GOODS_TYPE_NAME"/>
+                    <field id="PURCHASING_PRICE"/>
+                </form-list>
+            </forms>
+            <toolbar>
+                <button id="ADD_BUTTON_ID"/>
+                <button id="SAVE_BUTTON_ID"/>
+                <button id="EDIT_BUTTON_ID"/>
+                <button id="DELETE_BUTTON_ID"/>
+                <button id="VIEW_DETAILS_BUTTON_ID"/>
+                <separator id="SEARCH_SEPARATOR_ID"/>
+                <button id="SEARCH_BUTTON_ID"/>
+                <button id="FIND_BUTTON_ID"/>
+                <separator id="SEARCH_SEPARATOR_ID"/>
+                <button id="EXCEL_BUTTON_ID"/>
+            </toolbar>
+        </module>
+        <module id="FeatureOperator" isBuild="false" name="Пользователь запросов" nameEn="FeatureOperator">
+            <roles>
+                <role>JrsOperatorFeature</role>
+            </roles>
+            <db package="pkg_jepriashowcase">
+                <find parameters="FEATURE_OPERATOR_NAME"/>
+                <create parameters="FEATURE_OPERATOR_ID"/>
+            </db>
+            <record>
+                <field id="FEATURE_OPERATOR_ID" name="Пользователь" nameEn="" type="INTEGER"/>
+                <field id="FEATURE_OPERATOR_NAME" name="Пользователь" nameEn="" type="STRING"/>
+                <field id="OPERATOR_NAME" name="Пользователь, создавший запись" nameEn="" type="STRING"/>
+                <field id="DATE_INS" name="Дата создания" nameEn="" type="Date"/>
+            </record>
+            <forms>
+                <form-detail>
+                    <field id="FEATURE_OPERATOR_NAME" like="CONTAINS" visibleWorkstates="SEARCH, VIEW_DETAILS" widget="JepTextField"/>
+                    <field id="FEATURE_OPERATOR_ID" visibleWorkstates="CREATE" widget="JepComboBoxField"/>
+                    <field id="DATE_INS" visibleWorkstates="VIEW_DETAILS" widget="JepDateField"/>
+                    <field editableWorkstates="VIEW_DETAILS" id="OPERATOR_NAME" widget="JepTextField"/>
+                </form-detail>
+                <form-list>
+                    <field id="FEATURE_OPERATOR_NAME"/>
+                    <field id="DATE_INS"/>
+                    <field id="OPERATOR_NAME"/>
+                </form-list>
+            </forms>
+            <toolbar>
+                <button id="ADD_BUTTON_ID"/>
+                <button id="SAVE_BUTTON_ID"/>
+                <button id="DELETE_BUTTON_ID"/>
+                <button id="VIEW_DETAILS_BUTTON_ID"/>
+                <separator id="SEARCH_SEPARATOR_ID"/>
+                <button id="SEARCH_BUTTON_ID"/>
+                <button id="FIND_BUTTON_ID"/>
+                <separator id="SEARCH_SEPARATOR_ID"/>
+            </toolbar>
+        </module>
+        <module id="FeatureProcess" isBuild="false" name="Статус" nameEn="FeatureProcess">
+            <roles>
+                <role>JrsEditAllFeature</role>
+                <role>JrsEditFeature</role>
+            </roles>
+            <db package="pkg_jepriashowcase">
+                <find parameters="FEATURE_PROCESS_ID, FEATURE_ID, FEATURE_STATUS_CODE"/>
+                <create parameters="FEATURE_ID, FEATURE_STATUS_CODE"/>
+            </db>
+            <record>
+                <field id="FEATURE_PROCESS_ID" name="Идентификатор записи обработки запроса" nameEn="" type="INTEGER"/>
+                <field id="FEATURE_STATUS_NAME" name="Статус" nameEn="" type="STRING"/>
+                <field id="FEATURE_STATUS_CODE" name="Статус" nameEn="" type="STRING"/>
+                <field id="DATE_INS" name="Дата создания" nameEn="" type="DATE_TIME"/>
+                <field id="OPERATOR_NAME" name="Пользователь" nameEn="" type="STRING"/>
+            </record>
+            <forms>
+                <form-detail>
+                    <field id="FEATURE_STATUS_CODE" visibleWorkstates="SEARCH,CREATE" mandatoryWorkstates="CREATE" widget="JepComboBoxField"/>
+                </form-detail>
+                <form-list>
+                    <field id="FEATURE_STATUS_NAME"/>
+                    <field id="DATE_INS"/>
+                    <field id="OPERATOR_NAME"/>
+                </form-list>
+            </forms>
+            <toolbar presenter="on" view="on">
+            </toolbar>
+        </module>
+    </modules>
+</application>

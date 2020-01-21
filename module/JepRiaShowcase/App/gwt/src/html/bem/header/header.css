@@ -1,0 +1,15 @@
+.header {
+  padding-top: 1px;
+}
+
+.header__module-list {
+  margin-bottom: -1px;
+}
+
+.header__module-item {
+  display: inline-block;
+  margin-left: 2px;
+  padding: 0 6px;
+  border: 1px solid black;
+}
+
