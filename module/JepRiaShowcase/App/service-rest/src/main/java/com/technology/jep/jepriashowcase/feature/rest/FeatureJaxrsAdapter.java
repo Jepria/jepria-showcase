@@ -52,7 +52,7 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   //------------ entity methods ------------//
 
   @GET
-  @Path("{recordId}")
+  @Path("/{recordId}")
   public Response getRecordById(@Pattern(regexp = "\\d+", message = "ID must be an integer") @PathParam("recordId") String recordId) {
     FeatureDto result = (FeatureDto) entityEndpointAdapter.getRecordById(recordId);
     return Response.ok(result).build();
@@ -64,14 +64,14 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   }
 
   @DELETE
-  @Path("{recordId}")
+  @Path("/{recordId}")
   public Response deleteRecordById(@Pattern(regexp = "\\d+", message = "ID must be an integer") @PathParam("recordId") String recordId) {
     entityEndpointAdapter.deleteRecordById(recordId);
     return Response.ok().build();
   }
 
   @PUT
-  @Path("{recordId}")
+  @Path("/{recordId}")
   public Response update(@Pattern(regexp = "\\d+", message = "ID must be an integer") @PathParam("recordId") String recordId, FeatureUpdateDto record) {
     entityEndpointAdapter.update(recordId, record);
     return Response.ok().build();
@@ -80,7 +80,7 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   //------------ search methods ------------//
 
   @POST
-  @Path("search")
+  @Path("/search")
   public Response postSearch(SearchRequestDto<FeatureSearchDto> searchRequestDto,
                              @Pattern(regexp = "(resultset/paged-by-\\d+/\\d+)|(resultset\\?pageSize\\d+&page=\\d+)|(resultset\\?page=\\d+&pageSize=\\d+)", message = "Bad Extended-Response header value")
                              @HeaderParam(ExtendedResponse.REQUEST_HEADER_NAME) String extendedResponse,
@@ -89,7 +89,7 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   }
 
   @GET
-  @Path("search/{searchId}")
+  @Path("/search/{searchId}")
   public Response getSearchRequest(
           @PathParam("searchId") String searchId) {
     SearchRequestDto<FeatureSearchDto> result = (SearchRequestDto<FeatureSearchDto>)searchEndpointAdapter.getSearchRequest(searchId);
@@ -97,7 +97,7 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   }
 
   @GET
-  @Path("search/{searchId}/resultset-size")
+  @Path("/search/{searchId}/resultset-size")
   public Response getSearchResultsetSize(@PathParam("searchId") String searchId,
                                          @HeaderParam("Cache-Control") String cacheControl) {
     int result = searchEndpointAdapter.getSearchResultsetSize(searchId, cacheControl);
@@ -105,7 +105,7 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   }
 
   @GET
-  @Path("search/{searchId}/resultset")
+  @Path("/search/{searchId}/resultset")
   public Response getResultset(
           @PathParam("searchId") String searchId,
           @QueryParam("pageSize") Integer pageSize,
@@ -116,7 +116,7 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   }
 
   @GET
-  @Path("search/{searchId}/resultset/paged-by-{pageSize:\\d+}/{page}")
+  @Path("/search/{searchId}/resultset/paged-by-{pageSize:\\d+}/{page}")
   public Response getResultsetPaged(
           @PathParam("searchId") String searchId,
           @PathParam("pageSize") Integer pageSize,

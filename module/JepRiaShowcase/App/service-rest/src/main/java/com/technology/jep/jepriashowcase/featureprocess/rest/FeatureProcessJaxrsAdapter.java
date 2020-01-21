@@ -35,7 +35,7 @@ public class FeatureProcessJaxrsAdapter extends JaxrsAdapterBase {
   //------------ entity methods ------------//
 
   @GET
-  @Path("{recordId}")
+  @Path("/{recordId}")
   public Response getRecordById(@PathParam("featureId") Integer featureId, @PathParam("recordId") String recordId) {
     // convert path params to a complex key
     String complexKey = FeatureProcessFieldNames.FEATURE_ID + "=" + featureId + "~" + FeatureProcessFieldNames.FEATURE_PROCESS_ID + "=" + recordId;
@@ -53,7 +53,7 @@ public class FeatureProcessJaxrsAdapter extends JaxrsAdapterBase {
   }
 
   @DELETE
-  @Path("{recordId}")
+  @Path("/{recordId}")
   public Response deleteRecordById(@PathParam("featureId") Integer featureId, @PathParam("recordId") String recordId) {
     String complexKey = FeatureProcessFieldNames.FEATURE_ID + "=" + featureId + "~" + FeatureProcessFieldNames.FEATURE_PROCESS_ID + "=" + recordId;
     entityEndpointAdapter.deleteRecordById(complexKey);
