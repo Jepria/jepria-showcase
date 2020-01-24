@@ -2,7 +2,7 @@
 <project default="war-and-tomcat.deploy" name="Build common product from component products">
 
   <!-- Создание приложения war общего: src, service-rest -->
-  <target name="war" depends="war-gwt, war-service-rest">
+  <target name="war" depends="war-gwt, war-service-rest, init-service-rest-product-name">
 
     <!-- unzip web.jar from war-gwt -->
     <unzip src="gwt/lib/${gwt-product-name}-gwt.war" dest="temp-war-gwt"/>
@@ -85,7 +85,7 @@
   </target>
 
   <!-- invokes "war" target for the service-rest/build.xml ant buildfile -->
-  <target name="war-service-rest" depends="init-service-rest">
+  <target name="war-service-rest">
     <if><available file="service-rest" type="dir" /><then><!-- fail-safe if service-rest is missing -->
 
       <exec executable="cmd" failonerror="true"> <!-- failonerror is important -->
@@ -110,7 +110,7 @@
     <propertyregex defaultvalue="" input="${gwt-product-file}" override="true" property="gwt-product-name" regexp="^(.+)-gwt\.war$" select="\1" />
   </target>
 
-  <target name="init-service-rest">
+  <target name="init-service-rest-product-name">
     <if><available file="service-rest" type="dir" /><then><!-- fail-safe if service-rest is missing -->
 
       <!-- get product name and set it to the "service-rest-product-name" property -->
@@ -306,7 +306,7 @@
   </target>
 
   <!-- Инициализация переменных модуля  -->
-  <target name="init" depends="init-gwt, init-service-rest">
+  <target name="init" depends="init-gwt">
 
     <!-- Обратная совместимость со старым сценарием сборки -->
     <property name="MODULE_NAME" value="${gwt-product-name}" />
