@@ -334,27 +334,6 @@
     </antcall>
   </target>
 
-  <target name="svn-version">
-    <exec executable="svnversion" outputproperty="svnVersionRaw" resolveexecutable="true" failonerror="false" failifexecutionfails="false" />
-    <propertyregex defaultvalue="" input="${svnVersionRaw}" override="true" property="svnVersionInfo" regexp="^(\d+\D*:?\d+\D*)$" select="\1" />
-    <echo message="${svnVersionInfo}" />
-  </target>
-
-  <target name="svn-info">
-    <exec executable="svn" outputproperty="svnPathRaw" resolveexecutable="true" failonerror="false" failifexecutionfails="false">
-      <arg value="info" />
-      <arg value="--xml" />
-    </exec>
-    <!--
-        в регулярном выражение используется экранирование спец символов lt <, gt >
-    -->
-    <propertyregex property="svnPath"
-                   input="${svnPathRaw}"
-                   regexp="(?&lt;=&lt;url&gt;).*?(?=&lt;/url&gt;)"
-                   select="\0"
-                   casesensitive="false" />
-    <echo message="${svnPath}" />
-  </target>
   <!-- получаем домен и порт из DEPLOYMENT_PATH и PORT, если не задан localhost:80 -->
   <target name="get-server-domain">
     <fail unless="DEPLOYMENT_PATH" message="DEPLOYMENT_PATH not specified. Use -DEPLOYMENT_PATH=... command line argument." />
@@ -380,7 +359,8 @@
     </condition>
     <echo message="${DOMAIN}:${PORT}" />
   </target>
-  <target name="save-version-application" depends="svn-version, svn-info, define-toolkit-appinstall, get-server-domain, available-tomcat">
+
+  <target name="save-version-application" depends="define-toolkit-appinstall, get-server-domain, available-tomcat">
     <if>
       <isset property="SKIP_SAVE_INSTALL_INFO" />
       <then>
@@ -399,7 +379,7 @@
         <dirname file="." property="pdir" />
         <basename file="${pdir}" property="VERSION" />
 
-        <startAppInstall appInstallResultId="appInstallResultId" deploymentPath="${DEPLOYMENT_PATH}" loadOperatorId="${LOAD_OPERATORID}" port="${PORT}" svnPath="${svnPath}" svnVersionInfo="${svnVersionInfo}" version="${VERSION}" />
+        <startAppInstall appInstallResultId="appInstallResultId" deploymentPath="${DEPLOYMENT_PATH}" loadOperatorId="${LOAD_OPERATORID}" port="${PORT}" svnPath="https://svn.code.sf.net/p/javaenterpriseplatform/svn/Module/JepRiaShowcase/Trunk/App" svnVersionInfo="2007M" version="100.100.100" />
         <!--
         <echo message="${startAppInstallResult}" />
         <echo message="${appInstallResultId}" />
