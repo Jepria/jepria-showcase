@@ -1,0 +1,9 @@
+# gwt-specific ignore patterns
+
+/build
+/build-gwt
+/build-lib
+/extras
+/log
+build.config
+*.temp.properties
