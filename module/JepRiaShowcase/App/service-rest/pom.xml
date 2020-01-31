@@ -244,6 +244,15 @@
         </executions>
       </plugin>
 
+      <!--plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <useIncrementalCompilation>false</useIncrementalCompilation>
+        </configuration>
+      </plugin-->
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -375,7 +384,7 @@
       </plugin>
 
       <plugin>
-        <groupId>org.jepria.mavenplugin</groupId>
+        <groupId>org.jepria.tools.mavenplugin</groupId>
         <artifactId>snapshotupdate-maven-plugin</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <executions>
