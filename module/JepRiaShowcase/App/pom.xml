@@ -267,9 +267,22 @@
 
       <plugin>
         <groupId>org.jepria.tools.mavenplugin</groupId>
-        <artifactId>customcleanall-maven-plugin</artifactId>
+        <artifactId>cleanall-maven-plugin</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <extensions>true</extensions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>clean-jepriashowcase</id>
+            <phase>clean-all</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>
