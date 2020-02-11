@@ -283,6 +283,17 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${project.basedir}/lib</directory>
+              <includes>
+                <include>**/*</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
       </plugin>
 
       <plugin>
