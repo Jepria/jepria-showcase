@@ -20,7 +20,34 @@
     <gwt.product.name>JepRiaShowcase</gwt.product.name>
     <service.rest.product.name>jepriashowcase-service-rest</service.rest.product.name>
     <project.build.finalName>JepRiaShowcase</project.build.finalName>
+    <bin.home>${env.BIN_HOME}</bin.home>
   </properties>
+
+  <repositories>
+    <!--
+    Путь к бинарному репозиторию
+    https://github.com/Jepria/bin-repo
+    -->
+    <repository>
+      <id>binhome-local-deploy</id>
+      <name>binhome-local-deploy-repo</name>
+      <url>file:${bin.home}\deploy</url>
+    </repository>
+    <repository>
+      <id>binhome-local-build</id>
+      <name>binhome-local-build-repo</name>
+      <url>file:${bin.home}\build</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>local-maven-plugins</id>
+      <name>local-maven-plugins-repo</name>
+      <url>file:${bin.home}\build</url>
+    </pluginRepository>
+  </pluginRepositories>
+
 
   <dependencies>
     <dependency>

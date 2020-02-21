@@ -11,6 +11,31 @@
   <name>service-rest Maven Webapp</name>
   <url>http://jepria.org</url>
 
+  <repositories>
+    <!--
+    Путь к бинарному репозиторию
+    https://github.com/Jepria/bin-repo
+    -->
+    <repository>
+      <id>binhome-local-deploy</id>
+      <name>binhome-local-deploy-repo</name>
+      <url>file:${bin.home}\deploy</url>
+    </repository>
+    <repository>
+      <id>binhome-local-build</id>
+      <name>binhome-local-build-repo</name>
+      <url>file:${bin.home}\build</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>local-maven-plugins</id>
+      <name>local-maven-plugins-repo</name>
+      <url>file:${bin.home}\build</url>
+    </pluginRepository>
+  </pluginRepositories>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -32,6 +57,7 @@
     <jakartajsonbindapi.version>1.0.1</jakartajsonbindapi.version>
     <swaggerui.version>3.10.0</swaggerui.version>
     <project.build.finalName>jepriashowcase-service-rest</project.build.finalName>
+    <bin.home>${env.BIN_HOME}</bin.home>
   </properties>
 
   <dependencies>
