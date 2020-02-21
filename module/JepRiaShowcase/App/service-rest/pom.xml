@@ -4,8 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.technology.jep.jepriashowcase</groupId>
-  <!--artifactId>service-rest</artifactId-->
+  <groupId>org.jepria.jepriashowcase</groupId>
   <artifactId>jepriashowcase-service-rest</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
@@ -18,7 +17,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <jersey.version>2.29</jersey.version>
     <antcontrib.version>1.0b3</antcontrib.version>
-    <jepria.version>10.13.0-SNAPSHOT</jepria.version>
+    <jepria.version>11.1.0-SNAPSHOT</jepria.version>
     <jepriatoolkit.version>7.15.0</jepriatoolkit.version>
     <tomcat.version>7.0.68</tomcat.version>
     <log4j.version>1.2.17</log4j.version>
@@ -112,7 +111,6 @@
       <artifactId>jakarta.json.bind-api</artifactId>
       <version>${jakartajsonbindapi.version}</version>
     </dependency>
-    <!-- Jersey -->
     <!-- Log4j -->
     <dependency>
       <groupId>log4j</groupId>
@@ -122,12 +120,11 @@
     </dependency>
     <!-- JepRia -->
     <dependency>
-      <groupId>com.technology.jep.jepria</groupId>
+      <groupId>org.jepria</groupId>
       <artifactId>jepria</artifactId>
       <version>${jepria.version}</version>
       <scope>compile</scope>
     </dependency>
-    <!-- JepRia Toolkit -->
     <!-- javax needs for compilation -->
     <dependency>
       <groupId>org.apache.tomcat</groupId>
@@ -230,7 +227,7 @@
             </configuration>
           </execution>
 
-          <execution>
+          <!--execution>
             <id>purge-snapshot-dependencies</id>
             <phase>validate</phase>
             <goals>
@@ -240,12 +237,21 @@
               <snapshotsOnly>true</snapshotsOnly>
               <reResolve>true</reResolve>
               <includes>
-                <include>com.technology.jep.jepria:jepria</include>
+                <include>org.jepria:jepria</include>
               </includes>
             </configuration>
-          </execution>
+          </execution-->
         </executions>
       </plugin>
+
+      <!--plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <useIncrementalCompilation>false</useIncrementalCompilation>
+        </configuration>
+      </plugin-->
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -270,6 +276,14 @@
             </resource>
           </webResources>
           <packagingExcludes>WEB-INF/classes/</packagingExcludes>
+
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+            <manifestEntries>
+              <Built-By>developer</Built-By>
+            </manifestEntries>
+          </archive>
+
         </configuration>
       </plugin>
 
@@ -287,35 +301,41 @@
             <configuration>
               <classesDirectory>${project.build.directory}/classes</classesDirectory>
               <finalName>${project.build.finalName}-web</finalName>
+              <archive>
+                <addMavenDescriptor>false</addMavenDescriptor>
+                <manifestEntries>
+                  <Built-By>developer</Built-By>
+                </manifestEntries>
+              </archive>
             </configuration>
           </execution>
         </executions>
       </plugin>
 
-       <plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <version>3.0.2</version>
-            <executions>
-                <execution>
-                    <id>copy-text-resources</id>
-                    <phase>process-resources</phase>
-                    <goals>
-                        <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                        <resources>
-                            <resource>
-                                <directory>src/main/java</directory>
-                                <includes>
-                                    <include>**/*Text_en.properties</include>
-                                </includes>
-                            </resource>
-                        </resources>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+        <executions>
+          <execution>
+            <id>copy-text-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/java</directory>
+                  <includes>
+                    <include>**/*Text_en.properties</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -338,7 +358,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>	  
+      </plugin>
 
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
@@ -373,6 +393,28 @@
               <source>(.+?)\\(.+?)\\(.+?)\\(.+?)\\(.+?)\\text\\(.+)Text_Source.properties</source>
               <destination>{1}/{2}/{3}/{4}/{5}/text/{6}Text.properties</destination>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jepria.tools.mavenplugin</groupId>
+        <artifactId>snapshotupdate-maven-plugin</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>update-jepria-snapshot</id>
+            <phase>validate</phase>
+            <configuration>
+              <file>${BIN_HOME}/deploy/org/jepria/jepria/${jepria.version}/jepria-${jepria.version}.jar</file>
+              <groupId>org.jepria</groupId>
+              <artifactId>jepria</artifactId>
+              <version>${jepria.version}</version>
+              <packaging>jar</packaging>
+            </configuration>
+            <goals>
+              <goal>update-snapshot</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
