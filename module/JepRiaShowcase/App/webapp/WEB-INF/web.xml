@@ -1,15 +1,11 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5" >
-  <context-param>
-    <param-name>org.jepria.oauth.clientCode</param-name>
-    <param-value>5ee2db4682f2ca78a219dde4ff8f5096</param-value>
-  </context-param>
 
   <context-param>
-    <param-name>org.jepria.oauth.clientSecret</param-name>
-    <param-value>0075203bcf2ff43b5fcc36da08ab02692bb201e2579e429aac735261dc82bd1d</param-value>
+    <param-name>app.name</param-name>
+    <param-value>JepRiaShowcase</param-value>
   </context-param>
-
+  
   <servlet>
     <servlet-name>remoteLoggerServiceImpl</servlet-name>
     <servlet-class>com.allen_sauer.gwt.log.server.RemoteLoggerServiceImpl</servlet-class>
