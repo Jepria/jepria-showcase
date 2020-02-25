@@ -12,7 +12,7 @@ import org.jepria.server.data.SearchRequestDto;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class FeatureJaxrsAdapterTest {
+public class FeatureJaxrsAdapterTestIT {
 
   private static final String baseUrl          = "http://localhost:8080/jepriashowcase-service-rest/api/feature";
   private static final String operatorName     = "nagornyys";

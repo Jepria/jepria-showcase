@@ -3,7 +3,7 @@ package com.technology.jep.jepriashowcase.feature.rest;
 import io.restassured.RestAssured;
 import org.junit.Test;
 
-public class FeatureJaxrsAdapterSimpleTest {
+public class FeatureJaxrsAdapterSimpleTestIT {
 
   private static final String baseUrl          = "http://localhost:8080/jepriashowcase-service-rest/api";
   private static final String operatorName     = "nagornyys";

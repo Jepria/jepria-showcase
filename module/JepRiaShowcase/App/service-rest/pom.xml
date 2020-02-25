@@ -161,7 +161,7 @@
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <version>4.1.2</version>
-      <scope>test</scope>
+      <scope>integration-test</scope>
     </dependency>
   </dependencies>
 
@@ -186,9 +186,6 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
-          <configuration>
-            <skipTests>true</skipTests>
-          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -364,16 +361,23 @@
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
-        <executions>
-        </executions>
         <configuration>
           <update>true</update>
           <url>http://localhost:8080/manager/text</url>
           <username>admin</username>
-          <password>123666</password>
+          <password>admin</password>
           <failOnError>true</failOnError>
           <path>/jepriashowcase-service-rest</path>
         </configuration>
+        <executions>
+          <execution>
+            <id>tomcat-deploy</id>
+            <goals>
+              <goal>redeploy</goal>
+            </goals>
+            <phase>pre-integration-test</phase>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>
@@ -434,6 +438,26 @@
         </filesets>
         </configuration>
       </plugin-->
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.22.2</version>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>verify</id>
+            <goals>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
     </plugins>	
   </build>
