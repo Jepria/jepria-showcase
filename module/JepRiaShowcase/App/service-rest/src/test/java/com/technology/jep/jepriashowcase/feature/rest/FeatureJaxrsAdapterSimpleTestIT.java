@@ -1,7 +1,7 @@
 package com.technology.jep.jepriashowcase.feature.rest;
 
 import io.restassured.RestAssured;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FeatureJaxrsAdapterSimpleTestIT {
 

@@ -9,8 +9,8 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import javax.ws.rs.core.MediaType;
 import org.jepria.server.data.SearchRequestDto;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class FeatureJaxrsAdapterTestIT {
 
@@ -24,7 +24,7 @@ public class FeatureJaxrsAdapterTestIT {
 
     String   testUrl  = baseUrl + "/feature/" + recordId;
     Response response = RestAssured.given().auth().basic(operatorName, operatorPassword).when().get(testUrl);
-    Assert.assertEquals(testUrl, 200, response.statusCode());
+    Assertions.assertEquals(200, response.statusCode());
 
     //TODO: check response DTO
   }
@@ -46,7 +46,7 @@ public class FeatureJaxrsAdapterTestIT {
     Response postResponse = requestPost.post(testUrl);
 
     int statusCode = postResponse.statusCode();
-    Assert.assertEquals(200, statusCode);
+    Assertions.assertEquals(200, statusCode);
 
     //TODO: check response DTO
   }
@@ -63,7 +63,7 @@ public class FeatureJaxrsAdapterTestIT {
     Response deleteResponse = requestDelete.delete(testUrl);
 
     int statusCode = deleteResponse.statusCode();
-    Assert.assertEquals(200, statusCode); //TODO: maybe should be 204
+    Assertions.assertEquals(200, statusCode); //TODO: maybe should be 204
   }
 
   @Test
@@ -81,7 +81,7 @@ public class FeatureJaxrsAdapterTestIT {
     Response postResponse = requestPost.post(testUrl);
 
     int statusCode = postResponse.statusCode();
-    Assert.assertEquals(201, statusCode);
+    Assertions.assertEquals(201, statusCode);
   }
 
   @Test
@@ -125,7 +125,7 @@ public class FeatureJaxrsAdapterTestIT {
     Response postResponse = requestPost.post();
 
     int statusCode = postResponse.statusCode();
-    Assert.assertEquals(200, statusCode);
+    Assertions.assertEquals(200, statusCode);
   }
 
   private String createRecord(FeatureDto testDto, String location) {
@@ -137,7 +137,7 @@ public class FeatureJaxrsAdapterTestIT {
     Response postResponse = requestPost.post(location);
 
     int statusCode = postResponse.statusCode();
-    Assert.assertEquals(201, statusCode);
+    Assertions.assertEquals(201, statusCode);
     return postResponse.getHeader("Location");
   }
 
@@ -153,12 +153,12 @@ public class FeatureJaxrsAdapterTestIT {
     Response postResponse = requestPost.put(location);
 
     int statusCode = postResponse.statusCode();
-    Assert.assertEquals(200, statusCode);
+    Assertions.assertEquals(200, statusCode);
   }
 
   private FeatureDto getRecord(String location) {
     Response response = RestAssured.given().auth().basic(operatorName, operatorPassword).when().get(location);
-    Assert.assertEquals(location, 200, response.statusCode());
+    Assertions.assertEquals(200, response.statusCode());
     Gson gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
     return gson.fromJson(response.asString(), FeatureDto.class);
   }
@@ -179,7 +179,7 @@ public class FeatureJaxrsAdapterTestIT {
     Response deleteResponse = requestDelete.delete(location);
 
     int statusCode = deleteResponse.statusCode();
-    Assert.assertEquals(200, statusCode); //TODO: maybe should be 204
+    Assertions.assertEquals(200, statusCode); //TODO: maybe should be 204
   }
 
   @Test
@@ -218,7 +218,7 @@ public class FeatureJaxrsAdapterTestIT {
             .body(searchRequestDto);
 
     Response postResponse = request.post(location);
-    Assert.assertEquals(201, postResponse.statusCode());
+    Assertions.assertEquals(201, postResponse.statusCode());
 
     return postResponse.getHeader("location");
   }
@@ -228,7 +228,7 @@ public class FeatureJaxrsAdapterTestIT {
         RestAssured.given().auth().basic(operatorName, operatorPassword);
 
     Response response = request.get(searchLocation);
-    Assert.assertEquals(200, response.getStatusCode());
+    Assertions.assertEquals(200, response.getStatusCode());
 
     return new Gson().fromJson(response.asString(), SearchRequestDto.class);
   }
@@ -240,7 +240,7 @@ public class FeatureJaxrsAdapterTestIT {
         RestAssured.given().auth().basic(operatorName, operatorPassword);
 
     Response response = request.get(testUrl);
-    Assert.assertEquals(200, response.getStatusCode());
+    Assertions.assertEquals(200, response.getStatusCode());
 
     return response.getBody().as(Integer.TYPE);
   }
@@ -251,7 +251,7 @@ public class FeatureJaxrsAdapterTestIT {
 
     Response response = request.get(location);
 
-    Assert.assertEquals(200, response.statusCode());
+    Assertions.assertEquals(200, response.statusCode());
 
     Gson gson = new GsonBuilder().create();
     return gson.fromJson(response.asString(), FeatureDto.class);
