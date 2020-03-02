@@ -55,7 +55,7 @@
     <module>Oracle/Module/DynamicSql</module>
     <module>Oracle/Module/Logging</module>
     <module>Oracle/Module/TextParser</module>
-    <module>RusFinanceInfo/Module/AccessOperator</module>
+    <module>RusBalanceInfo/Module/AccessOperator</module>
     <link></link>
   </depend>
   <image></image>

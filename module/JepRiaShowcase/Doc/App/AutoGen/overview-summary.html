@@ -1177,7 +1177,7 @@ public class OutOfStaffAsRiaScope {
 &lt;script&gt;
         ...
         window.onload = function(){
-                document.getElementById("childFrame").contentWindow.postMessage('желаемые данные', 'https://wwww.rusfinancebank.ru');
+                document.getElementById("childFrame").contentWindow.postMessage('желаемые данные', 'https://wwww.rusbalancebank.ru');
         };
 &lt;/script&gt;
 </pre> Обратите внимание, что функция postMessage принимает два параметра: первый - это передаваемое сообщение-объект (в IE допускается передача только строковых значений), второй - указание домена, от имени которого будет отправлено сообщение встраиваемому модулю (если значение *, то отправка допускается с любого домена).
@@ -1188,7 +1188,7 @@ public class OutOfStaffAsRiaScope {
 &lt;script type="text/javascript"&gt;
 var json;
 function listener(event) {
-  if (event.origin != 'https://wwww.rusfinancebank.ru') {
+  if (event.origin != 'https://wwww.rusbalancebank.ru') {
     // что-то прислали с неизвестного домена - проигнорируем..
     return;
   }
@@ -1221,7 +1221,7 @@ public void eventListener(String message){
 <br> Как уже было сказано ранее, допустимо и обратная отправка сообщения родительскому приложению. Тогда функция listener примет вид:
 <pre>
 function listener(event) {
-  if (event.origin == 'https://wwww.rusfinancebank.ru') {
+  if (event.origin == 'https://wwww.rusbalancebank.ru') {
         if (event.data == 'Hello World') {
         event.source.postMessage('Hello', '*');
     } else {
@@ -2226,7 +2226,7 @@ JepMultiStateField comboBoxField = GWT.create(MyComboBoxField.class);
         ...
           
   </pre> </li>
-</ol> Пример: svn://srvbl08/RusFinanceInfo/Module/ASDManager, модули reconciliation и task
+</ol> Пример: svn://srvbl08/rusbalanceInfo/Module/ASDManager, модули reconciliation и task
 <br>
 <h4><a name="sortOptions">Сортировка данных для выпадающих списков</a></h4> Для сортировки данных выпадающих списков существует несколько способов:
 <ul>
@@ -2630,7 +2630,7 @@ public class User {
     // setters and getters
 } </pre> Полный список ограничений можно посмотреть в пакете
 <a href="https://javaee.github.io/javaee-spec/javadocs/javax/validation/constraints/package-summary.html" target="_blank">javax.validation.constraints</a>. Применение данной библиотеки в прикладном коде можно посмотреть на примере модуля
-<a href="svn://srvbl08/RusFinanceInfo/Module/OnlineApproval/Trunk/App" target="_blank">OnlineApproval</a> или заглянуть в
+<a href="svn://srvbl08/rusbalanceInfo/Module/OnlineApproval/Trunk/App" target="_blank">OnlineApproval</a> или заглянуть в
 <a href="http://www.gwtproject.org/doc/latest/DevGuideValidation.html" target="_blank">документацию GWT</a>.
 <h3><a name="refactoringNeeded">Косвенные признаки необходимости рефакторинга</a></h3> При наличии в коде нижеописанных конструкций и методов, в большинстве случаев, необходим рефакторинг данного кода. Наличие упомянутых конструкций и методов (в большинстве случаев) свидетельствует о непонятном (
 <u>в первую очередь для написавшего разработчика</u>) поведении кода. Очень часто это скрывает саму суть (источник) проблемы. Т.о. по «тяжести» последствий применение этих конструкций и методов сравнимо с сокрытием сообщений об ошибках.

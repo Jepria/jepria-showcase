@@ -107,7 +107,7 @@ under the License.
 		<proxy>
 		  <active>true</active>
 		  <protocol>http</protocol>
-		  <host>smsktmg.rusfinance.ru</host>
+		  <host>smsktmg.rusbalance.ru</host>
 		  <port>8080</port>
 		  <nonProxyHosts>local.net|some.host.com</nonProxyHosts>
 		</proxy>
@@ -120,7 +120,7 @@ under the License.
       <protocol>http</protocol>
       <username>BadosovNG</username>
       <password></password>
-      <host>smsktmg.rusfinance.ru</host>
+      <host>smsktmg.rusbalance.ru</host>
       <port>8080</port>
       <nonProxyHosts>local.net|some.host.com</nonProxyHosts>
     </proxy-->
@@ -187,7 +187,7 @@ under the License.
     </mirror-->            
 
     <mirror>
-      <id>rusfinance</id>
+      <id>rusbalance</id>
       <mirrorOf>central</mirrorOf>
       <url>http://vmskappint2:8081/repository/maven-central/</url>
     </mirror>

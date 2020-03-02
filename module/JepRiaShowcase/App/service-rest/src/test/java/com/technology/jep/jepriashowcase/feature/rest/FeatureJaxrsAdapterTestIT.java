@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public class FeatureJaxrsAdapterTestIT {
 
   private static final String baseUrl          = "http://localhost:8080/jepriashowcase-service-rest/api/feature";
-  private static final String operatorName     = "nagornyys";
+  private static final String operatorName     = "operatorName";
   private static final String operatorPassword = "123";
 
   @Test
