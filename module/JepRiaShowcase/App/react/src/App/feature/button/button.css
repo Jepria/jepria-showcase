@@ -1,0 +1,11 @@
+.button {
+  cursor: pointer;
+  border: solid 1px transparent;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  border: solid 1px transparent;
+  background: transparent;
+  cursor: default;
+}

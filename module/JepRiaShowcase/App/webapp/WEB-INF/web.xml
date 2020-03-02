@@ -304,4 +304,9 @@
     <location>/WEB-INF/security/Login.jsp</location>
   </error-page>
 
+  <error-page>
+    <error-code>404</error-code>
+    <location>/react/index.html</location>
+  </error-page>
+
 </web-app>

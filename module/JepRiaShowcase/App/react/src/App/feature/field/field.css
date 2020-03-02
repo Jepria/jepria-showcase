@@ -1,0 +1,11 @@
+.field__label {
+  display: block;
+  width: 200px;
+  float: left;
+  text-align: right;
+  padding-right: 5px;
+}
+
+.field__input {
+  width: 200px;
+}

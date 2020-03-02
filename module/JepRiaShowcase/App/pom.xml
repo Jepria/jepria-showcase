@@ -107,6 +107,10 @@
                 <exclude>WEB-INF/web.xml</exclude>
               </excludes>
             </resource>
+            <resource>
+              <directory>${project.basedir}/react/build</directory>
+              <targetPath>react</targetPath>
+            </resource>
           </webResources>
           <packagingExcludes>WEB-INF/classes/</packagingExcludes>
 
@@ -304,7 +308,7 @@
           <update>true</update>
           <url>http://localhost:8080/manager/text</url>
           <username>admin</username>
-          <password>123666</password>
+          <password>admin</password>
           <failOnError>true</failOnError>
           <path>/JepRiaShowcase</path>
         </configuration>

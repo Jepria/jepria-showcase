@@ -1,0 +1,10 @@
+.float-panel__item {
+  float: left;
+}
+
+.float-panel:after{
+  display: block;
+  content: "";
+  clear: both;
+  float: none;
+}
