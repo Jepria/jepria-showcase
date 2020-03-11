@@ -108,7 +108,7 @@
               </excludes>
             </resource>
             <resource>
-              <directory>${project.basedir}/react/build</directory>
+              <directory>${project.basedir}/client-react/build</directory>
               <targetPath>react</targetPath>
             </resource>
           </webResources>
@@ -326,7 +326,7 @@
               <goal>install-node-and-npm</goal>
             </goals>
             <configuration>
-              <workingDirectory>${project.basedir}/react/</workingDirectory>
+              <workingDirectory>${project.basedir}/client-react/</workingDirectory>
               <nodeVersion>v8.11.1</nodeVersion>
               <npmVersion>5.6.0</npmVersion>
             </configuration>
@@ -338,7 +338,7 @@
               <goal>npm</goal>
             </goals>
             <configuration>
-              <workingDirectory>${project.basedir}/react/</workingDirectory>
+              <workingDirectory>${project.basedir}/client-react/</workingDirectory>
               <arguments>install</arguments>
             </configuration>
           </execution>
@@ -349,7 +349,7 @@
               <goal>npm</goal>
             </goals>
             <configuration>
-              <workingDirectory>${project.basedir}/react/</workingDirectory>
+              <workingDirectory>${project.basedir}/client-react/</workingDirectory>
               <arguments>run build</arguments>
             </configuration>
           </execution>
