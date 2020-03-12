@@ -20,6 +20,11 @@
     <gwt.product.name>JepRiaShowcase</gwt.product.name>
     <service.rest.product.name>jepriashowcase-service-rest</service.rest.product.name>
     <project.build.finalName>JepRiaShowcase</project.build.finalName>
+
+    <deploy.url>http://localhost:8080/manager/text</deploy.url>
+    <deploy.path>/JepRiaShowcase</deploy.path>
+    <deploy.username>admin</deploy.username>
+    <deploy.password>admin</deploy.password>
   </properties>
 
   <dependencies>
@@ -306,11 +311,11 @@
         <version>2.2</version>
         <configuration>
           <update>true</update>
-          <url>http://localhost:8080/manager/text</url>
-          <username>admin</username>
-          <password>admin</password>
+          <url>${deploy.url}</url>
+          <username>${deploy.username}</username>
+          <password>${deploy.password}</password>
+          <path>${deploy.path}</path>
           <failOnError>true</failOnError>
-          <path>/JepRiaShowcase</path>
         </configuration>
       </plugin>
 
