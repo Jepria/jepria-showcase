@@ -129,6 +129,36 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.6.0</version>
         <executions>
+
+          <execution>
+            <id>node-install-exec</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>npm</executable>
+              <workingDirectory>${project.basedir}/client-react/</workingDirectory>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>node-build-exec</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>npm</executable>
+              <workingDirectory>${project.basedir}/client-react/</workingDirectory>
+              <arguments>
+                <argument>run</argument>
+                <argument>build</argument>
+              </arguments>
+            </configuration>
+          </execution>
+
           <execution>
             <id>build-jepriashowcase-gwt</id>
             <phase>prepare-package</phase>
@@ -312,48 +342,6 @@
           <failOnError>true</failOnError>
           <path>/JepRiaShowcase</path>
         </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>com.github.eirslett</groupId>
-        <artifactId>frontend-maven-plugin</artifactId>
-        <version>1.9.1</version>
-        <executions>
-
-          <execution>
-            <id>install node and npm</id>
-            <goals>
-              <goal>install-node-and-npm</goal>
-            </goals>
-            <configuration>
-              <workingDirectory>${project.basedir}/client-react/</workingDirectory>
-              <nodeVersion>v8.11.1</nodeVersion>
-              <npmVersion>5.6.0</npmVersion>
-            </configuration>
-          </execution>
-
-          <execution>
-            <id>npm install</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <configuration>
-              <workingDirectory>${project.basedir}/client-react/</workingDirectory>
-              <arguments>install</arguments>
-            </configuration>
-          </execution>
-
-          <execution>
-            <id>npm run build</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <configuration>
-              <workingDirectory>${project.basedir}/client-react/</workingDirectory>
-              <arguments>run build</arguments>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
 
     </plugins>
