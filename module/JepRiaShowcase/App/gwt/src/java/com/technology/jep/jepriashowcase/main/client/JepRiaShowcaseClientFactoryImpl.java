@@ -1,19 +1,5 @@
 package com.technology.jep.jepriashowcase.main.client;
 
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.ALLSHOPGOODS_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.ARSENIC_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.CUSTOM_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.FEATUREOPERATOR_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.FEATUREPROCESS_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.FEATURE_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.GOODS_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.REQUESTPROCESS_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.REQUEST_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.SEARCH_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.SHOPGOODS_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.SIMPLE_MODULE_ID;
-import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.SUPPLIER_MODULE_ID;
-
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -44,6 +30,8 @@ import com.technology.jep.jepriashowcase.shopgoods.client.ShopGoodsClientFactory
 import com.technology.jep.jepriashowcase.simple.client.SimpleClientFactoryImpl;
 import com.technology.jep.jepriashowcase.supplier.client.SupplierClientFactoryImpl;
 
+import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.*;
+
 public class JepRiaShowcaseClientFactoryImpl
   extends MainClientFactoryImpl<MainEventBus, JepMainServiceAsync> {
   
@@ -70,7 +58,8 @@ public class JepRiaShowcaseClientFactoryImpl
         REQUESTPROCESS_MODULE_ID,
         FEATURE_MODULE_ID,
         FEATUREOPERATOR_MODULE_ID,
-        FEATUREPROCESS_MODULE_ID
+        FEATUREPROCESS_MODULE_ID,
+        FEATUREPROCESS_REACT_MODULE_ID
     );
   }
   
@@ -188,6 +177,8 @@ public class JepRiaShowcaseClientFactoryImpl
           return FeatureProcessClientFactoryImpl.getInstance();
         }
       });
+    } else if(FEATUREPROCESS_REACT_MODULE_ID.equals(moduleId)) {
+      goToAnotherModule(GWT.getModuleName() + "/react");
     }
   }
 
@@ -196,4 +187,8 @@ public class JepRiaShowcaseClientFactoryImpl
     return mainView;
   }
   
+  public static native void goToAnotherModule(String url)
+    /*-{
+        $wnd.location.href = $wnd.location.protocol + "//" + $wnd.location.host + "/" + url;
+    }-*/;
 }

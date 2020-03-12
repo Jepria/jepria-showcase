@@ -19,6 +19,8 @@ public class JepRiaShowcaseClientConstant extends JepRiaShowcaseConstant {
   public static final String FEATURE_MODULE_ID = "Feature";
   public static final String FEATUREOPERATOR_MODULE_ID = "FeatureOperator";
   public static final String FEATUREPROCESS_MODULE_ID = "FeatureProcess";
+  public static final String FEATUREPROCESS_REACT_MODULE_ID = "FeatureProcessReact";
+  
   
   /**
    * Тексты клиентской части JepRiaShowcase.

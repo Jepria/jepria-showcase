@@ -5,6 +5,7 @@ import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClient
 import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.CUSTOM_MODULE_ID;
 import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.FEATUREOPERATOR_MODULE_ID;
 import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.FEATUREPROCESS_MODULE_ID;
+import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.FEATUREPROCESS_REACT_MODULE_ID;
 import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.FEATURE_MODULE_ID;
 import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.GOODS_MODULE_ID;
 import static com.technology.jep.jepriashowcase.main.client.JepRiaShowcaseClientConstant.REQUESTPROCESS_MODULE_ID;
@@ -39,6 +40,7 @@ public class JepRiaShowcaseMainViewImpl extends MainViewImpl {
     ret.add(new ModuleConfiguration(FEATURE_MODULE_ID, jepRiaShowcaseText.submodule_feature_title()));
     ret.add(new ModuleConfiguration(FEATUREOPERATOR_MODULE_ID, jepRiaShowcaseText.submodule_featureoperator_title()));
     ret.add(new ModuleConfiguration(FEATUREPROCESS_MODULE_ID, jepRiaShowcaseText.submodule_featureprocess_title()));
+    ret.add(new ModuleConfiguration(FEATUREPROCESS_REACT_MODULE_ID, jepRiaShowcaseText.submodule_featureprocess_title() + " — react"));
     return ret;
   }
 }
