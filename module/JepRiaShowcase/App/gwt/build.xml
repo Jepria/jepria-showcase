@@ -805,6 +805,11 @@
           <fileset file="${STANDARD_LIB}" />
           <fileset file="${COMMONS-FILEUPLOAD_LIB}" />
           <fileset file="${COMMONS-IO_LIB}" />
+
+          <fileset file="${OAUTH_SDK}" />
+          <fileset file="${NIMBUS_JOSE_JWT}" />
+          <fileset file="${ASM}" />
+          <fileset file="${JSON_SMART}" />
         </copy>
         <!-- выделяем копирование библиотек для формирования отчетов-->
         <if>
