@@ -5,7 +5,7 @@ import org.jepria.server.data.PrimaryKey;
 
 import java.util.Date;
 
-public class FeatureDto {
+public class FeatureDto implements Cloneable{
   @PrimaryKey
   private Integer featureId;
   private String featureName;
@@ -78,5 +78,40 @@ public class FeatureDto {
 
   public void setResponsible(OptionDto<Integer> responsible) {
     this.responsible = responsible;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof FeatureDto)) return false;
+
+    FeatureDto that = (FeatureDto) o;
+
+    if (getFeatureId() != null ? !getFeatureId().equals(that.getFeatureId()) : that.getFeatureId() != null)
+      return false;
+    if (getFeatureName() != null ? !getFeatureName().equals(that.getFeatureName()) : that.getFeatureName() != null)
+      return false;
+    if (getFeatureNameEn() != null ? !getFeatureNameEn().equals(that.getFeatureNameEn()) : that.getFeatureNameEn() != null)
+      return false;
+    if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
+      return false;
+    if (getFeatureStatus() != null ? !getFeatureStatus().equals(that.getFeatureStatus()) : that.getFeatureStatus() != null)
+      return false;
+    if (getDateIns() != null ? !getDateIns().equals(that.getDateIns()) : that.getDateIns() != null) return false;
+    if (getAuthor() != null ? !getAuthor().equals(that.getAuthor()) : that.getAuthor() != null) return false;
+    return getResponsible() != null ? getResponsible().equals(that.getResponsible()) : that.getResponsible() == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = getFeatureId() != null ? getFeatureId().hashCode() : 0;
+    result = 31 * result + (getFeatureName() != null ? getFeatureName().hashCode() : 0);
+    result = 31 * result + (getFeatureNameEn() != null ? getFeatureNameEn().hashCode() : 0);
+    result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+    result = 31 * result + (getFeatureStatus() != null ? getFeatureStatus().hashCode() : 0);
+    result = 31 * result + (getDateIns() != null ? getDateIns().hashCode() : 0);
+    result = 31 * result + (getAuthor() != null ? getAuthor().hashCode() : 0);
+    result = 31 * result + (getResponsible() != null ? getResponsible().hashCode() : 0);
+    return result;
   }
 }
