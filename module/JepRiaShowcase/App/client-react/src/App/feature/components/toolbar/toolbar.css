@@ -1,43 +1,74 @@
-/* нужно быть аккуратнее с миксами */
+/* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 
 .toolbar {
-  height: 22px;
+  font: 11px arial, tahoma, helvetica, sans-serif;
+  vertical-align: middle;
+  margin: 0;
   padding: 2px;
-  border: 1px solid black; /* стандартный цвет */
+  border-style: solid;
+  border-color: #99bbe8;
+  border-width: 0 1px 1px 1px;
+  overflow: hidden;
+  background-color: #d0def0;
+  background-image: url(bg.gif);
+  background-position: 0 5%;
 }
 
-.toolbar__button-list{
+.toolbar__button-list {
   height: 100%;
 }
 
 .toolbar__button {
-  height: 100%;
-  padding: 1px;
+  font: 11px arial, tahoma, verdana, helvetica;
+  height: 22px;
+  padding: 1px 1px;
+  /* background-color: transparent; */
+  /* background-image: none; */
+  border: solid 1px transparent;
   float: left;
+  vertical-align: middle;
+  text-align: center;
 }
 
-
 .toolbar__button:hover {
-  border: solid 1px #99BBE8;
-  background: #DDEFFF;
+  border: solid 1px #99bbe8;
+  background: #ddefff;
+}
+
+.toolbar__button:disabled {
+  opacity: 0.5;
+  background: transparent;
+  cursor: default;
+}
+
+/* 
+.toolbar__button:active {
+  border-top: solid 1px #99bbe8;
+  border-bottom: solid 1px white;
+  border-left: solid 1px #99bbe8;
+  border-right: solid 1px white;
+  background: #b6cbe4;
+} */
+
+.toolbar__button table {
+  height: auto;
 }
 
 .toobar__separator {
+  background-position: center;
+  background-repeat: repeat;
+  display: block;
+  font-size: 1px;
   height: 100%;
   width: 2px;
-  margin: 0 2px;
+  overflow: hidden;
+  cursor: default;
+  margin: 0 2px 0;
+  border: 0;
   background: url(grid-blue-split.gif) repeat;
   float: left;
-}
-
-.toolbar_theme_blue {
-  border-color: #99BBE8;
-  background-color: #D0DEF0;
-  background-image: url(bg.gif);
-  background-position: 0 5%;
 }
 
 a[disabled] {
   pointer-events: none;
 }
-
