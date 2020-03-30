@@ -26,8 +26,7 @@
   height: 100%;
   width: 2px;
   margin: 0 2px;
-  background: url(grid-blue-split.gif);
-  background-repeat: repeat;
+  background: url(grid-blue-split.gif) repeat;
   float: left;
 }
 
@@ -36,5 +35,9 @@
   background-color: #D0DEF0;
   background-image: url(bg.gif);
   background-position: 0 5%;
+}
+
+a[disabled] {
+  pointer-events: none;
 }
 
