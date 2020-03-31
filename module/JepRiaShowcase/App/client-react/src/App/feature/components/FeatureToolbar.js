@@ -55,7 +55,7 @@ function FeatureToolbar() {
           </button>
         </NavLink>
 
-        <div className="toobar__separator" />
+        <span className="toobar__separator" />
 
         <button className="toolbar__button">Список</button>
 
