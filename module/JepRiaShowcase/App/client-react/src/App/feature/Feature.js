@@ -1,6 +1,7 @@
 import React from "react";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 
+import 'react-app-polyfill/ie11';
 import "./Feature.css";
 import FeatureToolbar from "./components/FeatureToolbar";
 import "./header/header.css";
@@ -17,7 +18,9 @@ import {List} from "./pages/List";
 
 function Feature() {
   return (
-    <BrowserRouter>
+    <BrowserRouter
+      basename={`${window.location.pathname}`} //TODO
+    >
       <div className="jepria-font">
         <header className="header header_theme_blue">
           <ul className="header__module-list">
