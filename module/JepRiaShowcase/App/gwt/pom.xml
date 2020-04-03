@@ -27,31 +27,6 @@
         <deploy.path>${artifactId}</deploy.path>
     </properties>
 
-    <repositories>
-        <!--
-        Путь к бинарному репозиторию
-        https://github.com/Jepria/bin-repo
-        -->
-        <repository>
-            <id>binhome-local-deploy</id>
-            <name>binhome-local-deploy-repo</name>
-            <url>file:${bin.home}\deploy</url>
-        </repository>
-        <repository>
-            <id>binhome-local-build</id>
-            <name>binhome-local-build-repo</name>
-            <url>file:${bin.home}\build</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>local-maven-plugins</id>
-            <name>local-maven-plugins-repo</name>
-            <url>file:${bin.home}\build</url>
-        </pluginRepository>
-    </pluginRepositories>
-
     <dependencies>
         <dependency>
             <groupId>com.allen-sauer.gwt.log</groupId>

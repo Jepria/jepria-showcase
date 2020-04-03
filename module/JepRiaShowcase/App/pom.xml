@@ -25,33 +25,7 @@
     <deploy.path>/JepRiaShowcase</deploy.path>
     <deploy.username>admin</deploy.username>
     <deploy.password>admin</deploy.password>
-    <bin.home>${env.BIN_HOME}</bin.home>
   </properties>
-
-  <repositories>
-    <!--
-    Путь к бинарному репозиторию
-    https://github.com/Jepria/bin-repo
-    -->
-    <repository>
-      <id>binhome-local-deploy</id>
-      <name>binhome-local-deploy-repo</name>
-      <url>file:${bin.home}\deploy</url>
-    </repository>
-    <repository>
-      <id>binhome-local-build</id>
-      <name>binhome-local-build-repo</name>
-      <url>file:${bin.home}\build</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>binhome-local-plugin</id>
-      <name>binhome-local-plugin-repo</name>
-      <url>file:${bin.home}\build</url>
-    </pluginRepository>
-  </pluginRepositories>
 
   <dependencies>
     <dependency>
