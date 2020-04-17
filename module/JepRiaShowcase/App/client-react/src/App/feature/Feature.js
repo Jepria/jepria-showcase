@@ -1,5 +1,5 @@
 import React from "react";
-import {Switch, Route, HashRouter} from "react-router-dom";
+import {Switch, Route, BrowserRouter} from "react-router-dom";
 
 import 'react-app-polyfill/ie11';
 import "./Feature.css";
@@ -18,7 +18,7 @@ import {List} from "./pages/List";
 
 function Feature() {
   return (
-    <HashRouter>
+    <BrowserRouter basename="/JepRiaShowcase/react/">
       <div className="jepria-font">
         <header className="header header_theme_blue">
           <ul className="header__module-list">
@@ -36,7 +36,7 @@ function Feature() {
           <Route path="/list" component={List}/>
         </Switch>
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
