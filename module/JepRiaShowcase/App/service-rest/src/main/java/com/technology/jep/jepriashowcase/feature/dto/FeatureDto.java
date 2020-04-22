@@ -79,4 +79,5 @@ public class FeatureDto {
   public void setResponsible(OptionDto<Integer> responsible) {
     this.responsible = responsible;
   }
+
 }
