@@ -4,25 +4,31 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <!-- 
+    Сборка общего продукта (lib/*.war) на основе компонентов (service-rest/target/*.war, gwt/lib/*-gwt.war).
+
+    Наличие либо отсутствие в проекте компонентов пока что устанавливается вручную
+    комментированием xml-элементов с текстовыми метками "build:gwt", "build:service-rest", "build:client-react".
+  -->
+
   <groupId>org.jepria.jepriashowcase</groupId>
   <artifactId>JepRiaShowcase</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>JepRiaShowcase</name>
-  <!-- FIXME change it to the project's website -->
   <url>http://jepria.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <gwt.product.name>JepRiaShowcase</gwt.product.name>
-    <service.rest.product.name>jepriashowcase-service-rest</service.rest.product.name>
+    <project.build.gwt.productName>JepRiaShowcase</project.build.gwt.productName>
+    <project.build.serviceRest.productName>jepriashowcase-service-rest</project.build.serviceRest.productName>
     <project.build.finalName>JepRiaShowcase</project.build.finalName>
 
     <deploy.url>http://localhost:8080/manager/text</deploy.url>
-    <deploy.path>/JepRiaShowcase</deploy.path>
+    <deploy.path>/${project.build.finalName}</deploy.path>
     <deploy.username>admin</deploy.username>
     <deploy.password>admin</deploy.password>
   </properties>
@@ -38,14 +44,12 @@
 
   <build>
     <finalName>${project.build.finalName}</finalName>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
       <plugins>
-        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
         </plugin>
-        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.1.0</version>
@@ -73,7 +77,6 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
-        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <version>3.7.1</version>
@@ -100,22 +103,31 @@
                 <include>web.xml</include>
               </includes>
             </resource>
+            
+            <!-- build:gwt -->
             <resource>
               <directory>${project.build.directory}/temp-war-gwt</directory>
               <excludes>
                 <exclude>WEB-INF/web.xml</exclude>
               </excludes>
             </resource>
+            
+            <!-- build:service-rest -->  
             <resource>
               <directory>${project.build.directory}/temp-war-service-rest</directory>
               <excludes>
                 <exclude>WEB-INF/web.xml</exclude>
               </excludes>
             </resource>
+            
+            <!-- build:client-react -->  
+            <!--
             <resource>
               <directory>${project.basedir}/client-react/build</directory>
               <targetPath>react</targetPath>
             </resource>
+            -->
+          
           </webResources>
           <packagingExcludes>WEB-INF/classes/</packagingExcludes>
 
@@ -135,8 +147,10 @@
         <version>1.6.0</version>
         <executions>
 
+          <!-- build:client-react -->
+          <!--
           <execution>
-            <id>node-install-exec</id>
+            <id>build_client-react__node-install</id>
             <phase>generate-resources</phase>
             <goals>
               <goal>exec</goal>
@@ -147,9 +161,12 @@
               <arguments>install</arguments>
             </configuration>
           </execution>
+          -->
 
+          <!-- build:client-react -->
+          <!--        
           <execution>
-            <id>node-build-exec</id>
+            <id>build_client-react__node-build</id>
             <phase>prepare-package</phase>
             <goals>
               <goal>exec</goal>
@@ -163,9 +180,11 @@
               </arguments>
             </configuration>
           </execution>
-
+          -->
+          
+          <!-- build:gwt -->
           <execution>
-            <id>build-jepriashowcase-gwt</id>
+            <id>build_gwt</id>
             <phase>prepare-package</phase>
             <goals>
               <goal>exec</goal>
@@ -178,8 +197,10 @@
               </arguments>
             </configuration>
           </execution>
+                  
+          <!-- build:service-rest -->
           <execution>
-            <id>build-jepriashowcase-service-rest</id>
+            <id>build_service-rest</id>
             <phase>prepare-package</phase>
             <goals>
               <goal>exec</goal>
@@ -192,8 +213,11 @@
               </arguments>
             </configuration>
           </execution>
+          
+          
+          <!-- build:gwt -->
           <execution>
-            <id>clean-jepriashowcase-gwt</id>
+            <id>build_gwt__clean</id>
             <phase>clean-all</phase>
             <goals>
               <goal>exec</goal>
@@ -206,8 +230,11 @@
               </arguments>
             </configuration>
           </execution>
+
+
+          <!-- build:service-rest -->          
           <execution>
-            <id>clean-jepriashowcase-service-rest</id>
+            <id>build_service-rest__clean</id>
             <phase>clean-all</phase>
             <goals>
               <goal>exec</goal>
@@ -220,6 +247,7 @@
               </arguments>
             </configuration>
           </execution>
+          
         </executions>
       </plugin>
 
@@ -237,19 +265,19 @@
             <configuration>
               <filesets>
                 <fileset>
-                  <directory>${project.basedir}/gwt/lib/${gwt.product.name}-gwt.war</directory>
+                  <directory>${project.basedir}/gwt/lib/${project.build.gwt.productName}-gwt.war</directory>
                   <outputDirectory>${project.build.directory}/temp-war-gwt</outputDirectory>
                 </fileset>
                 <fileset>
-                  <directory>${project.build.directory}/temp-war-gwt/WEB-INF/lib/${gwt.product.name}-web.jar</directory>
+                  <directory>${project.build.directory}/temp-war-gwt/WEB-INF/lib/${project.build.gwt.productName}-web.jar</directory>
                   <outputDirectory>${project.build.directory}/temp-web-jar-gwt</outputDirectory>
                 </fileset>
                 <fileset>
-                  <directory>${project.basedir}/service-rest/target/${service.rest.product.name}.war</directory>
+                  <directory>${project.basedir}/service-rest/target/${project.build.serviceRest.productName}.war</directory>
                   <outputDirectory>${project.build.directory}/temp-war-service-rest</outputDirectory>
                 </fileset>
                 <fileset>
-                  <directory>${project.build.directory}/temp-war-service-rest/WEB-INF/lib/${service.rest.product.name}-web.jar</directory>
+                  <directory>${project.build.directory}/temp-war-service-rest/WEB-INF/lib/${project.build.serviceRest.productName}-web.jar</directory>
                   <outputDirectory>${project.build.directory}/temp-web-jar-service-rest</outputDirectory>
                 </fileset>
               </filesets>
@@ -263,20 +291,23 @@
         <artifactId>collisioncheck-maven-plugin</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <executions>
+
+          <!-- build:gwt && build:service-rest -->
           <execution>
-            <id>check-collisions-in-merged-files</id>
+            <id>build_gwt__check-collisions,build_service-rest__check-collisions</id>
             <phase>prepare-package</phase>
             <configuration>
               <classPathRoots>target/temp-web-jar-gwt;target/temp-web-jar-service-rest</classPathRoots>
-              <classPathRefs>gwt/lib/${gwt.product.name}-gwt.war/WEB-INF/lib/${gwt.product.name}-web.jar;service-rest/target/${service.rest.product.name}.war/WEB-INF/lib/${service.rest.product.name}-web.jar</classPathRefs>
+              <classPathRefs>gwt/lib/${project.build.gwt.productName}-gwt.war/WEB-INF/lib/${project.build.gwt.productName}-web.jar;service-rest/target/${project.build.serviceRest.productName}.war/WEB-INF/lib/${project.build.serviceRest.productName}-web.jar</classPathRefs>
               <filePathRoots>target/temp-war-gwt;target/temp-war-service-rest</filePathRoots>
-              <filePathRefs>gwt/lib/${gwt.product.name}-gwt.war;service-rest/target/${service.rest.product.name}.war</filePathRefs>
+              <filePathRefs>gwt/lib/${project.build.gwt.productName}-gwt.war;service-rest/target/${project.build.serviceRest.productName}.war</filePathRefs>
               <onlyClassCollision>false</onlyClassCollision>
             </configuration>
             <goals>
               <goal>check-collision</goal>
             </goals>
           </execution>
+
         </executions>
       </plugin>
 
@@ -315,7 +346,7 @@
         <artifactId>maven-clean-plugin</artifactId>
         <executions>
           <execution>
-            <id>clean-jepriashowcase</id>
+            <id>clean</id>
             <phase>clean-all</phase>
             <goals>
               <goal>clean</goal>
