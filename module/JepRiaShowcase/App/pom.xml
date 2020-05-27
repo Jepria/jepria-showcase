@@ -252,6 +252,30 @@
       </plugin>
 
       <plugin>
+        <groupId>org.jepria.tools.mavenplugin</groupId>
+        <artifactId>collisioncheck-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <executions>
+
+          <!-- build:gwt && build:service-rest -->
+          <execution>
+            <id>build_gwt__check-collisions,build_service-rest__check-collisions</id>
+            <phase>prepare-package</phase>
+            <configuration>
+              <warGwtPath>gwt/lib/${project.build.gwt.productName}-gwt.war</warGwtPath>
+              <warServiceRestPath>service-rest/target/${project.build.serviceRest.productName}.war</warServiceRestPath>
+              <strict>true</strict>
+            </configuration>
+            <goals>
+              <goal>check-collision</goal>
+            </goals>
+          </execution>
+
+        </executions>
+      </plugin>
+
+      <plugin>
+        <!-- unpack gwt.war and service-rest.war to temp directories to further merge them into a single war -->
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>truezip-maven-plugin</artifactId>
         <version>1.2</version>
@@ -269,45 +293,12 @@
                   <outputDirectory>${project.build.directory}/temp-war-gwt</outputDirectory>
                 </fileset>
                 <fileset>
-                  <directory>${project.build.directory}/temp-war-gwt/WEB-INF/lib/${project.build.gwt.productName}-web.jar</directory>
-                  <outputDirectory>${project.build.directory}/temp-web-jar-gwt</outputDirectory>
-                </fileset>
-                <fileset>
                   <directory>${project.basedir}/service-rest/target/${project.build.serviceRest.productName}.war</directory>
                   <outputDirectory>${project.build.directory}/temp-war-service-rest</outputDirectory>
-                </fileset>
-                <fileset>
-                  <directory>${project.build.directory}/temp-war-service-rest/WEB-INF/lib/${project.build.serviceRest.productName}-web.jar</directory>
-                  <outputDirectory>${project.build.directory}/temp-web-jar-service-rest</outputDirectory>
                 </fileset>
               </filesets>
             </configuration>
           </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jepria.tools.mavenplugin</groupId>
-        <artifactId>collisioncheck-maven-plugin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <executions>
-
-          <!-- build:gwt && build:service-rest -->
-          <execution>
-            <id>build_gwt__check-collisions,build_service-rest__check-collisions</id>
-            <phase>prepare-package</phase>
-            <configuration>
-              <classPathRoots>target/temp-web-jar-gwt;target/temp-web-jar-service-rest</classPathRoots>
-              <classPathRefs>gwt/lib/${project.build.gwt.productName}-gwt.war/WEB-INF/lib/${project.build.gwt.productName}-web.jar;service-rest/target/${project.build.serviceRest.productName}.war/WEB-INF/lib/${project.build.serviceRest.productName}-web.jar</classPathRefs>
-              <filePathRoots>target/temp-war-gwt;target/temp-war-service-rest</filePathRoots>
-              <filePathRefs>gwt/lib/${project.build.gwt.productName}-gwt.war;service-rest/target/${project.build.serviceRest.productName}.war</filePathRefs>
-              <onlyClassCollision>false</onlyClassCollision>
-            </configuration>
-            <goals>
-              <goal>check-collision</goal>
-            </goals>
-          </execution>
-
         </executions>
       </plugin>
 
