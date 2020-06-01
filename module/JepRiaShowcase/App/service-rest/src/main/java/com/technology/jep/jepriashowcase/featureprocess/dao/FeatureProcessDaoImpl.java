@@ -1,6 +1,6 @@
 package com.technology.jep.jepriashowcase.featureprocess.dao;
 
-import com.technology.jep.jepria.server.dao.ResultSetMapper;
+import org.jepria.compat.server.dao.ResultSetMapper;
 import com.technology.jep.jepriashowcase.featureprocess.FeatureProcessFieldNames;
 import com.technology.jep.jepriashowcase.featureprocess.dto.FeatureProcessCreateDtoInternal;
 import com.technology.jep.jepriashowcase.featureprocess.dto.FeatureProcessDto;

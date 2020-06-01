@@ -1,6 +1,6 @@
 package com.technology.jep.jepriashowcase.main.rest.jersey;
 
-import com.technology.jep.jepria.shared.exceptions.ApplicationException;
+import org.jepria.compat.shared.exceptions.ApplicationException;
 import com.technology.jep.jepriashowcase.feature.rest.FeatureJaxrsAdapter;
 import com.technology.jep.jepriashowcase.featureprocess.rest.FeatureProcessJaxrsAdapter;
 import org.jepria.server.service.rest.jersey.ApplicationConfigBase;
