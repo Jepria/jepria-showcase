@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 public class FeatureJaxrsAdapterCrudTestIT {
 
   private static final String ENTITY_URL = "http://localhost:8080/jepriashowcase-service-rest/api/feature";
-  private static final String OPERATOR_NAME = "name";
+  private static final String OPERATOR_NAME = "username";
   private static final String OPERATOR_PASSWORD = "password";
 
   @Test
@@ -56,7 +56,7 @@ public class FeatureJaxrsAdapterCrudTestIT {
             .when()
             .get(location);
     Assertions.assertEquals(200, response.statusCode());
-    Gson gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
+    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
     return gson.fromJson(response.asString(), FeatureDto.class);
   }
 
@@ -129,13 +129,10 @@ public class FeatureJaxrsAdapterCrudTestIT {
     return sb.toString();
   }
 
-  private boolean equalsEntities(Object obj1, Object obj2) {
-    if (obj1 == obj2) {
+  private boolean equalsEntities(FeatureDto entity1, FeatureDto entity2) {
+    if (entity1 == entity2) {
       return true;
     }
-
-    FeatureDto entity1 = (FeatureDto) obj1;
-    FeatureDto entity2 = (FeatureDto) obj2;
 
     if (!Objects.equals(entity1.getFeatureId(), entity2.getFeatureId())) {
       return false;
