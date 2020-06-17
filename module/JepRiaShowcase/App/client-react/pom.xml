@@ -40,7 +40,7 @@
         <version>1.6.0</version>
         <executions>
 
-          <!--<execution>
+          <execution>
             <id>node-install-exec</id>
             <phase>generate-resources</phase>
             <goals>
@@ -51,7 +51,7 @@
               <workingDirectory>${project.basedir}</workingDirectory>
               <arguments>install</arguments>
             </configuration>
-          </execution>-->
+          </execution>
     
           <execution>
             <id>node-build-exec</id>

@@ -29,8 +29,8 @@
 
     <deploy.url>http://localhost:8080/manager/text</deploy.url>
     <deploy.path>/${project.build.finalName}</deploy.path>
-    <deploy.username>admin</deploy.username>
-    <deploy.password>admin</deploy.password>
+    <deploy.username>username</deploy.username>
+    <deploy.password>password</deploy.password>
   </properties>
 
   <dependencies>
@@ -121,12 +121,10 @@
             </resource>
             
             <!-- build:client-react -->  
-            <!--
             <resource>
               <directory>${project.basedir}/client-react/build</directory>
               <targetPath>react</targetPath>
             </resource>
-            -->
           
           </webResources>
           <packagingExcludes>WEB-INF/classes/</packagingExcludes>
@@ -148,40 +146,21 @@
         <executions>
 
           <!-- build:client-react -->
-          <!--
           <execution>
-            <id>build_client-react__node-install</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>npm</executable>
-              <workingDirectory>${project.basedir}/client-react/</workingDirectory>
-              <arguments>install</arguments>
-            </configuration>
-          </execution>
-          -->
-
-          <!-- build:client-react -->
-          <!--        
-          <execution>
-            <id>build_client-react__node-build</id>
+            <id>build_client-react</id>
             <phase>prepare-package</phase>
             <goals>
               <goal>exec</goal>
             </goals>
             <configuration>
-              <executable>npm</executable>
-              <workingDirectory>${project.basedir}/client-react/</workingDirectory>
+              <executable>mvn</executable>
+              <workingDirectory>${project.basedir}/client-react</workingDirectory>
               <arguments>
-                <argument>run</argument>
-                <argument>build</argument>
+                <argument>package</argument>
               </arguments>
             </configuration>
           </execution>
-          -->
-          
+
           <!-- build:gwt -->
           <execution>
             <id>build_gwt</id>
