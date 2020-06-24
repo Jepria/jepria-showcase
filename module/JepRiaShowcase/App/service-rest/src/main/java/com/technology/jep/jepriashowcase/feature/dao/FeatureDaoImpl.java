@@ -1,11 +1,11 @@
 package com.technology.jep.jepriashowcase.feature.dao;
 
-import com.technology.jep.jepria.server.dao.ResultSetMapper;
 import com.technology.jep.jepriashowcase.feature.FeatureFieldNames;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureCreateDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureSearchDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureUpdateDto;
+import org.jepria.compat.server.dao.ResultSetMapper;
 import org.jepria.server.data.DaoSupport;
 import org.jepria.server.data.DtoUtil;
 import org.jepria.server.data.OptionDto;

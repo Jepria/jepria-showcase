@@ -1,6 +1,6 @@
 package com.technology.jep.jepriashowcase.feature;
  
-import com.technology.jep.jepria.shared.field.JepRecordFieldNames;
+import org.jepria.compat.shared.field.JepRecordFieldNames;
 
 public class FeatureFieldNames extends JepRecordFieldNames {
   public static final String FEATURE_ID = "feature_id";

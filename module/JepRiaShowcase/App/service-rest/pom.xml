@@ -6,7 +6,7 @@
 
   <groupId>org.jepria.jepriashowcase</groupId>
   <artifactId>jepriashowcase-service-rest</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>12.0.0</version>
   <packaging>war</packaging>
   <name>service-rest Maven Webapp</name>
   <url>http://jepria.org</url>
@@ -17,7 +17,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <jersey.version>2.29</jersey.version>
     <antcontrib.version>1.0b3</antcontrib.version>
-    <jepria.version>11.1.0-SNAPSHOT</jepria.version>
+    <jepria.version>12.0.0</jepria.version>
     <jepriatoolkit.version>7.15.0</jepriatoolkit.version>
     <tomcat.version>7.0.68</tomcat.version>
     <log4j.version>1.2.17</log4j.version>
@@ -122,7 +122,7 @@
     <!-- JepRia -->
     <dependency>
       <groupId>org.jepria</groupId>
-      <artifactId>jepria</artifactId>
+      <artifactId>jepria-rest</artifactId>
       <version>${jepria.version}</version>
       <scope>compile</scope>
     </dependency>
@@ -377,9 +377,9 @@
         <version>2.2</version>
         <configuration>
           <update>true</update>
-          <url>http://localhost:8080/manager/text</url>
+          <url>http://vsmlapprfid1:8080/manager/text</url>
           <username>admin</username>
-          <password>admin</password>
+          <password>admin0</password>
           <failOnError>true</failOnError>
           <path>/jepriashowcase-service-rest</path>
         </configuration>
@@ -424,9 +424,9 @@
             <id>update-jepria-snapshot</id>
             <phase>validate</phase>
             <configuration>
-              <file>${BIN_HOME}/deploy/org/jepria/jepria/${jepria.version}/jepria-${jepria.version}.jar</file>
+              <file>${BIN_HOME}/deploy/org/jepria/jepria-rest/${jepria.version}/jepria-rest-${jepria.version}.jar</file>
               <groupId>org.jepria</groupId>
-              <artifactId>jepria</artifactId>
+              <artifactId>jepria-rest</artifactId>
               <version>${jepria.version}</version>
               <packaging>jar</packaging>
             </configuration>
