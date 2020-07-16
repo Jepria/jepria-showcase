@@ -1,6 +1,6 @@
 package com.technology.jep.jepriashowcase.featureprocess;
  
-import com.technology.jep.jepria.shared.field.JepRecordFieldNames;
+import org.jepria.compat.shared.field.JepRecordFieldNames;
 
 public class FeatureProcessFieldNames extends JepRecordFieldNames {
   public static final String FEATURE_PROCESS_ID = "feature_process_id";

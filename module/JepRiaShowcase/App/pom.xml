@@ -13,7 +13,7 @@
 
   <groupId>org.jepria.jepriashowcase</groupId>
   <artifactId>JepRiaShowcase</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>12.0.0</version>
   <packaging>war</packaging>
 
   <name>JepRiaShowcase</name>
@@ -120,12 +120,12 @@
               </excludes>
             </resource>
             
-            <!-- build:client-react -->  
+            <!-- build:client-react -->
             <resource>
               <directory>${project.basedir}/client-react/build</directory>
               <targetPath>react</targetPath>
             </resource>
-          
+
           </webResources>
           <packagingExcludes>WEB-INF/classes/</packagingExcludes>
 
