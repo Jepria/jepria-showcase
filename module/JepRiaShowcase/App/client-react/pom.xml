@@ -47,7 +47,7 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <executable>npm</executable>
+              <executable>yarn</executable>
               <workingDirectory>${project.basedir}</workingDirectory>
               <arguments>install</arguments>
             </configuration>
@@ -60,7 +60,7 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <executable>npm</executable>
+              <executable>yarn</executable>
               <workingDirectory>${project.basedir}</workingDirectory>
               <arguments>
                 <argument>run</argument>
