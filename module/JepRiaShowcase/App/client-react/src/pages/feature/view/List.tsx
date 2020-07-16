@@ -132,6 +132,7 @@ const ListPage = () => {
               </TableBody>
             </Table>
             <JepGridPagingBar
+                currentPage={page}
                 rowCount={pageSize}
                 totalRowCount={searchSize}
                 onRefresh={(pageNumber, pageSize) => {
