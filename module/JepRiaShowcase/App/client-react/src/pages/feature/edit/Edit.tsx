@@ -33,21 +33,27 @@ const EditPage = () => {
     if (featureId) {
       updateFeature(featureId.toString(), data).then(() => {
         history.push(`/${featureId}/detail`);
-      })
+      });
     }
   };
 
   useEffect(() => {
-    getFeature(featureId).then(feature => {
+    getFeature(featureId).then((feature) => {
       setCurrentFeature(feature);
     });
   }, []);
 
   const formik = useFormik<FeatureUpdate>({
     initialValues: {
-      featureName: currentFeature?.featureName ? currentFeature?.featureName : "",
-      featureNameEn: currentFeature?.featureNameEn ? currentFeature?.featureNameEn : "",
-      description: currentFeature?.description ? currentFeature?.description : ""
+      featureName: currentFeature?.featureName
+        ? currentFeature?.featureName
+        : "",
+      featureNameEn: currentFeature?.featureNameEn
+        ? currentFeature?.featureNameEn
+        : "",
+      description: currentFeature?.description
+        ? currentFeature?.description
+        : "",
     },
     onSubmit: (values: FeatureUpdate) => {
       onSubmit(values);
@@ -58,40 +64,54 @@ const EditPage = () => {
   return (
     <>
       <TabPanel>
-        <Tab selected={true}>
-          {t("feature.header")}
-        </Tab>
+        <Tab selected={true}>{t("feature.header")}</Tab>
       </TabPanel>
       <Toolbar>
         <ToolbarButtonCreate onClick={() => history.push(`/create`)} />
-        <ToolbarButtonSave onClick={() => {
-          let button = document.getElementById("edit-submit");
-          if (button) {
-            button.click();
-          }
-        }} />
+        <ToolbarButtonSave
+          onClick={() => {
+            let button = document.getElementById("edit-submit");
+            if (button) {
+              button.click();
+            }
+          }}
+        />
         <ToolbarButtonEdit disabled={true} />
         <ToolbarButtonDelete />
-        <ToolbarButtonView onClick={() => history.push(`/${featureId}/detail`)} />
+        <ToolbarButtonView
+          onClick={() => history.push(`/${featureId}/detail`)}
+        />
         <ToolbarSplitter />
-        <ToolbarButtonBase onClick={() => {
-          let searchId = searchContext?.getSearch();
-          history.push(`/list/${searchId}/?pageSize=25&page=1`)
-        }}>{t("toolbar.list")}</ToolbarButtonBase>
+        <ToolbarButtonBase
+          onClick={() => {
+            let searchId = searchContext?.getSearch();
+            history.push(`/list/${searchId}/?pageSize=25&page=1`);
+          }}
+        >
+          {t("toolbar.list")}
+        </ToolbarButtonBase>
         <ToolbarButtonFind onClick={() => history.push(`/`)} />
-        <ToolbarButtonBase disabled={true}>{t("toolbar.find")}</ToolbarButtonBase>
+        <ToolbarButtonBase disabled={true}>
+          {t("toolbar.find")}
+        </ToolbarButtonBase>
       </Toolbar>
       <Form id="edit-form" onSubmit={formik.handleSubmit}>
         <FormField>
           <Label>{t("feature.fields.featureId")}:</Label>
-          <Label style={{ width: "350px", textAlign: "left" }}>{currentFeature?.featureId}</Label>
+          <Label style={{ width: "350px", textAlign: "left" }}>
+            {currentFeature?.featureId}
+          </Label>
         </FormField>
         <FormField>
           <Label>{t("feature.fields.featureStatus")}:</Label>
-          <Label style={{
-            width: "350px",
-            textAlign: "left"
-          }}>{currentFeature?.featureStatus.name}</Label>
+          <Label
+            style={{
+              width: "350px",
+              textAlign: "left",
+            }}
+          >
+            {currentFeature?.featureStatus?.name}
+          </Label>
         </FormField>
         <FormField>
           <Label>{t("feature.fields.featureName")}:</Label>
@@ -115,10 +135,14 @@ const EditPage = () => {
         </FormField>
         <FormField>
           <Label>{t("feature.fields.dateIns")}:</Label>
-          <Label style={{
-            width: "350px",
-            textAlign: "left"
-          }}>{currentFeature?.dateIns.toString()}</Label>
+          <Label
+            style={{
+              width: "350px",
+              textAlign: "left",
+            }}
+          >
+            {currentFeature?.dateIns.toString() ? new Date(currentFeature?.dateIns.toString()).toLocaleDateString() : ""}
+          </Label>
         </FormField>
         <FormField>
           <Label>{t("feature.fields.description")}:</Label>
@@ -132,14 +156,20 @@ const EditPage = () => {
         </FormField>
         <FormField>
           <Label>{t("feature.fields.author")}:</Label>
-          <Label style={{ width: "350px", textAlign: "left" }}>{currentFeature?.author.name}</Label>
+          <Label style={{ width: "350px", textAlign: "left" }}>
+            {currentFeature?.author?.name}
+          </Label>
         </FormField>
         <FormField>
           <Label>{t("feature.fields.responsible")}:</Label>
-          <Label style={{
-            width: "350px",
-            textAlign: "left"
-          }}>{currentFeature?.responsible.name}</Label>
+          <Label
+            style={{
+              width: "350px",
+              textAlign: "left",
+            }}
+          >
+            {currentFeature?.responsible?.name}
+          </Label>
         </FormField>
         <FormField>
           <Input id="edit-submit" type="submit" hidden={true} />
@@ -147,6 +177,6 @@ const EditPage = () => {
       </Form>
     </>
   );
-}
+};
 
 export default EditPage;
