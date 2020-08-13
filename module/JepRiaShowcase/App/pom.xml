@@ -259,8 +259,10 @@
         <artifactId>truezip-maven-plugin</artifactId>
         <version>1.2</version>
         <executions>
+          
+          <!-- build:gwt -->
           <execution>
-            <id>unpack-nested-projects</id>
+            <id>unpack-nested-project-gwt</id>
             <goals>
               <goal>copy</goal>
             </goals>
@@ -271,6 +273,19 @@
                   <directory>${project.basedir}/gwt/lib/${project.build.gwt.productName}-gwt.war</directory>
                   <outputDirectory>${project.build.directory}/temp-war-gwt</outputDirectory>
                 </fileset>
+              </filesets>
+            </configuration>
+          </execution>
+
+          <!-- build:service-rest -->
+          <execution>
+            <id>unpack-nested-project-service-rest</id>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <phase>prepare-package</phase>
+            <configuration>
+              <filesets>
                 <fileset>
                   <directory>${project.basedir}/service-rest/target/${project.build.serviceRest.productName}.war</directory>
                   <outputDirectory>${project.build.directory}/temp-war-service-rest</outputDirectory>
