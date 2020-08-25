@@ -1,6 +1,7 @@
 package com.technology.jep.jepriashowcase.feature.rest;
 
 import com.technology.jep.jepriashowcase.feature.FeatureServerFactory;
+import com.technology.jep.jepriashowcase.feature.FeatureService;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureCreateDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureSearchDto;
@@ -26,6 +27,8 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
 
   protected final SearchEndpointAdapter searchEndpointAdapter = new SearchEndpointAdapter(() -> FeatureServerFactory.getInstance().getSearchService(() -> request.getSession()));
 
+  protected final FeatureService service = FeatureServerFactory.getInstance().getService();
+
   //------------ application-specific methods ------------//
 
   @POST
@@ -45,7 +48,7 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   @GET
   @Path("/option/feature-status")
   public Response getFeatureStatus() {
-    List<OptionDto<String>> result = FeatureServerFactory.getInstance().getService().getFeatureStatus();
+    List<OptionDto<String>> result = this.service.getFeatureStatus();
     return Response.ok(result).build();
   }
 

@@ -13,6 +13,8 @@ import java.util.function.Supplier;
 
 public class FeatureServerFactory extends ServerFactory<FeatureDao> {
 
+  private static FeatureService service;
+
   private FeatureServerFactory() {
     super(new FeatureDaoImpl(), "jdbc/ITMDS");
   }
@@ -22,7 +24,15 @@ public class FeatureServerFactory extends ServerFactory<FeatureDao> {
   }
 
   public FeatureService getService() {
-    return new FeatureService();
+    if (null != service) {
+      return service;
+    } else {
+      return new FeatureServiceImpl();
+    }
+  }
+
+  public static void setService(FeatureService service) {
+    FeatureServerFactory.service = service;
   }
 
   /**

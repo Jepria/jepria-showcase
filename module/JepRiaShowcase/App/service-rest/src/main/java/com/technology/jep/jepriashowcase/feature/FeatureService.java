@@ -1,21 +1,15 @@
 package com.technology.jep.jepriashowcase.feature;
 
+import java.util.List;
 import org.jepria.server.data.OptionDto;
 import org.jepria.server.service.security.Credential;
 
-import java.util.List;
+public interface FeatureService {
 
-public class FeatureService {
+  public void setFeatureResponsible(Integer featureId, Integer responsibleId, Credential credential);
 
-  public void setFeatureResponsible(Integer featureId, Integer responsibleId, Credential credential) {
-    FeatureServerFactory.getInstance().getDao().setFeatureResponsible(featureId, responsibleId, credential.getOperatorId());
-  }
+  public List<OptionDto<Integer>> getFeatureOperator();
 
-  public List<OptionDto<Integer>> getFeatureOperator() {
-    return FeatureServerFactory.getInstance().getDao().getFeatureOperator();
-  }
+  public List<OptionDto<String>> getFeatureStatus();
 
-  public List<OptionDto<String>> getFeatureStatus() {
-    return FeatureServerFactory.getInstance().getDao().getFeatureStatus();
-  }
 }
