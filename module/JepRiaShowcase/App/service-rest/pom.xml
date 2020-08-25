@@ -177,6 +177,12 @@
       </exclusions>
       <scope>runtime</scope>
     </dependency>
+    <!--Testing-->
+    <dependency>
+      <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+      <artifactId>jersey-test-framework-provider-jetty</artifactId>
+      <version>${jersey.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
