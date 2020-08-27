@@ -2,18 +2,14 @@ package com.technology.jep.jepriashowcase.feature.rest;
 
 import com.technology.jep.jepriashowcase.feature.FeatureServerFactory;
 import com.technology.jep.jepriashowcase.feature.FeatureService;
-import com.technology.jep.jepriashowcase.feature.dto.FeatureCreateDto;
+import com.technology.jep.jepriashowcase.feature.dao.FeatureDao;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
-import com.technology.jep.jepriashowcase.main.rest.jersey.ApplicationConfig;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.glassfish.jersey.client.JerseyWebTarget;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.jepria.server.data.OptionDto;
@@ -23,47 +19,24 @@ import org.jepria.server.service.rest.gson.JsonBindingProvider;
 import org.jepria.server.service.rest.jersey.ApplicationConfigBase.ExceptionMapperDefault;
 import org.jepria.server.service.rest.jersey.ApplicationConfigBase.ExceptionMapperJsonb;
 import org.jepria.server.service.rest.jersey.ApplicationConfigBase.ExceptionMapperUndeclaredThrowable;
-import org.jepria.server.service.rest.jersey.JepSecurityContextBinder;
 import org.jepria.server.service.rest.jersey.validate.ExceptionMapperValidation;
 import org.jepria.server.service.security.Credential;
-import org.jepria.server.service.security.HttpBasicDynamicFeature;
-import org.jepria.server.service.security.JaxrsCorsFilter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@Disabled
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 class FeatureJaxrsAdapterTest extends JerseyTest {
 
-  private static final String ENTITY_URL        = "/feature";
-  private static final String OPERATOR_NAME     = "username";
-  private static final String OPERATOR_PASSWORD = "password";
-
-  private class FeatureServiceImpl implements FeatureService {
-
-    @Override
-    public void setFeatureResponsible(Integer featureId, Integer responsibleId, Credential credential) {
-
-    }
-
-    @Override
-    public List<OptionDto<Integer>> getFeatureOperator() {
-      return null;
-    }
-
-    @Override
-    public List<OptionDto<String>> getFeatureStatus() {
-      OptionDto<String> optionDto = new OptionDto<String>();
-      optionDto.setName("NAme");
-      optionDto.setValue("value");
-      List<OptionDto<String>> options = new ArrayList<>();
-      options.add(optionDto);
-      return options;
-    }
-
-  }
+  @Mock
+  FeatureService service;
 
   @Override
   protected Application configure() {
@@ -74,17 +47,17 @@ class FeatureJaxrsAdapterTest extends JerseyTest {
     ResourceConfig config = new ResourceConfig(FeatureJaxrsAdapter.class);
 
     config.register(JsonBindingProvider.class);
-    config.register(HttpBasicDynamicFeature.class);
-    config.register(RolesAllowedDynamicFeature.class);
-    config.register(JepSecurityContextBinder.class);
+//    config.register(HttpBasicDynamicFeature.class);
+//    config.register(RolesAllowedDynamicFeature.class);
+//    config.register(JepSecurityContextBinder.class);
     config.register(XCacheControlFilter.class);
     config.register(ExceptionMapperJsonb.class);
     config.register(ExceptionMapperUndeclaredThrowable.class);
     config.register(ExceptionMapperDefault.class);
     config.register(MetaInfoResource.class);
     config.register(ExceptionMapperValidation.class);
-    config.register(JaxrsCorsFilter.class);
-    return new ResourceConfig(FeatureJaxrsAdapter.class);
+//    config.register(JaxrsCorsFilter.class);
+    return config;
   }
 
   @BeforeEach
@@ -104,24 +77,58 @@ class FeatureJaxrsAdapterTest extends JerseyTest {
 
   @Test
   void getFeatureOperator() {
+    List<OptionDto<Integer>> expectedOptions = new ArrayList<>();
+    OptionDto<Integer> optionDto = new OptionDto<>();
+    optionDto.setValue(12);
+    optionDto.setName("Name");
+    expectedOptions.add(optionDto);
+
+    when(service.getFeatureOperator()).thenReturn(expectedOptions);
+
+    FeatureServerFactory.setService(this.service);
+
+    Response response = target("/feature/option/feature-operator").request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    String respStr = response.readEntity(String.class);
+    Assertions.assertEquals(200, response.getStatus(), "should return 200");
   }
 
   @Test
   void getFeatureStatus() {
+    List<OptionDto<String>> expectedOptions = new ArrayList<>();
+    OptionDto<String>       optionDto       = new OptionDto<>();
+    optionDto.setValue("Value");
+    optionDto.setName("Name");
+    expectedOptions.add(optionDto);
 
-    FeatureServiceImpl service = new FeatureServiceImpl();
+    when(service.getFeatureStatus()).thenReturn(expectedOptions);
 
-    FeatureServerFactory.setService(service);
+    FeatureServerFactory.setService(this.service);
 
-    Response response = target("/feature/option/feature-status").request().get();
+    Response response = target("/feature/option/feature-status").request(MediaType.APPLICATION_JSON_TYPE).get();
 
+    String respStr = response.readEntity(String.class);
     Assertions.assertEquals(200, response.getStatus(), "should return 200");
   }
 
+  @Disabled
   @Test
   void getRecordById() {
-    Response response = target("/feature/1").request().get();
+
+    FeatureDto expectedDto = new FeatureDto();
+
+    expectedDto.setFeatureName("FeatureName");
+    expectedDto.setFeatureNameEn("FeatureNameEn");
+    expectedDto.setDescription("Description");
+
+    FeatureServerFactory.setService(this.service);
+
+    Response response = target("/feature/11").request(MediaType.APPLICATION_JSON_TYPE).get();
     Assertions.assertEquals(200, response.getStatus(), "should return 200");
+
+    FeatureDto dto = response.readEntity(FeatureDto.class);
+
+
   }
 
   @Test
