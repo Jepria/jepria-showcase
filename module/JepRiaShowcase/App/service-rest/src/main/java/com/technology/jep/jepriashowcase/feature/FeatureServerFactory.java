@@ -27,7 +27,7 @@ public class FeatureServerFactory extends ServerFactory<FeatureDao> {
     if (null != service) {
       return service;
     } else {
-      return new FeatureServiceImpl();
+      return new FeatureServiceImpl(getDao());
     }
   }
 
