@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Form } from "jfront-components";
-import { FormField } from "jfront-components";
-import Label from "../../../components/label";
+import { Form } from "@jfront/ui-core";
+import { FormField } from "@jfront/ui-core";
+import { Label } from "@jfront/ui-label";
 import { deleteFeature, getFeature } from "../../../api/feature/FeatureApi";
 import { Feature } from "../../../api/feature/FeatureInterface";
 import { useHistory, useParams } from "react-router-dom";
@@ -15,8 +15,8 @@ import {
   ToolbarButtonSave,
   ToolbarButtonView,
   ToolbarSplitter,
-} from "jfront-components";
-import { Tab, TabPanel } from "jfront-components";
+} from "@jfront/ui-core";
+import { Tab, TabPanel } from "@jfront/ui-core";
 import { SearchContext } from "../../../context";
 import { useTranslation } from "react-i18next";
 
@@ -63,7 +63,7 @@ const DetailPage = () => {
           onClick={() => {
             if (featureId) {
               deleteFeature(featureId).then(() => {
-                let searchId = searchContext?.getSearch();
+                let searchId = searchContext?.getId();
                 if (searchId) {
                   history.push(`/list/${searchId}/?pageSize=25&page=1`);
                 } else {
@@ -77,7 +77,7 @@ const DetailPage = () => {
         <ToolbarSplitter />
         <ToolbarButtonBase
           onClick={() => {
-            let searchId = searchContext?.getSearch();
+            let searchId = searchContext?.getId();
             if (searchId) {
               history.push(`/list/${searchId}/?pageSize=25&page=1`);
             } else {
@@ -88,16 +88,12 @@ const DetailPage = () => {
           {t("toolbar.list")}
         </ToolbarButtonBase>
         <ToolbarButtonFind onClick={() => history.push(`/`)} />
-        <ToolbarButtonBase disabled={true}>
-          {t("toolbar.find")}
-        </ToolbarButtonBase>
+        <ToolbarButtonBase disabled={true}>{t("toolbar.find")}</ToolbarButtonBase>
       </Toolbar>
       <Form>
         <FormField>
           <Label>{t("feature.fields.featureId")}:</Label>
-          <Label style={{ width: "350px", textAlign: "left" }}>
-            {currentFeature?.featureId}
-          </Label>
+          <Label style={{ width: "350px", textAlign: "left" }}>{currentFeature?.featureId}</Label>
         </FormField>
         <FormField>
           <Label>{t("feature.fields.featureStatus")}:</Label>
@@ -112,9 +108,7 @@ const DetailPage = () => {
         </FormField>
         <FormField>
           <Label>{t("feature.fields.featureName")}:</Label>
-          <Label style={{ width: "350px", textAlign: "left" }}>
-            {currentFeature?.featureName}
-          </Label>
+          <Label style={{ width: "350px", textAlign: "left" }}>{currentFeature?.featureName}</Label>
         </FormField>
         <FormField>
           <Label>{t("feature.fields.featureNameEn")}:</Label>
@@ -125,14 +119,14 @@ const DetailPage = () => {
         <FormField>
           <Label>{t("feature.fields.dateIns")}:</Label>
           <Label style={{ width: "350px", textAlign: "left" }}>
-            {currentFeature?.dateIns.toString() ? new Date(currentFeature?.dateIns.toString()).toLocaleDateString() : ""}
+            {currentFeature?.dateIns.toString()
+              ? new Date(currentFeature?.dateIns.toString()).toLocaleDateString()
+              : ""}
           </Label>
         </FormField>
         <FormField>
           <Label>{t("feature.fields.description")}:</Label>
-          <Label style={{ width: "350px", textAlign: "left" }}>
-            {currentFeature?.description}
-          </Label>
+          <Label style={{ width: "350px", textAlign: "left" }}>{currentFeature?.description}</Label>
         </FormField>
         <FormField>
           <Label>{t("feature.fields.author")}:</Label>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Tab, TabPanel} from "jfront-components";
+import {Tab, TabPanel} from "@jfront/ui-core";
 import {
   Toolbar,
   ToolbarButtonBase,
@@ -10,19 +10,20 @@ import {
   ToolbarButtonSave,
   ToolbarButtonView,
   ToolbarSplitter
-} from "jfront-components";
+} from "@jfront/ui-core";
+import { ComboBox, ComboBoxItem } from "@jfront/ui-core";
 import {useHistory, useParams} from "react-router-dom";
 import {
   FeatureProcessCreate,
   FeatureStatusOptions
 } from "../../../api/feature-process/FeatureProcessInterface";
-import {Form} from "jfront-components";
-import {FormField} from "jfront-components";
+import {Form} from "@jfront/ui-core";
+import {FormField} from "@jfront/ui-core";
 import {
   createFeatureProcess,
   getFeatureStatusOptions
 } from "../../../api/feature-process/FeatureProcessApi";
-import Label from "../../../components/label";
+import { Label } from "@jfront/ui-label";
 import {useFormik} from "formik";
 import {useTranslation} from "react-i18next";
 
@@ -97,6 +98,22 @@ const FeatureProcessCreatePage = () => {
                 return <option key={option.value} value={option.value}>{option.name}</option>
               }) : null}
             </select>
+            {/* <ComboBox 
+              name="featureStatusCode" 
+              // value={formik.values.featureStatusCode}
+              onChangeValue={
+                (name, value) => {
+                  console.log("name = " + name)
+                  console.log("value = " + value)
+                  // formik.setFieldValue("featureStatusCode", event.target.value)
+                }
+              }
+            >
+              <ComboBoxItem value={undefined} label=""/>
+              {statusOptions ? statusOptions.map(option => {
+                return <ComboBoxItem key={option.value} value={option.value} label={option.name} />
+              }) : null}
+            </ComboBox> */}
           </FormField>
           <FormField>
             <input type="submit" id="feature-process-save" hidden={true}/>

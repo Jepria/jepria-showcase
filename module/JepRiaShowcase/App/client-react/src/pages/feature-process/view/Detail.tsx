@@ -5,7 +5,7 @@ import {
   deleteFeatureProcess,
   getFeatureProcess
 } from "../../../api/feature-process/FeatureProcessApi";
-import {Tab, TabPanel} from "jfront-components";
+import {Tab, TabPanel} from "@jfront/ui-core";
 import {
   Toolbar,
   ToolbarButtonBase,
@@ -14,10 +14,10 @@ import {
   ToolbarButtonFind,
   ToolbarButtonView,
   ToolbarSplitter
-} from "jfront-components";
-import {Form} from "jfront-components";
-import {FormField} from "jfront-components";
-import Label from "../../../components/label";
+} from "@jfront/ui-core";
+import {Form} from "@jfront/ui-core";
+import {FormField} from "@jfront/ui-core";
+import { Label } from "@jfront/ui-label";
 import {useTranslation} from "react-i18next";
 
 const FeatureProcessDetailPage = () => {

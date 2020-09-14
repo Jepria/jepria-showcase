@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Toolbar,
   ToolbarButtonBase,
@@ -8,32 +8,33 @@ import {
   ToolbarButtonFind,
   ToolbarButtonSave,
   ToolbarButtonView,
-  ToolbarSplitter
-} from "jfront-components";
-import {useHistory} from "react-router-dom";
-import {Form} from "jfront-components";
-import {FormField} from "jfront-components";
-import Label from "../../../components/label";
-import Input from "../../../components/input";
-import {getResultSetSize, postSearchRequest} from "../../../api/feature/FeatureApi";
-import {SearchRequest} from "../../../api/types";
-import {FeatureSearchTemplate} from "../../../api/feature/FeatureInterface";
-import {Tab, TabPanel} from "jfront-components";
-import {SearchContext} from "../../../context";
-import {FeatureStatusOptions} from "../../../api/feature-process/FeatureProcessInterface";
-import {getFeatureStatusOptions} from "../../../api/feature-process/FeatureProcessApi";
-import {useFormik} from "formik";
-import {DatePicker} from "jfront-components";
-import {useTranslation} from "react-i18next";
+  ToolbarSplitter,
+} from "@jfront/ui-core";
+import { useHistory } from "react-router-dom";
+import { Form } from "@jfront/ui-core";
+import { FormField } from "@jfront/ui-core";
+import { Label } from "@jfront/ui-label";
+import { FeatureSearchTemplate } from "../../../api/feature/FeatureInterface";
+import { Tab, TabPanel } from "@jfront/ui-core";
+import { SearchContext } from "../../../context";
+import { FeatureStatusOptions } from "../../../api/feature-process/FeatureProcessInterface";
+import { getFeatureStatusOptions } from "../../../api/feature-process/FeatureProcessApi";
+import { useFormik } from "formik";
+import { DatePicker } from "@jfront/ui-core";
+import { useTranslation } from "react-i18next";
+import { CheckBoxGroup } from "@jfront/ui-core";
+import { CheckBox } from "@jfront/ui-core";
+import queryString from "query-string";
+import { TextInput } from "@jfront/ui-core";
 
 const SearchPage = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const history = useHistory();
   const searchContext = useContext(SearchContext);
   let [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const onSubmit = (data: FeatureSearchTemplate) => {
-
     if (!data.featureId) {
       data.featureId = undefined;
     }
@@ -44,115 +45,138 @@ const SearchPage = () => {
       data.dateInsTo = undefined;
     }
 
-    let searchRequest: SearchRequest<FeatureSearchTemplate> = {template: data};
-
-    postSearchRequest(searchRequest).then((searchId) => {
-      getResultSetSize(searchId).then(resultSize => {
-        if (resultSize > 0) {
-          searchContext?.setSearch(searchId);
-          history.push(`/list/${searchId}/?pageSize=25&page=1`)
-        } else {
-          alert("Search empty!")
-        }
-      });
-    });
-
+    console.log("queryString.stringify(data):");
+    console.log(queryString.stringify(data));
+    let query = queryString.stringify(data);
+    if (query) {
+      query = "&" + query;
+    }
+    history.push(`/list/?pageSize=25&page=1${query}`);
   };
 
   useEffect(() => {
     getFeatureStatusOptions().then((options) => {
       setStatusOptions(options);
+      setIsLoading(false);
     });
-  }, [])
+  }, []);
 
   const formik = useFormik<FeatureSearchTemplate>({
-    initialValues: {},
+    initialValues: searchContext.getTemplate(),
     onSubmit: (values: FeatureSearchTemplate) => {
       onSubmit(values);
-    }
+    },
   });
 
   return (
-      <>
-        <TabPanel>
-          <Tab selected={true}>
-            {t("feature.header")}
-          </Tab>
-        </TabPanel>
-        <Toolbar>
-          <ToolbarButtonCreate onClick={() => history.push(`/create`)}/>
-          <ToolbarButtonSave disabled={true}/>
-          <ToolbarButtonEdit disabled={true}/>
-          <ToolbarButtonDelete disabled={true}/>
-          <ToolbarButtonView disabled={true}/>
-          <ToolbarSplitter/>
-          <ToolbarButtonBase disabled={!searchContext?.getSearch()} onClick={() => {
-            let searchId = searchContext?.getSearch();
+    <>
+      <TabPanel>
+        <Tab selected={true}>{t("feature.header")}</Tab>
+      </TabPanel>
+      <Toolbar>
+        <ToolbarButtonCreate onClick={() => history.push(`/create`)} />
+        <ToolbarButtonSave disabled={true} />
+        <ToolbarButtonEdit disabled={true} />
+        <ToolbarButtonDelete disabled={true} />
+        <ToolbarButtonView disabled={true} />
+        <ToolbarSplitter />
+        <ToolbarButtonBase //TODO: think about code bellow
+          disabled={!searchContext?.getId()}
+          onClick={() => {
+            let searchId = searchContext?.getId();
             if (searchId) {
-              history.push(`/list/${searchId}/?pageSize=25&page=1`)
+              history.push(`/list/${searchId}/?pageSize=25&page=1`);
             }
-          }}>{t("toolbar.list")}</ToolbarButtonBase>
-          <ToolbarButtonFind disabled={true}/>
-          <ToolbarButtonBase onClick={() => {
+          }}
+        >
+          {t("toolbar.list")}
+        </ToolbarButtonBase>
+        <ToolbarButtonFind disabled={true} />
+        <ToolbarButtonBase
+          onClick={() => {
             let button = document.getElementById("search-submit");
             if (button) {
               button.click();
             }
-          }}>{t("toolbar.find")}</ToolbarButtonBase>
-        </Toolbar>
-        <Form onSubmit={formik.handleSubmit}>
-          <FormField>
-            <Label>{t("feature.fields.featureId")}:</Label>
-            <Input name="featureId" value={formik.values.featureId} onChange={formik.handleChange}
-                   type="number" autoComplete="off"/>
-          </FormField>
-          <FormField>
-            <Label>{t("feature.fields.featureNameTemplate")}:</Label>
-            <Input name="featureNameTemplate" value={formik.values.featureNameTemplate}
-                   onChange={formik.handleChange} autoComplete="off"
-            />
-          </FormField>
-          <FormField>
-            <Label>{t("feature.fields.featureNameEnTemplate")}:</Label>
-            <Input name="featureNameEnTemplate" value={formik.values.featureNameEnTemplate}
-                   onChange={formik.handleChange} autoComplete="off"/>
-          </FormField>
-          <FormField>
-            <Label>{t("feature.fields.dateInsFrom")}:</Label>
-            <DatePicker
-                name="dateInsFrom"
-                selected={formik.values.dateInsFrom}
-                onChange={(date) => {
-                  formik.setFieldValue("dateInsFrom", date)
-                }}
-            />
-          </FormField>
-          <FormField>
-            <Label>{t("feature.fields.dateInsTo")}:</Label>
-            <DatePicker
-                name="dateInsTo"
-                selected={formik.values.dateInsTo}
-                onChange={(date) => {
-                  formik.setFieldValue("dateInsTo", date)
-                }}
-            />
-          </FormField>
-          <FormField>
-            <Label>{t("feature.fields.statusCodeList")}</Label>
-            <select name="statusCodeList" value={formik.values.statusCodeList}
-                    onChange={formik.handleChange} multiple={true}>
-              <option value={undefined}></option>
-              {statusOptions ? statusOptions.map(option => {
-                return <option key={option.value} value={option.value}>{option.name}</option>
-              }) : null}
-            </select>
-          </FormField>
-          <FormField>
-            <Input id="search-submit" type="submit" hidden={true}/>
-          </FormField>
-        </Form>
-      </>
+          }}
+        >
+          {t("toolbar.find")}
+        </ToolbarButtonBase>
+      </Toolbar>
+      <Form onSubmit={formik.handleSubmit}>
+        <FormField style={{ display: "inline-block" }}>
+          <Label>{t("feature.fields.featureId")}:</Label>
+          <TextInput
+            name="featureId"
+            value={formik.values.featureId}
+            onChange={formik.handleChange}
+            type="number"
+            autoComplete="off"
+          />
+        </FormField>
+        <FormField>
+          <Label>{t("feature.fields.featureNameTemplate")}:</Label>
+          <TextInput
+            name="featureNameTemplate"
+            value={formik.values.featureNameTemplate}
+            onChange={formik.handleChange}
+            autoComplete="off"
+          />
+        </FormField>
+        <FormField>
+          <Label>{t("feature.fields.featureNameEnTemplate")}:</Label>
+          <TextInput
+            name="featureNameEnTemplate"
+            value={formik.values.featureNameEnTemplate}
+            onChange={formik.handleChange}
+            autoComplete="off"
+          />
+        </FormField>
+        <FormField>
+          <DatePicker
+            name="dateInsFrom"
+            label={t("feature.fields.dateInsFrom")}
+            selected={formik.values.dateInsFrom}
+            onChange={(date) => {
+              formik.setFieldValue("dateInsFrom", date);
+            }}
+          />
+        </FormField>
+        <FormField>
+          <DatePicker
+            name="dateInsTo"
+            label={t("feature.fields.dateInsTo")}
+            selected={formik.values.dateInsTo}
+            onChange={(date) => {
+              formik.setFieldValue("dateInsTo", date);
+            }}
+          />
+        </FormField>
+        <FormField>
+          <CheckBoxGroup
+            name="statusCodeList"
+            text={t("feature.fields.statusCodeList")}
+            values={formik.values.statusCodeList ? formik.values.statusCodeList : []}
+            style={{ width: "142px" }}
+            onChange={(name, newValue) => {
+              console.log(newValue);
+              formik.setFieldValue("statusCodeList", newValue);
+            }}
+            isLoading={isLoading}
+          >
+            {statusOptions
+              ? statusOptions.map((option) => {
+                  return <CheckBox value={option.value} label={option.name} />;
+                })
+              : null}
+          </CheckBoxGroup>
+        </FormField>
+        <FormField>
+          <input id="search-submit" type="submit" hidden={true} />
+        </FormField>
+      </Form>
+    </>
   );
-}
+};
 
 export default SearchPage;
