@@ -1,54 +1,66 @@
 package com.technology.jep.jepriashowcase.feature.rest;
 
 import com.technology.jep.jepriashowcase.feature.FeatureServerFactory;
+import com.technology.jep.jepriashowcase.feature.FeatureServerFactoryImpl;
 import com.technology.jep.jepriashowcase.feature.FeatureService;
+import com.technology.jep.jepriashowcase.feature.FeatureServiceImpl;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureCreateDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureSearchDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureUpdateDto;
+import java.util.List;
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.validation.constraints.Pattern;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 import org.jepria.server.data.OptionDto;
 import org.jepria.server.data.SearchRequestDto;
 import org.jepria.server.service.rest.ExtendedResponse;
 import org.jepria.server.service.rest.JaxrsAdapterBase;
 import org.jepria.server.service.security.HttpBasic;
 
-import javax.annotation.security.RolesAllowed;
-import javax.validation.constraints.Pattern;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
-import java.util.List;
-
 @Path("/feature")
 @HttpBasic(passwordType = HttpBasic.PASSWORD)
 @RolesAllowed({"JrsEditFeature", "JrsAssignResponsibleFeature", "JrsEditAllFeature"})
 public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
 
-  protected final EntityEndpointAdapter entityEndpointAdapter = new EntityEndpointAdapter(() -> FeatureServerFactory.getInstance().getEntityService());
+  @Inject
+  protected FeatureServerFactoryImpl serverFactory;
 
-  protected final SearchEndpointAdapter searchEndpointAdapter = new SearchEndpointAdapter(() -> FeatureServerFactory.getInstance().getSearchService(() -> request.getSession()));
+  protected final EntityEndpointAdapter entityEndpointAdapter = new EntityEndpointAdapter(() -> serverFactory.getEntityService());
 
-  protected final FeatureService service = FeatureServerFactory.getInstance().getService();
+  protected final SearchEndpointAdapter searchEndpointAdapter = new SearchEndpointAdapter(() -> serverFactory.getSearchService(() -> request.getSession()));
 
-  //------------ application-specific methods ------------//
+  protected FeatureService service;
+
+//------------ application-specific methods ------------//
 
   @POST
   @Path("/{featureId}/set-feature-responsible")
   public Response setFeatureResponsible(@PathParam("featureId") Integer featureId, @QueryParam("responsibleId") Integer responsibleId) {
-    FeatureServerFactory.getInstance().getService().setFeatureResponsible(featureId, responsibleId, securityContext.getCredential());
+    serverFactory.getService().setFeatureResponsible(featureId, responsibleId, securityContext.getCredential());
     return Response.ok().build();
   }
 
   @GET
   @Path("/option/feature-operator")
   public Response getFeatureOperator() {
-    List<OptionDto<Integer>> result = FeatureServerFactory.getInstance().getService().getFeatureOperator();
+    List<OptionDto<Integer>> result = serverFactory.getService().getFeatureOperator();
     return Response.ok(result).build();
   }
 
   @GET
   @Path("/option/feature-status")
   public Response getFeatureStatus() {
-    List<OptionDto<String>> result = this.service.getFeatureStatus();
+    List<OptionDto<String>> result = serverFactory.getService().getFeatureStatus();
     return Response.ok(result).build();
   }
 
@@ -85,24 +97,24 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   @POST
   @Path("/search")
   public Response postSearch(SearchRequestDto<FeatureSearchDto> searchRequestDto,
-                             @Pattern(regexp = "(resultset/paged-by-\\d+/\\d+)|(resultset\\?pageSize\\d+&page=\\d+)|(resultset\\?page=\\d+&pageSize=\\d+)", message = "Bad Extended-Response header value")
-                             @HeaderParam(ExtendedResponse.REQUEST_HEADER_NAME) String extendedResponse,
-                             @HeaderParam("Cache-Control") String cacheControl) {
+      @Pattern(regexp = "(resultset/paged-by-\\d+/\\d+)|(resultset\\?pageSize\\d+&page=\\d+)|(resultset\\?page=\\d+&pageSize=\\d+)", message = "Bad Extended-Response header value")
+      @HeaderParam(ExtendedResponse.REQUEST_HEADER_NAME) String extendedResponse,
+      @HeaderParam("Cache-Control") String cacheControl) {
     return searchEndpointAdapter.postSearch(searchRequestDto, extendedResponse, cacheControl);
   }
 
   @GET
   @Path("/search/{searchId}")
   public Response getSearchRequest(
-          @PathParam("searchId") String searchId) {
-    SearchRequestDto<FeatureSearchDto> result = (SearchRequestDto<FeatureSearchDto>)searchEndpointAdapter.getSearchRequest(searchId);
+      @PathParam("searchId") String searchId) {
+    SearchRequestDto<FeatureSearchDto> result = (SearchRequestDto<FeatureSearchDto>) searchEndpointAdapter.getSearchRequest(searchId);
     return Response.ok(result).build();
   }
 
   @GET
   @Path("/search/{searchId}/resultset-size")
   public Response getSearchResultsetSize(@PathParam("searchId") String searchId,
-                                         @HeaderParam("Cache-Control") String cacheControl) {
+      @HeaderParam("Cache-Control") String cacheControl) {
     int result = searchEndpointAdapter.getSearchResultsetSize(searchId, cacheControl);
     return Response.ok(result).build();
   }
@@ -110,22 +122,22 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   @GET
   @Path("/search/{searchId}/resultset")
   public Response getResultset(
-          @PathParam("searchId") String searchId,
-          @QueryParam("pageSize") Integer pageSize,
-          @QueryParam("page") Integer page,
-          @HeaderParam("Cache-Control") String cacheControl) {
-    List<FeatureDto> result = (List<FeatureDto>)searchEndpointAdapter.getResultset(searchId, pageSize, page, cacheControl);
+      @PathParam("searchId") String searchId,
+      @QueryParam("pageSize") Integer pageSize,
+      @QueryParam("page") Integer page,
+      @HeaderParam("Cache-Control") String cacheControl) {
+    List<FeatureDto> result = (List<FeatureDto>) searchEndpointAdapter.getResultset(searchId, pageSize, page, cacheControl);
     return result == null ? Response.noContent().build() : Response.ok(result).build();
   }
 
   @GET
   @Path("/search/{searchId}/resultset/paged-by-{pageSize:\\d+}/{page}")
   public Response getResultsetPaged(
-          @PathParam("searchId") String searchId,
-          @PathParam("pageSize") Integer pageSize,
-          @PathParam("page") Integer page,
-          @HeaderParam("Cache-Control") String cacheControl) {
-    List<FeatureDto> result = (List<FeatureDto>)searchEndpointAdapter.getResultsetPaged(searchId, pageSize, page, cacheControl);
+      @PathParam("searchId") String searchId,
+      @PathParam("pageSize") Integer pageSize,
+      @PathParam("page") Integer page,
+      @HeaderParam("Cache-Control") String cacheControl) {
+    List<FeatureDto> result = (List<FeatureDto>) searchEndpointAdapter.getResultsetPaged(searchId, pageSize, page, cacheControl);
     return result == null ? Response.noContent().build() : Response.ok(result).build();
   }
 }

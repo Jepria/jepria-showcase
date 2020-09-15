@@ -5,6 +5,7 @@ import com.technology.jep.jepriashowcase.feature.dto.FeatureCreateDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureSearchDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureUpdateDto;
+import javax.ws.rs.Produces;
 import org.jepria.compat.server.dao.ResultSetMapper;
 import org.jepria.server.data.DaoSupport;
 import org.jepria.server.data.DtoUtil;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+@Produces
 public class FeatureDaoImpl implements FeatureDao {
 
 

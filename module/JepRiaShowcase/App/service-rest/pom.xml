@@ -185,17 +185,24 @@
       <version>${jersey.version}</version>
     </dependency>
 
-    <dependency>
+    <!--<dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>3.3.3</version>
+      <version>3.5.7</version>
+      <scope>test</scope>
+    </dependency>-->
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-inline</artifactId>
+      <version>3.5.7</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
-      <version>3.3.3</version>
+      <version>3.5.7</version>
       <scope>test</scope>
     </dependency>
 
@@ -399,9 +406,9 @@
         <version>2.2</version>
         <configuration>
           <update>true</update>
-          <url>http://vsmlapprfid1:8080/manager/text</url>
+          <url>http://localhost:8080/manager/text</url>
           <username>admin</username>
-          <password>admin0</password>
+          <password>admin</password>
           <failOnError>true</failOnError>
           <path>/jepriashowcase-service-rest</path>
         </configuration>

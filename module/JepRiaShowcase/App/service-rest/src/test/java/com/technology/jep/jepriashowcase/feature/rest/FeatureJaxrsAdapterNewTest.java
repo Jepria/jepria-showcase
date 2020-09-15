@@ -1,15 +1,12 @@
 package com.technology.jep.jepriashowcase.feature.rest;
 
-import com.technology.jep.jepriashowcase.feature.FeatureServerFactoryImpl;
-import com.technology.jep.jepriashowcase.feature.FeatureServiceImpl;
-import com.technology.jep.jepriashowcase.feature.dao.FeatureDaoImpl;
+import com.technology.jep.jepriashowcase.feature.FeatureService;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -27,24 +24,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 @Disabled
 @ExtendWith(MockitoExtension.class)
-class FeatureJaxrsAdapterTest extends JerseyTest {
+class FeatureJaxrsAdapterNewTest extends JerseyTest {
+
+  @Mock
+  FeatureService service;
 
 //  @Mock
-//  FeatureServiceImpl service;
+//  FeatureServiceFactory factory;
 
   @Override
   protected Application configure() {
@@ -53,27 +46,6 @@ class FeatureJaxrsAdapterTest extends JerseyTest {
 //    ApplicationConfig config = new ApplicationConfig();
 //    return config;
     ResourceConfig config = new ResourceConfig(FeatureJaxrsAdapter.class);
-
-    config.register(new AbstractBinder() {
-      @Override
-      protected void configure() {
-        bind(FeatureDaoImpl.class).to(FeatureDaoImpl.class);
-      }
-    });
-
-    config.register(new AbstractBinder() {
-      @Override
-      protected void configure() {
-        bind(FeatureServerFactoryImpl.class).to(FeatureServerFactoryImpl.class);
-      }
-    });
-
-    config.register(new AbstractBinder() {
-      @Override
-      protected void configure() {
-        bindAsContract(TestInjectImpl.class);
-      }
-    });
 
     config.register(JsonBindingProvider.class);
 //    config.register(HttpBasicDynamicFeature.class);
@@ -108,40 +80,21 @@ class FeatureJaxrsAdapterTest extends JerseyTest {
   @Test
   void getFeatureOperator() {
     List<OptionDto<Integer>> expectedOptions = new ArrayList<>();
-    OptionDto<Integer>       optionDto       = new OptionDto<>();
+    OptionDto<Integer> optionDto = new OptionDto<>();
     optionDto.setValue(12);
     optionDto.setName("Name");
     expectedOptions.add(optionDto);
 
+    when(service.getFeatureOperator()).thenReturn(expectedOptions);
 
-//    when(service.getFeatureOperator()).thenReturn(expectedOptions);
+//    when(factory.getService()).thenReturn(service);
 
-    try (MockedStatic factory = mockStatic(FeatureServerFactoryImpl.class)) {
-      factory.when(FeatureServerFactoryImpl::test).thenReturn("bar");
-      System.out.println(FeatureServerFactoryImpl.test());
-      Response response = target("/feature/option/feature-operator").request(MediaType.APPLICATION_JSON_TYPE).get();
-
-      String respStr = response.readEntity(String.class);
-      Assertions.assertEquals(200, response.getStatus(), "should return 200");
-    }
-
-  }
-
-  @Disabled
-  @Test
-  void getFeatureOperator2() {
-    List<OptionDto<Integer>> expectedOptions = new ArrayList<>();
-    OptionDto<Integer>       optionDto       = new OptionDto<>();
-    optionDto.setValue(12);
-    optionDto.setName("Name");
-    expectedOptions.add(optionDto);
-
-//    FeatureServiceImpl mockService = Mockito.mock(FeatureServiceImpl.class);
-//    when(service.getFeatureOperator()).thenReturn(expectedOptions);
+//    FeatureServerFactory.setService(this.service);
 
     Response response = target("/feature/option/feature-operator").request(MediaType.APPLICATION_JSON_TYPE).get();
-    String   respStr  = response.readEntity(String.class);
 
+    String respStr = response.readEntity(String.class);
+    Assertions.assertEquals(200, response.getStatus(), "should return 200");
   }
 
   @Disabled
@@ -153,7 +106,7 @@ class FeatureJaxrsAdapterTest extends JerseyTest {
     optionDto.setName("Name");
     expectedOptions.add(optionDto);
 
-//    when(service.getFeatureStatus()).thenReturn(expectedOptions);
+    when(service.getFeatureStatus()).thenReturn(expectedOptions);
 
 
     Response response = target("/feature/option/feature-status").request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -171,8 +124,6 @@ class FeatureJaxrsAdapterTest extends JerseyTest {
     expectedDto.setFeatureName("FeatureName");
     expectedDto.setFeatureNameEn("FeatureNameEn");
     expectedDto.setDescription("Description");
-
-//    FeatureServerFactory.setService(this.service);
 
     Response response = target("/feature/11").request(MediaType.APPLICATION_JSON_TYPE).get();
     Assertions.assertEquals(200, response.getStatus(), "should return 200");
