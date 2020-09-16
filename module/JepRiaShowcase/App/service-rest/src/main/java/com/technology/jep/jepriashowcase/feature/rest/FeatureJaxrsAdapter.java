@@ -89,9 +89,9 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   @POST
   @Path("/search")
   public Response postSearch(SearchRequestDto<FeatureSearchDto> searchRequestDto,
-      @Pattern(regexp = "(resultset/paged-by-\\d+/\\d+)|(resultset\\?pageSize\\d+&page=\\d+)|(resultset\\?page=\\d+&pageSize=\\d+)", message = "Bad Extended-Response header value")
-      @HeaderParam(ExtendedResponse.REQUEST_HEADER_NAME) String extendedResponse,
-      @HeaderParam("Cache-Control") String cacheControl) {
+                             @Pattern(regexp = "(resultset/paged-by-\\d+/\\d+)|(resultset\\?pageSize\\d+&page=\\d+)|(resultset\\?page=\\d+&pageSize=\\d+)", message = "Bad Extended-Response header value")
+                             @HeaderParam(ExtendedResponse.REQUEST_HEADER_NAME) String extendedResponse,
+                             @HeaderParam("Cache-Control") String cacheControl) {
     return searchEndpointAdapter.postSearch(searchRequestDto, extendedResponse, cacheControl);
   }
 
@@ -106,7 +106,7 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   @GET
   @Path("/search/{searchId}/resultset-size")
   public Response getSearchResultsetSize(@PathParam("searchId") String searchId,
-      @HeaderParam("Cache-Control") String cacheControl) {
+                                         @HeaderParam("Cache-Control") String cacheControl) {
     int result = searchEndpointAdapter.getSearchResultsetSize(searchId, cacheControl);
     return Response.ok(result).build();
   }
