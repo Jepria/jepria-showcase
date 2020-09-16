@@ -1,16 +1,13 @@
 package com.technology.jep.jepriashowcase.feature;
 
 import com.technology.jep.jepriashowcase.feature.dao.FeatureDao;
-import com.technology.jep.jepriashowcase.feature.dao.FeatureDaoImpl;
-import javax.inject.Inject;
-import javax.ws.rs.Produces;
-import org.jepria.compat.server.dao.transaction.TransactionFactory;
 import org.jepria.server.ServerFactory;
 import org.jepria.server.service.rest.EntityService;
 import org.jepria.server.service.rest.EntityServiceImpl;
 import org.jepria.server.service.rest.SearchService;
 import org.jepria.server.service.rest.SearchServiceImpl;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import java.util.function.Supplier;
 
@@ -22,27 +19,16 @@ public class FeatureServerFactoryImpl extends ServerFactory<FeatureDao> implemen
 
   private static FeatureServerFactoryImpl instance;
 
-  FeatureDaoImpl _dao;
+  FeatureDao _dao;
 
   private FeatureDao proxyDao;
   private String dataSourceJndiName = "jdbc/ITMDS";
   private String moduleName;
 
   @Inject
-  public FeatureServerFactoryImpl(FeatureDaoImpl dao) {
+  public FeatureServerFactoryImpl(FeatureDao dao) {
     super(dao, "jdbc/ITMDS");
     _dao = dao;
-  }
-
-//  public static FeatureServerFactory getInstance() {
-//    if (null == instance) {
-//      instance = new FeatureServerFactoryImpl();
-//    }
-//    return instance;
-//  }
-
-  public static String test() {
-    return "foo";
   }
 
   public FeatureService getService() {

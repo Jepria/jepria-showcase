@@ -1,92 +1,103 @@
 package com.technology.jep.jepriashowcase.feature.rest;
 
-import com.technology.jep.jepriashowcase.feature.FeatureServerFactoryImpl;
+import com.google.gson.Gson;
+import com.technology.jep.jepriashowcase.feature.FeatureRecordDefinition;
+import com.technology.jep.jepriashowcase.feature.FeatureServerFactory;
 import com.technology.jep.jepriashowcase.feature.FeatureServiceImpl;
-import com.technology.jep.jepriashowcase.feature.dao.FeatureDaoImpl;
+import com.technology.jep.jepriashowcase.feature.dao.FeatureDao;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
-import java.util.ArrayList;
-import java.util.List;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.jepria.server.data.OptionDto;
-import org.jepria.server.service.rest.MetaInfoResource;
-import org.jepria.server.service.rest.XCacheControlFilter;
-import org.jepria.server.service.rest.gson.JsonBindingProvider;
-import org.jepria.server.service.rest.jersey.ApplicationConfigBase.ExceptionMapperDefault;
-import org.jepria.server.service.rest.jersey.ApplicationConfigBase.ExceptionMapperJsonb;
-import org.jepria.server.service.rest.jersey.ApplicationConfigBase.ExceptionMapperUndeclaredThrowable;
-import org.jepria.server.service.rest.jersey.validate.ExceptionMapperValidation;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.jepria.server.service.rest.EntityServiceImpl;
+import org.jepria.server.service.rest.jersey.ApplicationConfigBase;
+import org.jepria.server.service.security.PrincipalImpl;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.spy;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @Disabled
 @ExtendWith(MockitoExtension.class)
 class FeatureJaxrsAdapterTest extends JerseyTest {
 
-//  @Mock
-//  FeatureServiceImpl service;
+  private static FeatureDao mockedDao;
+  private static FeatureServerFactory mockedFactory;
+
+  private class TestApplicationConfig extends ApplicationConfigBase {
+    public TestApplicationConfig() {
+      register(FeatureJaxrsAdapter.class);
+      register(new AbstractBinder() {
+        @Override
+        protected void configure() {
+          bind(mockedDao).to(FeatureDao.class);
+        }
+      });
+      register(new AbstractBinder() {
+        @Override
+        protected void configure() {
+          bind(mockedFactory).to(FeatureServerFactory.class);
+        }
+      });
+      register((ContainerRequestFilter) containerRequestContext -> containerRequestContext.setSecurityContext(new SecurityContext() {
+        @Override
+        public Principal getUserPrincipal() {
+          return new PrincipalImpl("user", 123);
+        }
+
+        @Override
+        public boolean isUserInRole(String s) {
+          return true;
+        }
+
+        @Override
+        public boolean isSecure() {
+          return false;
+        }
+
+        @Override
+        public String getAuthenticationScheme() {
+          return "BASIC";
+        }
+      }));
+    }
+
+    @Override
+    protected void registerHttpBasicDynamicFeature() {
+    }
+
+    @Override
+    protected void registerRolesAllowedDynamicFeature() {
+    }
+  }
 
   @Override
   protected Application configure() {
     enable(TestProperties.DUMP_ENTITY);
     enable(TestProperties.LOG_TRAFFIC);
-//    ApplicationConfig config = new ApplicationConfig();
-//    return config;
-    ResourceConfig config = new ResourceConfig(FeatureJaxrsAdapter.class);
 
-    config.register(new AbstractBinder() {
-      @Override
-      protected void configure() {
-        bind(FeatureDaoImpl.class).to(FeatureDaoImpl.class);
-      }
-    });
+    mockedDao = Mockito.mock(FeatureDao.class);
+    mockedFactory = Mockito.mock(FeatureServerFactory.class);
 
-    config.register(new AbstractBinder() {
-      @Override
-      protected void configure() {
-        bind(FeatureServerFactoryImpl.class).to(FeatureServerFactoryImpl.class);
-      }
-    });
+    when(mockedFactory.getService()).thenReturn(new FeatureServiceImpl(mockedDao));
+    when(mockedFactory.getEntityService()).thenReturn(new EntityServiceImpl(mockedDao, new FeatureRecordDefinition()));
+//    when(mockedFactory.getSearchService()).thenReturn(new SearchServiceImpl(mockedDao));
 
-    config.register(new AbstractBinder() {
-      @Override
-      protected void configure() {
-        bindAsContract(TestInjectImpl.class);
-      }
-    });
-
-    config.register(JsonBindingProvider.class);
-//    config.register(HttpBasicDynamicFeature.class);
-//    config.register(RolesAllowedDynamicFeature.class);
-//    config.register(JepSecurityContextBinder.class);
-    config.register(XCacheControlFilter.class);
-    config.register(ExceptionMapperJsonb.class);
-    config.register(ExceptionMapperUndeclaredThrowable.class);
-    config.register(ExceptionMapperDefault.class);
-    config.register(MetaInfoResource.class);
-    config.register(ExceptionMapperValidation.class);
-//    config.register(JaxrsCorsFilter.class);
-    return config;
+    return new TestApplicationConfig();
   }
 
   @BeforeEach
@@ -104,93 +115,67 @@ class FeatureJaxrsAdapterTest extends JerseyTest {
 
   }
 
-  @Disabled
   @Test
   void getFeatureOperator() {
     List<OptionDto<Integer>> expectedOptions = new ArrayList<>();
-    OptionDto<Integer>       optionDto       = new OptionDto<>();
+    OptionDto<Integer> optionDto = new OptionDto<>();
     optionDto.setValue(12);
     optionDto.setName("Name");
     expectedOptions.add(optionDto);
 
-
-//    when(service.getFeatureOperator()).thenReturn(expectedOptions);
-
-    try (MockedStatic factory = mockStatic(FeatureServerFactoryImpl.class)) {
-      factory.when(FeatureServerFactoryImpl::test).thenReturn("bar");
-      System.out.println(FeatureServerFactoryImpl.test());
-      Response response = target("/feature/option/feature-operator").request(MediaType.APPLICATION_JSON_TYPE).get();
-
-      String respStr = response.readEntity(String.class);
-      Assertions.assertEquals(200, response.getStatus(), "should return 200");
-    }
-
-  }
-
-  @Disabled
-  @Test
-  void getFeatureOperator2() {
-    List<OptionDto<Integer>> expectedOptions = new ArrayList<>();
-    OptionDto<Integer>       optionDto       = new OptionDto<>();
-    optionDto.setValue(12);
-    optionDto.setName("Name");
-    expectedOptions.add(optionDto);
-
-//    FeatureServiceImpl mockService = Mockito.mock(FeatureServiceImpl.class);
-//    when(service.getFeatureOperator()).thenReturn(expectedOptions);
+    when(mockedDao.getFeatureOperator()).thenReturn(expectedOptions);
 
     Response response = target("/feature/option/feature-operator").request(MediaType.APPLICATION_JSON_TYPE).get();
-    String   respStr  = response.readEntity(String.class);
 
+    Assertions.assertEquals(200, response.getStatus(), "should return 200");
+
+    String respStr = response.readEntity(String.class).replaceAll("\\s+", "");
+    Gson gson = new Gson();
+    Assertions.assertEquals(gson.toJson(expectedOptions), respStr);
   }
 
-  @Disabled
   @Test
   void getFeatureStatus() {
     List<OptionDto<String>> expectedOptions = new ArrayList<>();
-    OptionDto<String>       optionDto       = new OptionDto<>();
+    OptionDto<String> optionDto = new OptionDto<>();
     optionDto.setValue("Value");
     optionDto.setName("Name");
     expectedOptions.add(optionDto);
 
-//    when(service.getFeatureStatus()).thenReturn(expectedOptions);
-
+    when(mockedDao.getFeatureStatus()).thenReturn(expectedOptions);
 
     Response response = target("/feature/option/feature-status").request(MediaType.APPLICATION_JSON_TYPE).get();
 
-    String respStr = response.readEntity(String.class);
     Assertions.assertEquals(200, response.getStatus(), "should return 200");
+
+    String respStr = response.readEntity(String.class).replaceAll("\\s+", "");
+    Gson gson = new Gson();
+    Assertions.assertEquals(gson.toJson(expectedOptions), respStr);
   }
 
-  @Disabled
   @Test
   void getRecordById() {
-
     FeatureDto expectedDto = new FeatureDto();
 
     expectedDto.setFeatureName("FeatureName");
     expectedDto.setFeatureNameEn("FeatureNameEn");
     expectedDto.setDescription("Description");
+    List<FeatureDto> list = Collections.singletonList(expectedDto);
 
-//    FeatureServerFactory.setService(this.service);
+    when(mockedDao.findByPrimaryKey(any(), any())).thenReturn((List) list);
 
     Response response = target("/feature/11").request(MediaType.APPLICATION_JSON_TYPE).get();
+
     Assertions.assertEquals(200, response.getStatus(), "should return 200");
 
-    FeatureDto dto = response.readEntity(FeatureDto.class);
-
-
+    String respStr = response.readEntity(String.class).replaceAll("\\s+", "");
+    Gson gson = new Gson();
+    Assertions.assertEquals(gson.toJson(expectedDto), respStr);
   }
 
   @Test
   void create() {
-    /*FeatureCreateDto dto = new FeatureCreateDto();
-    dto.setDescription("fwef");
-    dto.setFeatureName("name");
-    dto.setFeatureNameEn("nameEng");
-    Entity<FeatureCreateDto> entity = new Entity<FeatureCreateDto>();
-    Response response = target("/feature").request().post();
-    Assertions.assertEquals(201, response.getStatus(), "should return 201");*/
+
   }
 
   @Test

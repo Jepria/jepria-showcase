@@ -1,31 +1,23 @@
 package com.technology.jep.jepriashowcase.feature.rest;
 
 import com.technology.jep.jepriashowcase.feature.FeatureServerFactory;
-import com.technology.jep.jepriashowcase.feature.FeatureServerFactoryImpl;
 import com.technology.jep.jepriashowcase.feature.FeatureService;
-import com.technology.jep.jepriashowcase.feature.FeatureServiceImpl;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureCreateDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureSearchDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureUpdateDto;
-import java.util.List;
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.validation.constraints.Pattern;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
 import org.jepria.server.data.OptionDto;
 import org.jepria.server.data.SearchRequestDto;
 import org.jepria.server.service.rest.ExtendedResponse;
 import org.jepria.server.service.rest.JaxrsAdapterBase;
 import org.jepria.server.service.security.HttpBasic;
+
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.validation.constraints.Pattern;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/feature")
 @HttpBasic(passwordType = HttpBasic.PASSWORD)
@@ -33,7 +25,7 @@ import org.jepria.server.service.security.HttpBasic;
 public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
 
   @Inject
-  protected FeatureServerFactoryImpl serverFactory;
+  protected FeatureServerFactory serverFactory;
 
   protected final EntityEndpointAdapter entityEndpointAdapter = new EntityEndpointAdapter(() -> serverFactory.getEntityService());
 
