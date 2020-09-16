@@ -406,9 +406,9 @@
         <version>2.2</version>
         <configuration>
           <update>true</update>
-          <url>http://localhost:8080/manager/text</url>
+          <url>http://vsmlapprfid1:8080/manager/text</url>
           <username>admin</username>
-          <password>admin</password>
+          <password>admin0</password>
           <failOnError>true</failOnError>
           <path>/jepriashowcase-service-rest</path>
         </configuration>
