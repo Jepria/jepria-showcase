@@ -424,7 +424,7 @@
             <id>update-jepria-snapshot</id>
             <phase>validate</phase>
             <configuration>
-              <file>${BIN_HOME}/deploy/org/jepria/jepria-rest/${jepria.version}/jepria-rest-${jepria.version}.jar</file>
+              <file>${BIN_HOME}/build/org/jepria/jepria-rest/${jepria.version}/jepria-rest-${jepria.version}.jar</file>
               <groupId>org.jepria</groupId>
               <artifactId>jepria-rest</artifactId>
               <version>${jepria.version}</version>
