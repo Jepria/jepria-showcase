@@ -58,7 +58,6 @@
     "@types/react-router-dom": "^5.1.4",
     "@types/styled-components": "^5.1.0",
     "gh-pages": "^2.2.0",
-    "namor": "^2.0.2",
-    "puppeteer": "^5.2.1"
+    "namor": "^2.0.2"
   }
 }
