@@ -50,5 +50,32 @@
       <url-pattern>/api-docs/*</url-pattern>
     </web-resource-collection>
   </security-constraint>
+
+  <servlet>
+    <servlet-name>FeatureExcelServlet</servlet-name>
+    <servlet-class>com.technology.jep.jepriashowcase.feature.servlet.FeatureExcelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FeatureExcelServlet</servlet-name>
+    <url-pattern>/api/feature/excel</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>GoodsDownload</servlet-name>
+    <servlet-class>com.technology.jep.jepriashowcase.goods.servlet.GoodsDownloadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsDownload</servlet-name>
+    <url-pattern>/api/goods/download</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GoodsUpload</servlet-name>
+    <servlet-class>com.technology.jep.jepriashowcase.goods.servlet.GoodsUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsUpload</servlet-name>
+    <url-pattern>/api/goods/upload</url-pattern>
+  </servlet-mapping>
   
 </web-app>

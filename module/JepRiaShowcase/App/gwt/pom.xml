@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <jepria.version>11.0.0</jepria.version>
+        <jepria.version>12.1.0</jepria.version>
         <jepriatoolkit.version>7.15.0</jepriatoolkit.version>
         <tomcat.version>7.0.68</tomcat.version>
         <log4j.version>1.2.17</log4j.version>
@@ -52,7 +52,7 @@
         <!-- JepRia -->
         <dependency>
             <groupId>org.jepria</groupId>
-            <artifactId>jepria</artifactId>
+            <artifactId>jepria-gwt</artifactId>
             <version>${jepria.version}</version>
         </dependency>
         <dependency>
