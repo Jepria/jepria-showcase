@@ -31,6 +31,10 @@
     <swaggerui.version>3.10.0</swaggerui.version>
     <project.build.finalName>jepriashowcase-service-rest</project.build.finalName>
     <project.build.outputDirectory>res</project.build.outputDirectory>
+    <deploy.url>http://localhost:8080/manager/text</deploy.url>
+    <deploy.path>/${project.build.finalName}</deploy.path>
+    <deploy.username>username</deploy.username>
+    <deploy.password>password</deploy.password>
   </properties>
 
   <parent>
@@ -410,11 +414,11 @@
         <version>2.2</version>
         <configuration>
           <update>true</update>
-          <url>http://vsmlapprfid1:8080/manager/text</url>
-          <username>admin</username>
-          <password>admin0</password>
+          <url>${deploy.url}</url>
+          <username>${deploy.username}</username>
+          <password>${deploy.password}</password>
+          <path>${deploy.path}</path>
           <failOnError>true</failOnError>
-          <path>/jepriashowcase-service-rest</path>
         </configuration>
         <executions>
           <execution>
