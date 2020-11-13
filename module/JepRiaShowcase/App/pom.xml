@@ -26,10 +26,6 @@
     <project.build.gwt.productName>JepRiaShowcase</project.build.gwt.productName>
     <project.build.serviceRest.productName>jepriashowcase-service-rest</project.build.serviceRest.productName>
     <project.build.finalName>JepRiaShowcase</project.build.finalName>
-    <deploy.url>http://localhost:8080/manager/text</deploy.url>
-    <deploy.path>/${project.build.finalName}</deploy.path>
-    <deploy.username>username</deploy.username>
-    <deploy.password>password</deploy.password>
   </properties>
 
   <modules>
