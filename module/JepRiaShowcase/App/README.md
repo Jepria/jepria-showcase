@@ -10,17 +10,17 @@
  
  ## Available Scripts
  
- In the project directory, you can run:
+ In the parent project directory, you can run:
  
  ### `mvn package`
  
   Build the app.
  
- ### `mvn tomcat7:deploy`
+ ### `mvn tomcat7:deploy -pl webapp`
  
- Build the app and deploy.
+ Rebuild only the child project 'webapp' and deploy the app.
  
- ### `mvn tomcat7:deploy-only`
+ ### `mvn tomcat7:deploy-only -pl webapp`
  
  Deploy the app.
  
