@@ -1,31 +1,36 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Form } from "@jfront/ui-core";
-import { TextInput } from "@jfront/ui-core";
-import { getFeature, updateFeature } from "../../../api/feature/FeatureApi";
-import { Feature, FeatureUpdate } from "../../../api/feature/FeatureInterface";
-import { useHistory, useParams } from "react-router-dom";
-import {
-  Toolbar,
-  ToolbarButtonBase,
-  ToolbarButtonCreate,
-  ToolbarButtonDelete,
-  ToolbarButtonEdit,
-  ToolbarButtonFind,
-  ToolbarButtonSave,
-  ToolbarButtonView,
-  ToolbarSplitter,
-} from "@jfront/ui-core";
-import { Tab, TabPanel } from "@jfront/ui-core";
-import { SearchContext } from "../../../context";
+import React, { useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { Form } from "@jfront/ui-core";
+import { TextInput } from "@jfront/ui-core";
+import {
+  selectFeature,
+  selectSaveOnEditFeature,
+  setCurrentFeature,
+  submitSavedOnEditFeature,
+} from "../featureSlice";
+import { getFeature, updateFeature } from "../api/FeatureApi";
+import { Feature, FeatureUpdate } from "../api/FeatureInterface";
+import { setState, Workstates } from "../../../app/WorkstateSlice";
 
 const EditPage = () => {
+  let formRef = useRef(null) as any;
   const history = useHistory();
   let { featureId } = useParams();
-  const searchContext = useContext(SearchContext);
-  const [currentFeature, setCurrentFeature] = useState<Feature>();
   const { t } = useTranslation();
+  const onSaveFeature = useSelector(selectSaveOnEditFeature);
+
+  const dispatch = useDispatch();
+  const currentFeature: Feature = useSelector(selectFeature);
+
+  useEffect(() => {
+    if (onSaveFeature) {
+      dispatch(submitSavedOnEditFeature);
+      formRef.current?.dispatchEvent(new Event("submit"));
+    }
+  }, [onSaveFeature]);
 
   const onSubmit = (data: FeatureUpdate) => {
     if (featureId) {
@@ -36,22 +41,17 @@ const EditPage = () => {
   };
 
   useEffect(() => {
+    dispatch(setState(Workstates.FeatureEdit));
     getFeature(featureId).then((feature) => {
-      setCurrentFeature(feature);
+      dispatch(setCurrentFeature(feature));
     });
   }, []);
 
   const formik = useFormik<FeatureUpdate>({
     initialValues: {
-      featureName: currentFeature?.featureName
-        ? currentFeature?.featureName
-        : "",
-      featureNameEn: currentFeature?.featureNameEn
-        ? currentFeature?.featureNameEn
-        : "",
-      description: currentFeature?.description
-        ? currentFeature?.description
-        : "",
+      featureName: currentFeature?.featureName ? currentFeature?.featureName : "",
+      featureNameEn: currentFeature?.featureNameEn ? currentFeature?.featureNameEn : "",
+      description: currentFeature?.description ? currentFeature?.description : "",
     },
     onSubmit: (values: FeatureUpdate) => {
       onSubmit(values);
@@ -61,39 +61,7 @@ const EditPage = () => {
 
   return (
     <>
-      <TabPanel>
-        <Tab selected={true}>{t("feature.header")}</Tab>
-      </TabPanel>
-      <Toolbar>
-        <ToolbarButtonCreate onClick={() => history.push(`/create`)} />
-        <ToolbarButtonSave
-          onClick={() => {
-            let button = document.getElementById("edit-submit");
-            if (button) {
-              button.click();
-            }
-          }}
-        />
-        <ToolbarButtonEdit disabled={true} />
-        <ToolbarButtonDelete />
-        <ToolbarButtonView
-          onClick={() => history.push(`/${featureId}/detail`)}
-        />
-        <ToolbarSplitter />
-        <ToolbarButtonBase
-          onClick={() => {
-            let searchId = searchContext?.getId();
-            history.push(`/list/${searchId}/?pageSize=25&page=1`);
-          }}
-        >
-          {t("toolbar.list")}
-        </ToolbarButtonBase>
-        <ToolbarButtonFind onClick={() => history.push(`/`)} />
-        <ToolbarButtonBase disabled={true}>
-          {t("toolbar.find")}
-        </ToolbarButtonBase>
-      </Toolbar>
-      <Form id="edit-form" onSubmit={formik.handleSubmit}>
+      <Form id="edit-form" onSubmit={formik.handleSubmit} ref={formRef}>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureId")}:</Form.Label>
           <Form.Label style={{ width: "350px", textAlign: "left" }}>
@@ -139,7 +107,9 @@ const EditPage = () => {
               textAlign: "left",
             }}
           >
-            {currentFeature?.dateIns.toString() ? new Date(currentFeature?.dateIns.toString()).toLocaleDateString() : ""}
+            {currentFeature?.dateIns.toString()
+              ? new Date(currentFeature?.dateIns.toString()).toLocaleDateString()
+              : ""}
           </Form.Label>
         </Form.Field>
         <Form.Field>
