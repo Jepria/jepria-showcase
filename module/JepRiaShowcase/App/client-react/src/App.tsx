@@ -1,17 +1,17 @@
-import React, { useState, Suspense, useEffect } from "react";
-
-import DetailPage from "./pages/feature/view/Detail";
+import React, { Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import CreatePage from "./pages/feature/create/Create";
-import SearchPage from "./pages/feature/search/Search";
-import ListPage from "./pages/feature/view/List";
-import EditPage from "./pages/feature/edit/Edit";
-import FeatureProcessListPage from "./pages/feature-process/view/List";
-import FeatureProcessDetailPage from "./pages/feature-process/view/Detail";
-import FeatureProcessCreatePage from "./pages/feature-process/create/Create";
-import { SearchContext, SearchContextInterface } from "./context";
 import { useTranslation } from "react-i18next";
-import { FeatureSearchTemplate } from "./api/feature/FeatureInterface";
+import DetailPage from "./features/feature/pages/Detail";
+import CreatePage from "./features/feature/pages/Create";
+import SearchPage from "./features/feature/pages/Search";
+import ListPage from "./features/feature/pages/List";
+import EditPage from "./features/feature/pages/Edit";
+import FeatureProcessListPage from "./features/feature-process/pages/List";
+import FeatureProcessDetailPage from "./features/feature-process/pages/Detail";
+import FeatureProcessCreatePage from "./features/feature-process/pages/Create";
+import AppTabPanel from "./features/tabpanel/AppTabPanel";
+import FeatureToolbar from "./features/feature/components/FeatureToolbar";
+import FeatureProcessToolbar from "./features/feature-process/components/FeatureProcessToolbar";
 
 const Loader = () => (
   <div>
@@ -22,23 +22,6 @@ const Loader = () => (
 function Main() {
   const { t, i18n } = useTranslation();
   const language = new URLSearchParams(window.location.search).get("locale");
-  const [searchId, setSearchId] = useState<string>("");
-  const [searchTemplate, setSearchTemplate] = useState<FeatureSearchTemplate>({});
-
-  const searchFeature: SearchContextInterface = {
-    getId(): string {
-      return searchId;
-    },
-    setId(searchId: string) {
-      setSearchId(searchId);
-    },
-    getTemplate(): FeatureSearchTemplate {
-      return searchTemplate;
-    },
-    setTemplate(template: FeatureSearchTemplate): void {
-      setSearchTemplate(template);
-    },
-  };
 
   useEffect(() => {
     if (language) {
@@ -47,27 +30,43 @@ function Main() {
   }, [language]);
 
   return (
-    <SearchContext.Provider value={searchFeature}>
-      <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
-        <Switch>
-          <Route path="/" exact component={SearchPage} />
-          <Route path="/create" exact component={CreatePage} />
-          <Route path="/:featureId/edit" exact component={EditPage} />
-          <Route path="/:featureId/detail" component={DetailPage} />
-          <Route path="/list" component={ListPage} />
-          <Route path="/:featureId/feature-process" exact component={FeatureProcessListPage} />
-          <Route
-            path="/:featureId/feature-process/:featureProcessId/detail"
-            component={FeatureProcessDetailPage}
-          />
-          <Route
-            path="/:featureId/feature-process/create"
-            exact
-            component={FeatureProcessCreatePage}
-          />
-        </Switch>
-      </BrowserRouter>
-    </SearchContext.Provider>
+    <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
+      <AppTabPanel />
+      <Switch>
+        <Route path="/" exact>
+          <FeatureToolbar />
+          <SearchPage />
+        </Route>
+        <Route path="/create" exact>
+          <FeatureToolbar />
+          <CreatePage />
+        </Route>
+        <Route path="/:featureId/edit" exact>
+          <FeatureToolbar />
+          <EditPage />
+        </Route>
+        <Route path="/:featureId/detail">
+          <FeatureToolbar />
+          <DetailPage />
+        </Route>
+        <Route path="/list">
+          <FeatureToolbar />
+          <ListPage />
+        </Route>
+        <Route path="/:featureId/feature-process" exact>
+          <FeatureProcessToolbar />
+          <FeatureProcessListPage />
+        </Route>
+        <Route path="/:featureId/feature-process/:featureProcessId/detail">
+          <FeatureProcessToolbar />
+          <FeatureProcessDetailPage />
+        </Route>
+        <Route path="/:featureId/feature-process/create" exact>
+          <FeatureProcessToolbar />
+          <FeatureProcessCreatePage />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
