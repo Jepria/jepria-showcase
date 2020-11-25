@@ -5,16 +5,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <!-- 
-    Сборка общего продукта (lib/*.war) на основе компонентов (service-rest/target/*.war, gwt/lib/*-gwt.war).
+    Сборка общего продукта (lib/*.war) на основе компонентов (client-react/build/*.*, service-rest/target/*.war, gwt/lib/*-gwt.war).
 
     Наличие либо отсутствие в проекте компонентов пока что устанавливается вручную
-    комментированием xml-элементов с текстовыми метками "build:gwt", "build:service-rest", "build:client-react".
+    комментированием xml-элемента "<module>" для соответствующего дочернего проекта.
   -->
 
   <groupId>org.jepria.jepriashowcase</groupId>
   <artifactId>JepRiaShowcase</artifactId>
   <version>12.0.0</version>
-  <packaging>war</packaging>
+  <packaging>pom</packaging>
 
   <name>JepRiaShowcase</name>
   <url>http://jepria.org</url>
@@ -26,24 +26,16 @@
     <project.build.gwt.productName>JepRiaShowcase</project.build.gwt.productName>
     <project.build.serviceRest.productName>jepriashowcase-service-rest</project.build.serviceRest.productName>
     <project.build.finalName>JepRiaShowcase</project.build.finalName>
-
-    <deploy.url>http://localhost:8080/manager/text</deploy.url>
-    <deploy.path>/${project.build.finalName}</deploy.path>
-    <deploy.username>username</deploy.username>
-    <deploy.password>password</deploy.password>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+  <modules>
+    <module>client-react</module>
+    <module>gwt</module>
+    <module>service-rest</module>
+    <module>webapp</module>
+  </modules>
 
   <build>
-    <finalName>${project.build.finalName}</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -87,285 +79,31 @@
         </plugin>
       </plugins>
     </pluginManagement>
-
     <plugins>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>3.2.2</version>
-        <configuration>
-          <webResources>
-            <resource>
-              <directory>${project.basedir}/webapp/WEB-INF</directory>
-              <targetPath>WEB-INF</targetPath>
-              <includes>
-                <include>web.xml</include>
-              </includes>
-            </resource>
-            
-            <!-- build:gwt -->
-            <resource>
-              <directory>${project.build.directory}/temp-war-gwt</directory>
-              <excludes>
-                <exclude>WEB-INF/web.xml</exclude>
-              </excludes>
-            </resource>
-            
-            <!-- build:service-rest -->  
-            <resource>
-              <directory>${project.build.directory}/temp-war-service-rest</directory>
-              <excludes>
-                <exclude>WEB-INF/web.xml</exclude>
-              </excludes>
-            </resource>
-            
-            <!-- build:client-react -->
-            <resource>
-              <directory>${project.basedir}/client-react/build</directory>
-              <targetPath>react</targetPath>
-            </resource>
-
-          </webResources>
-          <packagingExcludes>WEB-INF/classes/</packagingExcludes>
-
-          <archive>
-            <addMavenDescriptor>false</addMavenDescriptor>
-            <manifestEntries>
-              <Built-By>developer</Built-By>
-            </manifestEntries>
-          </archive>
-
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version>
-        <executions>
-
-          <!-- build:client-react -->
-          <execution>
-            <id>build_client-react</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>mvn</executable>
-              <workingDirectory>${project.basedir}/client-react</workingDirectory>
-              <arguments>
-                <argument>package</argument>
-              </arguments>
-            </configuration>
-          </execution>
-
-          <!-- build:gwt -->
-          <execution>
-            <id>build_gwt</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>ant</executable>
-              <workingDirectory>${project.basedir}/gwt</workingDirectory>
-              <arguments>
-                <argument>war</argument>
-              </arguments>
-            </configuration>
-          </execution>
-                  
-          <!-- build:service-rest -->
-          <execution>
-            <id>build_service-rest</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>mvn</executable>
-              <workingDirectory>${project.basedir}/service-rest</workingDirectory>
-              <arguments>
-                <argument>package</argument>
-              </arguments>
-            </configuration>
-          </execution>
-          
-          
-          <!-- build:gwt -->
-          <execution>
-            <id>build_gwt__clean</id>
-            <phase>clean-all</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>ant</executable>
-              <workingDirectory>${project.basedir}/gwt</workingDirectory>
-              <arguments>
-                <argument>clean-all</argument>
-              </arguments>
-            </configuration>
-          </execution>
-
-
-          <!-- build:service-rest -->          
-          <execution>
-            <id>build_service-rest__clean</id>
-            <phase>clean-all</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>mvn</executable>
-              <workingDirectory>${project.basedir}/service-rest</workingDirectory>
-              <arguments>
-                <argument>clean</argument>
-              </arguments>
-            </configuration>
-          </execution>
-          
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jepria.tools.mavenplugin</groupId>
-        <artifactId>collisioncheck-maven-plugin</artifactId>
-        <version>1.0.0</version>
-        <executions>
-
-          <!-- build:gwt && build:service-rest -->
-          <execution>
-            <id>build_gwt__check-collisions,build_service-rest__check-collisions</id>
-            <phase>prepare-package</phase>
-            <configuration>
-              <warGwtPath>gwt/lib/${project.build.gwt.productName}-gwt.war</warGwtPath>
-              <warServiceRestPath>service-rest/target/${project.build.serviceRest.productName}.war</warServiceRestPath>
-              <strict>true</strict>
-            </configuration>
-            <goals>
-              <goal>check-collision</goal>
-            </goals>
-          </execution>
-
-        </executions>
-      </plugin>
-
-      <plugin>
-        <!-- unpack gwt.war and service-rest.war to temp directories to further merge them into a single war -->
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>truezip-maven-plugin</artifactId>
-        <version>1.2</version>
-        <executions>
-          
-          <!-- build:gwt -->
-          <execution>
-            <id>unpack-nested-project-gwt</id>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <phase>prepare-package</phase>
-            <configuration>
-              <filesets>
-                <fileset>
-                  <directory>${project.basedir}/gwt/lib/${project.build.gwt.productName}-gwt.war</directory>
-                  <outputDirectory>${project.build.directory}/temp-war-gwt</outputDirectory>
-                </fileset>
-              </filesets>
-            </configuration>
-          </execution>
-
-          <!-- build:service-rest -->
-          <execution>
-            <id>unpack-nested-project-service-rest</id>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <phase>prepare-package</phase>
-            <configuration>
-              <filesets>
-                <fileset>
-                  <directory>${project.basedir}/service-rest/target/${project.build.serviceRest.productName}.war</directory>
-                  <outputDirectory>${project.build.directory}/temp-war-service-rest</outputDirectory>
-                </fileset>
-              </filesets>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-project-artifact</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.basedir}/lib</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${project.build.directory}</directory>
-                  <includes>
-                    <include>${project.build.finalName}.war</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jepria.tools.mavenplugin</groupId>
-        <artifactId>cleanall-maven-plugin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <extensions>true</extensions>
-      </plugin>
-
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
         <executions>
           <execution>
-            <id>clean</id>
-            <phase>clean-all</phase>
+            <id>clean-lib</id>
+            <phase>clean</phase>
             <goals>
               <goal>clean</goal>
             </goals>
+            <configuration>
+              <filesets>
+                <fileset>
+                  <directory>${project.basedir}/lib</directory>
+                  <includes>
+                    <include>**/*</include>
+                  </includes>
+                  <followSymlinks>false</followSymlinks>
+                </fileset>
+              </filesets>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <filesets>
-            <fileset>
-              <directory>${project.basedir}/lib</directory>
-              <includes>
-                <include>**/*</include>
-              </includes>
-              <followSymlinks>false</followSymlinks>
-            </fileset>
-          </filesets>
-        </configuration>
+        <inherited>false</inherited>
       </plugin>
-
-      <plugin>
-        <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-          <warFile>lib/${project.build.finalName}.war</warFile>
-          <update>true</update>
-          <url>${deploy.url}</url>
-          <username>${deploy.username}</username>
-          <password>${deploy.password}</password>
-          <path>${deploy.path}</path>
-          <failOnError>true</failOnError>
-        </configuration>
-      </plugin>
-
     </plugins>
   </build>
 
