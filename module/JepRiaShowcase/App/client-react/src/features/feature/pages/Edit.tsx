@@ -64,7 +64,7 @@ const EditPage = () => {
       <Form id="edit-form" onSubmit={formik.handleSubmit} ref={formRef}>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureId")}:</Form.Label>
-          <Form.Label style={{ width: "350px", textAlign: "left" }}>
+          <Form.Label style={{ width: "350px", justifyContent: "start" }}>
             {currentFeature?.featureId}
           </Form.Label>
         </Form.Field>
@@ -73,7 +73,7 @@ const EditPage = () => {
           <Form.Label
             style={{
               width: "350px",
-              textAlign: "left",
+              justifyContent: "start",
             }}
           >
             {currentFeature?.featureStatus?.name}
@@ -104,7 +104,7 @@ const EditPage = () => {
           <Form.Label
             style={{
               width: "350px",
-              textAlign: "left",
+              justifyContent: "start",
             }}
           >
             {currentFeature?.dateIns.toString()
