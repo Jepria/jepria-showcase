@@ -34,68 +34,65 @@ const ListPage = () => {
   }, [location]);
 
   return (
-    <Panel>
-      <Panel.Header></Panel.Header>
-      <Panel.Content>
-        {isLoading ? (
-          <div style={{ textAlign: "center" }}>Loading...</div>
-        ) : (
-          <Grid
-            id="table"
-            columns={[
-              {
-                Header: t("feature.fields.featureId"),
-                accessor: "featureId",
-              },
-              {
-                Header: t("feature.fields.featureStatus"),
-                accessor: "featureStatus.name",
-              },
-              {
-                Header: t("feature.fields.workSequence"),
-                accessor: "workSequence",
-              },
-              {
-                Header: t("feature.fields.featureName"),
-                accessor: "featureName",
-              },
-              {
-                Header: t("feature.fields.featureNameEn"),
-                accessor: "featureNameEn",
-              },
-              {
-                Header: t("feature.fields.description"),
-                accessor: "description",
-              },
-              {
-                Header: t("feature.fields.dateIns"),
-                accessor: "dateIns",
-              },
-              {
-                Header: t("feature.fields.author"),
-                accessor: "author.name",
-              },
-              {
-                Header: t("feature.fields.responsible"),
-                accessor: "responsible.name",
-              },
-            ]}
-            data={features}
-            onSelection={(selectedFeatures) => {
-              console.log(selectedFeatures);
-              if (selectedFeatures.length === 1) {
-                dispatch(setCurrentFeature(selectedFeatures[0]));
-              } else {
-                dispatch(setCurrentFeature(undefined));
-              }
-            }}
-            onDoubleClick={(feature) => {
-              history.push(`/${feature.featureId}/detail`);
-            }}
-          />
-        )}
-      </Panel.Content>
-    </Panel>
+    <>
+      {isLoading ? (
+        <div style={{ textAlign: "center" }}>Loading...</div>
+      ) : (
+        <Grid
+          id="table"
+          columns={[
+            {
+              Header: t("feature.fields.featureId"),
+              accessor: "featureId",
+            },
+            {
+              Header: t("feature.fields.featureStatus"),
+              accessor: "featureStatus.name",
+            },
+            {
+              Header: t("feature.fields.workSequence"),
+              accessor: "workSequence",
+            },
+            {
+              Header: t("feature.fields.featureName"),
+              accessor: "featureName",
+            },
+            {
+              Header: t("feature.fields.featureNameEn"),
+              accessor: "featureNameEn",
+            },
+            {
+              Header: t("feature.fields.description"),
+              accessor: "description",
+            },
+            {
+              Header: t("feature.fields.dateIns"),
+              accessor: "dateIns",
+            },
+            {
+              Header: t("feature.fields.author"),
+              accessor: "author.name",
+            },
+            {
+              Header: t("feature.fields.responsible"),
+              accessor: "responsible.name",
+            },
+          ]}
+          data={features}
+          onSelection={(selectedFeatures) => {
+            console.log(selectedFeatures);
+            if (selectedFeatures.length === 1) {
+              dispatch(setCurrentFeature(selectedFeatures[0]));
+            } else {
+              dispatch(setCurrentFeature(undefined));
+            }
+          }}
+          onDoubleClick={(feature) => {
+            history.push(`/${feature.featureId}/detail`);
+          }}
+        />
+      )}
+    </>
   );
 };
 
