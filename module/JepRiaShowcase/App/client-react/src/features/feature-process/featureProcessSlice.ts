@@ -4,14 +4,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "./../../app/store";
 // import { getFeature, createFeatureApi } from "./api/FeatureApi";
 
-interface FeatureState {
+interface FeatureProcessState {
   currentFeatureProcess: FeatureProcess;
   error: string;
   saveOnCreateFeatureProcess: boolean;
   // onFeatureCreated: boolean;
 }
 
-const initialState: FeatureState = {
+const initialState: FeatureProcessState = {
   currentFeatureProcess: null,
   error: null,
   saveOnCreateFeatureProcess: false,
@@ -44,34 +44,16 @@ export const selectError = (state: RootState) => state.featureProcess.error;
 export const selectSaveOnCreateFeatureProcess = (state: RootState) =>
   state.featureProcess.saveOnCreateFeatureProcess;
 
-// export const fetchFeature = (featureId: string): AppThunk => async (dispatch) => {
-//   try {
-//     getFeature(featureId).then((feature) => {
-//       dispatch(setCurrentFeature(feature));
-//     });
-//   } catch (error) {
-//     dispatch(getFeatureError(error));
-//   }
-// };
-
-// export const createFeature = (feature: FeatureCreate): AppThunk => async (dispatch) => {
-//   try {
-//     createFeatureApi(feature).then((feature) => {
-//       dispatch(setCurrentFeature(feature));
-//       // dispatch(setCreateFeature(true));
-//     });
-//   } catch (error) {
-//     dispatch(getFeatureError(error));
-//   }
-// };
-
-export const submitSaveOnCreateFeatureProcess = (): AppThunk => async (dispatch) => {
+export const submitSaveOnCreateFeatureProcess = (): AppThunk => async (
+  dispatch
+) => {
   dispatch(setSaveOnCreateFeatureProcess(true));
 };
 
-export const submitSavedOnCreateFeatureProcess = (): AppThunk => async (dispatch) => {
+export const submitSavedOnCreateFeatureProcess = (): AppThunk => async (
+  dispatch
+) => {
   dispatch(setSaveOnCreateFeatureProcess(false));
 };
-
 
 export default featureProcessSlice.reducer;

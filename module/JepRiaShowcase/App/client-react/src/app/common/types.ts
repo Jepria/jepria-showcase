@@ -1,3 +1,4 @@
+//TODO: remove
 export type ColumnSortConfiguration = {
   columnName: string;
   sortOrder: string;

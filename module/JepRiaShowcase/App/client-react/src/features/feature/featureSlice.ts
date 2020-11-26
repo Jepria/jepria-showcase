@@ -8,7 +8,6 @@ interface FeatureState {
   error: string;
   saveOnCreateFeature: boolean;
   saveOnEditFeature: boolean;
-  // onFeatureCreated: boolean;
 }
 
 const initialState: FeatureState = {

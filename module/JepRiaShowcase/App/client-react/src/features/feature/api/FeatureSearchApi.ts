@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Feature, FeatureSearchTemplate } from "./FeatureInterface";
 import { ConnectorSearch } from "@jfront/core-rest";
 

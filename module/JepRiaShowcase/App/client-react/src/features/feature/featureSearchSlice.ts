@@ -64,6 +64,8 @@ export const selectSearchPageSize = (state: RootState) => state.featureSearch.pa
 export const selectSearchPage = (state: RootState) => state.featureSearch.page;
 export const selectSearchSubmit = (state: RootState) => state.featureSearch.submit;
 
+
+// TODO: add JS Doc
 export const fetchSearchFeatures = (
   searchRequestString: string,
   pageSize,
