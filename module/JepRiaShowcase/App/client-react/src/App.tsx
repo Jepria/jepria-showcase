@@ -1,11 +1,11 @@
 import React, { Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import DetailPage from "./features/feature/pages/Detail";
-import CreatePage from "./features/feature/pages/Create";
-import SearchPage from "./features/feature/pages/Search";
-import ListPage from "./features/feature/pages/List";
-import EditPage from "./features/feature/pages/Edit";
+import FeatureDetailPage from "./features/feature/pages/Detail";
+import FeatureCreatePage from "./features/feature/pages/Create";
+import FeatureSearchPage from "./features/feature/pages/Search";
+import FeatureListPage from "./features/feature/pages/List";
+import FeatureEditPage from "./features/feature/pages/Edit";
 import FeatureProcessListPage from "./features/feature-process/pages/List";
 import FeatureProcessDetailPage from "./features/feature-process/pages/Detail";
 import FeatureProcessCreatePage from "./features/feature-process/pages/Create";
@@ -39,23 +39,23 @@ function Main() {
         <Switch>
           <Route path="/" exact>
             <FeatureToolbar />
-            <SearchPage />
+            <FeatureSearchPage />
           </Route>
           <Route path="/create" exact>
             <FeatureToolbar />
-            <CreatePage />
+            <FeatureCreatePage />
           </Route>
           <Route path="/:featureId/edit" exact>
             <FeatureToolbar />
-            <EditPage />
+            <FeatureEditPage />
           </Route>
           <Route path="/:featureId/detail">
             <FeatureToolbar />
-            <DetailPage />
+            <FeatureDetailPage />
           </Route>
           <Route path="/list">
             <FeatureToolbar />
-            <ListPage />
+            <FeatureListPage />
           </Route>
           <Route path="/:featureId/feature-process" exact>
             <FeatureProcessToolbar />
