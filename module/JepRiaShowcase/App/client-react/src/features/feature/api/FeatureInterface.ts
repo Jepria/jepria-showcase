@@ -38,7 +38,4 @@ export type FeatureSearchTemplate = {
   dateInsFrom?: Date;
   dateInsTo?: Date;
   statusCodeList?: string[];
-  /*authorId: number;
-  responsibleId: number;
-  maxRowCount: number;*/
 };

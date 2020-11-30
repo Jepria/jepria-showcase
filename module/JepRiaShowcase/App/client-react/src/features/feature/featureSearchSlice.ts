@@ -7,17 +7,17 @@ import { AppThunk, RootState } from "./../../app/store";
 import { SearchRequest } from "@jfront/core-rest";
 
 interface FeatureSearchState {
-  searchTemplate: string;
-  error: string;
-  isLoading: boolean;
-  searchResult: Array<Feature>;
-  pageSize: number;
-  page: number;
-  submit: boolean;
+  searchTemplate?: FeatureSearchTemplate;
+  error?: string;
+  isLoading?: boolean;
+  searchResult?: Array<Feature>;
+  pageSize?: number;
+  page?: number;
+  submit?: boolean;
 }
 
 const initialState: FeatureSearchState = {
-  searchTemplate: null,
+  searchTemplate: { featureId: 13 },
   error: null,
   isLoading: false,
   searchResult: [],
@@ -30,7 +30,7 @@ export const featureSearchSlice = createSlice({
   name: "featureSearch",
   initialState,
   reducers: {
-    setSearchTemplate(state, action) {
+    setSearchTemplate(state: FeatureSearchState, action: PayloadAction<FeatureSearchTemplate>) {
       state.searchTemplate = action.payload;
     },
     searchError(state, action) {
@@ -64,8 +64,13 @@ export const selectSearchPageSize = (state: RootState) => state.featureSearch.pa
 export const selectSearchPage = (state: RootState) => state.featureSearch.page;
 export const selectSearchSubmit = (state: RootState) => state.featureSearch.submit;
 
+/**
+ * Fetch features and update search result
+ * @param {string} searchRequestString template string from query
+ * @param {number} pageSize page size
+ * @param {number} page page index
+ */
 
-// TODO: add JS Doc
 export const fetchSearchFeatures = (
   searchRequestString: string,
   pageSize,
@@ -90,7 +95,8 @@ export const fetchSearchFeatures = (
           if (searchId) {
             featureCrudApi.search(searchId, pageSize, page).then((features) => {
               dispatch(searchSuccess(features));
-              dispatch(setSearchTemplate(searchRequestString));
+              console.log("searchTemplate: ", searchTemplate);
+              dispatch(setSearchTemplate(JSON.parse(JSON.stringify(searchTemplate))));
               dispatch(isLoading(false));
             });
           }

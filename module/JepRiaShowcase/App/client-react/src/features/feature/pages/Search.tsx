@@ -23,7 +23,7 @@ const SearchPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
   const selectSearch = useSelector(selectSearchSubmit);
-  const searchTemplate: string = useSelector(selectSearchTemplate);
+  const searchTemplate: FeatureSearchTemplate = useSelector(selectSearchTemplate);
 
   useEffect(() => {
     if (selectSearch) {
@@ -32,21 +32,26 @@ const SearchPage = () => {
     }
   }, [selectSearch]);
 
-  const onSubmit = (data: FeatureSearchTemplate) => {
-    if (!data.featureId) {
-      data.featureId = undefined;
-    }
-    if (!data.dateInsFrom) {
-      data.dateInsFrom = undefined;
-    }
-    if (!data.dateInsTo) {
-      data.dateInsTo = undefined;
+  const onSubmit = (data?: FeatureSearchTemplate) => {
+    if (data) {
+      if (!data.featureId) {
+        data.featureId = undefined;
+      }
+      console.log("feasd");
+      if (!data.dateInsFrom) {
+        data.dateInsFrom = undefined;
+      }
+      if (!data.dateInsTo) {
+        data.dateInsTo = undefined;
+      }
     }
 
     let query = queryString.stringify(data);
     if (query) {
       query = "&" + query;
     }
+
+    console.log("PUSH! query= ", query);
     history.push(`/list/?pageSize=25&page=1${query}`);
   };
 
@@ -59,10 +64,11 @@ const SearchPage = () => {
   }, []);
 
   const formik = useFormik<FeatureSearchTemplate>({
-    initialValues: queryString.parse(searchTemplate),
-    onSubmit: (values: FeatureSearchTemplate) => {
+    initialValues: searchTemplate,
+    onSubmit: (values) => {
       onSubmit(values);
     },
+    enableReinitialize: true,
   });
 
   return (

@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Panel } from "@jfront/ui-core";
 import FeatureDetailPage from "./features/feature/pages/Detail";
 import FeatureCreatePage from "./features/feature/pages/Create";
 import FeatureSearchPage from "./features/feature/pages/Search";
@@ -12,7 +13,6 @@ import FeatureProcessCreatePage from "./features/feature-process/pages/Create";
 import AppTabPanel from "./features/tabpanel/AppTabPanel";
 import FeatureToolbar from "./features/feature/components/FeatureToolbar";
 import FeatureProcessToolbar from "./features/feature-process/components/FeatureProcessToolbar";
-import { Panel } from "@jfront/ui-core";
 
 const Loader = () => (
   <div>

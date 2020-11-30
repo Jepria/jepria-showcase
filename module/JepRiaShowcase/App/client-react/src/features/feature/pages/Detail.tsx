@@ -75,10 +75,6 @@ const DetailPage = () => {
           </Form.Label>
         </Form.Field>
         <Form.Field>
-          <Form.Label>Порядок выполнения:</Form.Label>
-          <Form.Label />
-        </Form.Field>
-        <Form.Field>
           <Form.Label>{t("feature.fields.responsible")}:</Form.Label>
           <Form.Label
             style={{
