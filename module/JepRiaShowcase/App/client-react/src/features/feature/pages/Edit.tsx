@@ -23,7 +23,7 @@ const EditPage = () => {
   const onSaveFeature = useSelector(selectSaveOnEditFeature);
 
   const dispatch = useDispatch();
-  const currentFeature: Feature = useSelector(selectFeature);
+  const currentRecord: Feature = useSelector(selectFeature);
 
   useEffect(() => {
     if (onSaveFeature) {
@@ -49,9 +49,9 @@ const EditPage = () => {
 
   const formik = useFormik<FeatureUpdate>({
     initialValues: {
-      featureName: currentFeature?.featureName ? currentFeature?.featureName : "",
-      featureNameEn: currentFeature?.featureNameEn ? currentFeature?.featureNameEn : "",
-      description: currentFeature?.description ? currentFeature?.description : "",
+      featureName: currentRecord?.featureName ? currentRecord?.featureName : "",
+      featureNameEn: currentRecord?.featureNameEn ? currentRecord?.featureNameEn : "",
+      description: currentRecord?.description ? currentRecord?.description : "",
     },
     onSubmit: (values: FeatureUpdate) => {
       onSubmit(values);
@@ -65,7 +65,7 @@ const EditPage = () => {
         <Form.Field>
           <Form.Label>{t("feature.fields.featureId")}:</Form.Label>
           <Form.Label style={{ width: "350px", justifyContent: "start" }}>
-            {currentFeature?.featureId}
+            {currentRecord?.featureId}
           </Form.Label>
         </Form.Field>
         <Form.Field>
@@ -76,14 +76,14 @@ const EditPage = () => {
               justifyContent: "start",
             }}
           >
-            {currentFeature?.featureStatus?.name}
+            {currentRecord?.featureStatus?.name}
           </Form.Label>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureName")}:</Form.Label>
           <TextInput
             style={{ width: "350px", textAlign: "left" }}
-            defaultValue={currentFeature?.featureName}
+            defaultValue={currentRecord?.featureName}
             name="featureName"
             value={formik.values.featureName}
             onChange={formik.handleChange}
@@ -93,7 +93,7 @@ const EditPage = () => {
           <Form.Label>{t("feature.fields.featureNameEn")}:</Form.Label>
           <TextInput
             style={{ width: "350px", textAlign: "left" }}
-            defaultValue={currentFeature?.featureNameEn}
+            defaultValue={currentRecord?.featureNameEn}
             name="featureNameEn"
             value={formik.values.featureNameEn}
             onChange={formik.handleChange}
@@ -107,8 +107,8 @@ const EditPage = () => {
               justifyContent: "start",
             }}
           >
-            {currentFeature?.dateIns.toString()
-              ? new Date(currentFeature?.dateIns.toString()).toLocaleDateString()
+            {currentRecord?.dateIns.toString()
+              ? new Date(currentRecord?.dateIns.toString()).toLocaleDateString()
               : ""}
           </Form.Label>
         </Form.Field>
@@ -116,7 +116,7 @@ const EditPage = () => {
           <Form.Label>{t("feature.fields.description")}:</Form.Label>
           <TextInput
             style={{ width: "350px", textAlign: "left" }}
-            defaultValue={currentFeature?.description}
+            defaultValue={currentRecord?.description}
             name="description"
             value={formik.values.description}
             onChange={formik.handleChange}
@@ -125,7 +125,7 @@ const EditPage = () => {
         <Form.Field>
           <Form.Label>{t("feature.fields.author")}:</Form.Label>
           <Form.Label style={{ width: "350px", textAlign: "left" }}>
-            {currentFeature?.author?.name}
+            {currentRecord?.author?.name}
           </Form.Label>
         </Form.Field>
         <Form.Field>
@@ -136,7 +136,7 @@ const EditPage = () => {
               textAlign: "left",
             }}
           >
-            {currentFeature?.responsible?.name}
+            {currentRecord?.responsible?.name}
           </Form.Label>
         </Form.Field>
         <Form.Field>

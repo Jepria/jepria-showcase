@@ -13,7 +13,7 @@ const FeatureProcessDetailPage = () => {
   const [] = useState<boolean>(false);
   // const [featureProcess, setFeatureProcess] = useState<FeatureProcess>();
   const dispatch = useDispatch();
-  const featureProcess = useSelector(selectFeatureProcess);
+  const currentRecord = useSelector(selectFeatureProcess);
 
   useEffect(() => {
     if (featureId && featureProcessId) {
@@ -29,11 +29,11 @@ const FeatureProcessDetailPage = () => {
       <Form>
         <Form.Field>
           <Form.Label>{t("feature-process.fields.featureStatusCode")}</Form.Label>
-          <Form.Label>{featureProcess?.featureStatusName}</Form.Label>
+          <Form.Label>{currentRecord?.featureStatusName}</Form.Label>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature-process.fields.dateIns")}</Form.Label>
-          <Form.Label>{featureProcess?.dateIns}</Form.Label>
+          <Form.Label>{currentRecord?.dateIns}</Form.Label>
         </Form.Field>
       </Form>
     </>

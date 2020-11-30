@@ -11,7 +11,7 @@ const DetailPage = () => {
   let { featureId } = useParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const currentFeature: Feature = useSelector(selectFeature);
+  const currentRecord: Feature = useSelector(selectFeature);
   const error = useSelector(selectError);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const DetailPage = () => {
         <Form.Field>
           <Form.Label>{t("feature.fields.featureId")}:</Form.Label>
           <Form.Label style={{ width: "350px", justifyContent: "flex-start" }}>
-            {currentFeature?.featureId}
+            {currentRecord?.featureId}
           </Form.Label>
         </Form.Field>
         <Form.Field>
@@ -37,27 +37,27 @@ const DetailPage = () => {
               justifyContent: "flex-start",
             }}
           >
-            {currentFeature?.featureStatus?.name}
+            {currentRecord?.featureStatus?.name}
           </Form.Label>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureName")}:</Form.Label>
           <Form.Label style={{ width: "350px", justifyContent: "flex-start" }}>
-            {currentFeature?.featureName}
+            {currentRecord?.featureName}
           </Form.Label>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureNameEn")}:</Form.Label>
           <Form.Label style={{ width: "350px", justifyContent: "flex-start" }}>
-            {currentFeature?.featureNameEn}
+            {currentRecord?.featureNameEn}
           </Form.Label>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.dateIns")}:</Form.Label>
           <Form.Label style={{ width: "350px", justifyContent: "flex-start" }}>
-            {currentFeature
-              ? currentFeature?.dateIns.toString()
-                ? new Date(currentFeature?.dateIns.toString()).toLocaleDateString()
+            {currentRecord
+              ? currentRecord?.dateIns.toString()
+                ? new Date(currentRecord?.dateIns.toString()).toLocaleDateString()
                 : ""
               : null}
           </Form.Label>
@@ -65,13 +65,13 @@ const DetailPage = () => {
         <Form.Field>
           <Form.Label>{t("feature.fields.description")}:</Form.Label>
           <Form.Label style={{ width: "350px", justifyContent: "flex-start" }}>
-            {currentFeature?.description}
+            {currentRecord?.description}
           </Form.Label>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.author")}:</Form.Label>
           <Form.Label style={{ width: "350px", justifyContent: "flex-start" }}>
-            {currentFeature?.author?.name}
+            {currentRecord?.author?.name}
           </Form.Label>
         </Form.Field>
         <Form.Field>
@@ -82,7 +82,7 @@ const DetailPage = () => {
               justifyContent: "flex-start",
             }}
           >
-            {currentFeature?.responsible?.name}
+            {currentRecord?.responsible?.name}
           </Form.Label>
         </Form.Field>
       </Form>

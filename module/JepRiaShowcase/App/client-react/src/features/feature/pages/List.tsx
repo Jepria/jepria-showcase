@@ -4,7 +4,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Feature } from "../api/FeatureInterface";
 import { Grid } from "@jfront/ui-core";
-import { Panel } from "@jfront/ui-core";
 import { setCurrentFeature } from "../featureSlice";
 import { selectSearchResult, fetchSearchFeatures, selectIsLoading } from "../featureSearchSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
