@@ -33,25 +33,11 @@ const SearchPage = () => {
   }, [selectSearch]);
 
   const onSubmit = (data?: FeatureSearchTemplate) => {
-    if (data) {
-      if (!data.featureId) {
-        data.featureId = undefined;
-      }
-      console.log("feasd");
-      if (!data.dateInsFrom) {
-        data.dateInsFrom = undefined;
-      }
-      if (!data.dateInsTo) {
-        data.dateInsTo = undefined;
-      }
-    }
-
     let query = queryString.stringify(data);
     if (query) {
       query = "&" + query;
     }
 
-    console.log("PUSH! query= ", query);
     history.push(`/list/?pageSize=25&page=1${query}`);
   };
 
@@ -135,7 +121,7 @@ const SearchPage = () => {
           >
             {statusOptions
               ? statusOptions.map((option) => {
-                  return <CheckBox value={option.value} label={option.name} />;
+                  return <CheckBox key={option.value} value={option.value} label={option.name} />;
                 })
               : null}
           </CheckBoxGroup>

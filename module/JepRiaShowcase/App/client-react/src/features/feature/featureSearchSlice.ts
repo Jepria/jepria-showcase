@@ -3,7 +3,6 @@ import queryString from "query-string";
 import { Feature, FeatureSearchTemplate } from "./api/FeatureInterface";
 import { featureCrudApi } from "./api/FeatureSearchApi";
 import { AppThunk, RootState } from "./../../app/store";
-// import { SearchRequest } from "../../app/common/types";
 import { SearchRequest } from "@jfront/core-rest";
 
 interface FeatureSearchState {
@@ -17,7 +16,7 @@ interface FeatureSearchState {
 }
 
 const initialState: FeatureSearchState = {
-  searchTemplate: { featureId: 13 },
+  searchTemplate: {},
   error: null,
   isLoading: false,
   searchResult: [],
@@ -95,7 +94,6 @@ export const fetchSearchFeatures = (
           if (searchId) {
             featureCrudApi.search(searchId, pageSize, page).then((features) => {
               dispatch(searchSuccess(features));
-              console.log("searchTemplate: ", searchTemplate);
               dispatch(setSearchTemplate(JSON.parse(JSON.stringify(searchTemplate))));
               dispatch(isLoading(false));
             });
