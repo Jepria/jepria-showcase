@@ -28,8 +28,8 @@ const FeatureToolbar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const state: Workstates = useSelector(selectState);
-  const currentFeature: Feature = useSelector(selectFeature);
-  const features: Array<Feature> = useSelector(selectSearchResult);
+  const currentRecord: Feature = useSelector(selectFeature);
+  const records: Array<Feature> = useSelector(selectSearchResult);
   const searchPage: number = useSelector(selectSearchPage);
   const searchPageSize: number = useSelector(selectSearchPageSize);
 
@@ -44,28 +44,26 @@ const FeatureToolbar = () => {
         onClick={() => {
           
           if (Workstates.FeatureCreate === state) {
-            console.log("submitSaveOnCreate");
             dispatch(submitSaveOnCreate());
           } else if (Workstates.FeatureEdit == state) {
-            console.log("submitSaveOnEdit");
             dispatch(submitSaveOnEditFeature());
           }
         }}
       />
       <ToolbarButtonEdit
-        disabled={!currentFeature}
+        disabled={!currentRecord}
         onClick={() => {
-          history.push(`/${currentFeature?.featureId}/edit`);
+          history.push(`/${currentRecord?.featureId}/edit`);
         }}
       />
-      <ToolbarButtonDelete disabled={!currentFeature} />
+      <ToolbarButtonDelete disabled={!currentRecord} />
       <ToolbarButtonView
-        disabled={!currentFeature || Workstates.FeatureDetail === state}
-        onClick={() => history.push(`/${currentFeature?.featureId}/detail`)}
+        disabled={!currentRecord || Workstates.FeatureDetail === state}
+        onClick={() => history.push(`/${currentRecord?.featureId}/detail`)}
       />
       <ToolbarSplitter />
       <ToolbarButtonBase
-        disabled={Workstates.FeatureList !== state && features ? features.length === 0 : true}
+        disabled={Workstates.FeatureList !== state && records ? records.length === 0 : true}
         onClick={() => history.push(`/list/?pageSize=${searchPageSize}&page=${searchPage}`)}
       >
         {t("toolbar.list")}

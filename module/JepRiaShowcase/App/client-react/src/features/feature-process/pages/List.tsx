@@ -12,7 +12,7 @@ const FeatureProcessListPage = () => {
   const location = useLocation();
   const history = useHistory();
   const [] = useState<boolean>(false);
-  const [featureProcesses, setFeatureProcesses] = useState<FeatureProcess[]>();
+  const [records, setRecords] = useState<FeatureProcess[]>();
   let { featureId } = useParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const FeatureProcessListPage = () => {
   const find = () => {
     if (featureId) {
       findFeatureProcess(parseInt(featureId)).then((processes: FeatureProcess[]) => {
-        setFeatureProcesses(processes);
+        setRecords(processes);
       });
     }
   };
@@ -44,7 +44,7 @@ const FeatureProcessListPage = () => {
             accessor: "dateIns",
           },
         ]}
-        data={featureProcesses ? featureProcesses : []} //todo: bug in library
+        data={records ? records : []} //todo: bug in library
         onSelection={(selected) => {
           console.log(selected);
           if (selected.length === 1) {

@@ -20,7 +20,7 @@ const ListPage = () => {
   const page: number = parseInt(query.get("page") as string);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const features: Array<Feature> = useSelector(selectSearchResult);
+  const records: Array<Feature> = useSelector(selectSearchResult);
   const isLoading = useSelector(selectIsLoading);
 
   const find = () => {
@@ -77,7 +77,7 @@ const ListPage = () => {
               accessor: "responsible.name",
             },
           ]}
-          data={features}
+          data={records}
           onSelection={(selectedFeatures) => {
             console.log(selectedFeatures);
             if (selectedFeatures.length === 1) {
