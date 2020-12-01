@@ -12,7 +12,7 @@ import {
   submitSavedOnEditFeature,
 } from "../featureSlice";
 import { getFeature, updateFeature } from "../api/FeatureApi";
-import { Feature, FeatureUpdate } from "../api/FeatureInterface";
+import { Feature, FeatureUpdate } from "../api/FeatureTypes";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 
 const EditPage = () => {

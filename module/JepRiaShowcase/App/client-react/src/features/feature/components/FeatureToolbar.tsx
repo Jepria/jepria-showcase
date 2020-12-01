@@ -20,7 +20,7 @@ import {
   selectSearchResult,
   submitSearch,
 } from "../featureSearchSlice";
-import { Feature } from "../api/FeatureInterface";
+import { Feature } from "../api/FeatureTypes";
 import { selectState, Workstates } from "../../../app/WorkstateSlice";
 
 const FeatureToolbar = () => {

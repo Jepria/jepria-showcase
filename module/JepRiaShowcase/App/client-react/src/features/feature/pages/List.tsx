@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@jfront/ui-core";
-import { Feature } from "../api/FeatureInterface";
+import { Feature } from "../api/FeatureTypes";
 import { setCurrentRecord } from "../featureSlice";
 import { selectSearchResult, fetchSearchFeatures, selectIsLoading } from "../featureSearchSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";

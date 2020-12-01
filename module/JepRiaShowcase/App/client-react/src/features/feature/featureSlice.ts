@@ -1,5 +1,5 @@
 import { RecordState } from "./../../app/common/recordSlice";
-import { Feature, FeatureCreate } from "./api/FeatureInterface";
+import { Feature, FeatureCreate } from "./api/FeatureTypes";
 import { AppThunk, RootState } from "./../../app/store";
 import { getFeature, createFeatureApi } from "./api/FeatureApi";
 import { createGenericSlice } from "../../app/common/recordSlice";

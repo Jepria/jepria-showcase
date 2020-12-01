@@ -1,4 +1,4 @@
-import { Feature, FeatureSearchTemplate } from "./FeatureInterface";
+import { Feature, FeatureSearchTemplate } from "./FeatureTypes";
 import { ConnectorSearch } from "@jfront/core-rest";
 
 class FeatureSearchApi extends ConnectorSearch<Feature, FeatureSearchTemplate> {

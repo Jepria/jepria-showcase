@@ -1,5 +1,5 @@
 import { ConnectorCrud } from "@jfront/core-rest";
-import { Feature, FeatureCreate, FeatureUpdate } from "./FeatureInterface";
+import { Feature, FeatureCreate, FeatureUpdate } from "./FeatureTypes";
 
 class FeatureCrudApi extends ConnectorCrud<Feature, FeatureCreate, FeatureUpdate> {
   constructor(baseUrl: string) {

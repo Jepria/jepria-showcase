@@ -3,7 +3,7 @@ import {
   FeatureProcess,
   FeatureProcessCreate,
   FeatureStatusOptions,
-} from "./FeatureProcessInterface";
+} from "./FeatureProcessTypes";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const withCredentials = false;

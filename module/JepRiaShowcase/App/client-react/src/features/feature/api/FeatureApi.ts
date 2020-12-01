@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Feature, FeatureCreate, FeatureUpdate } from "./FeatureInterface";
+import { Feature, FeatureCreate, FeatureUpdate } from "./FeatureTypes";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const withCredentials = false;

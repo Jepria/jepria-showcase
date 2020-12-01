@@ -18,24 +18,24 @@ export interface Feature {
   };
 }
 
-export type FeatureCreate = {
+export interface FeatureCreate {
   featureName: string;
   featureNameEn: string;
   description?: string;
-};
+}
 
-export type FeatureUpdate = {
+export interface FeatureUpdate {
   featureName: string;
   featureNameEn: string;
   description?: string;
   responsibleId?: number;
-};
+}
 
-export type FeatureSearchTemplate = {
+export interface FeatureSearchTemplate {
   featureId?: number;
   featureNameTemplate?: string;
   featureNameEnTemplate?: string;
   dateInsFrom?: Date;
   dateInsTo?: Date;
   statusCodeList?: string[];
-};
+}

@@ -1,7 +1,7 @@
 import { SearchState, createGenericSearchSlice } from "./../../app/common/recordSearchSlice";
 import queryString from "query-string";
 import { SearchRequest } from "@jfront/core-rest";
-import { Feature, FeatureSearchTemplate } from "./api/FeatureInterface";
+import { Feature, FeatureSearchTemplate } from "./api/FeatureTypes";
 import { featureCrudApi } from "./api/FeatureSearchApi";
 import { AppThunk, RootState } from "./../../app/store";
 

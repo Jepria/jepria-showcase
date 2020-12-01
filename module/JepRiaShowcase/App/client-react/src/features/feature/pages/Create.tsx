@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
-import { Feature, FeatureCreate } from "../api/FeatureInterface";
+import { Feature, FeatureCreate } from "../api/FeatureTypes";
 import { selectSaveOnCreateFeature, setCreateRecord } from "../featureSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { featureCrudApi } from "../api/FeatureCrudApi";

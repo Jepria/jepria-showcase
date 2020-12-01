@@ -13,7 +13,7 @@ import {
 } from "@jfront/ui-core";
 import { selectState, Workstates } from "../../../app/WorkstateSlice";
 import { selectFeature } from "../../feature/featureSlice";
-import { Feature } from "../../feature/api/FeatureInterface";
+import { Feature } from "../../feature/api/FeatureTypes";
 import { selectFeatureProcess, submitSaveOnCreateFeatureProcess } from "../featureProcessSlice";
 import { deleteFeatureProcess } from "../api/FeatureProcessApi";
 

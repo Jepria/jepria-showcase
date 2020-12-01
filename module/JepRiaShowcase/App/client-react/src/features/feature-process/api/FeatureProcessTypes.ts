@@ -1,4 +1,4 @@
-export type FeatureProcess = {
+export interface FeatureProcess {
   featureId: number;
   featureProcessId: number;
   featureStatusCode: string;
@@ -6,11 +6,11 @@ export type FeatureProcess = {
   dateIns: Date;
 }
 
-export type FeatureProcessCreate = {
+export interface FeatureProcessCreate {
   featureStatusCode: string;
 }
 
-export type FeatureStatusOptions = {
+export interface FeatureStatusOptions {
   name: string;
   value: string;
 }

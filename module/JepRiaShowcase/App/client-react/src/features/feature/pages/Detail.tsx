@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
-import { Feature } from "../api/FeatureInterface";
+import { Feature } from "../api/FeatureTypes";
 import { fetchFeature, selectError, selectFeature } from "../featureSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 

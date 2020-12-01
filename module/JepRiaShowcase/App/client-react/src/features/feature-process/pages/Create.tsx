@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
-import { FeatureProcessCreate, FeatureStatusOptions } from "../api/FeatureProcessInterface";
+import { FeatureProcessCreate, FeatureStatusOptions } from "../api/FeatureProcessTypes";
 import { createFeatureProcess, getFeatureStatusOptions } from "../api/FeatureProcessApi";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 import {
