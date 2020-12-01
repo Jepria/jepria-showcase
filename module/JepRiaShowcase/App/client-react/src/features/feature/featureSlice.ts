@@ -1,8 +1,8 @@
 import { RecordState } from "./../../app/common/recordSlice";
 import { Feature, FeatureCreate } from "./api/FeatureTypes";
 import { AppThunk, RootState } from "./../../app/store";
-import { getFeature, createFeatureApi } from "./api/FeatureApi";
 import { createGenericSlice } from "../../app/common/recordSlice";
+import { featureCrudApi } from "./api/FeatureCrudApi";
 
 const initialState: RecordState<Feature> = {
   currentRecord: null,
@@ -29,7 +29,7 @@ export const selectSaveOnEditFeature = (state: RootState) => state.feature.saveO
 
 export const fetchFeature = (featureId: string): AppThunk => async (dispatch) => {
   try {
-    getFeature(featureId).then((feature) => {
+    featureCrudApi.getRecordById(featureId).then((feature) => {
       dispatch(setCurrentRecord(feature));
     });
   } catch (error) {
@@ -39,7 +39,7 @@ export const fetchFeature = (featureId: string): AppThunk => async (dispatch) =>
 
 export const createFeature = (feature: FeatureCreate): AppThunk => async (dispatch) => {
   try {
-    createFeatureApi(feature).then((feature) => {
+    featureCrudApi.create(feature).then((feature) => {
       dispatch(setCurrentRecord(feature));
     });
   } catch (error) {

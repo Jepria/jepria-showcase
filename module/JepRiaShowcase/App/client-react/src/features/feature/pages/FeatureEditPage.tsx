@@ -11,9 +11,9 @@ import {
   setCurrentRecord,
   submitSavedOnEditFeature,
 } from "../featureSlice";
-import { getFeature, updateFeature } from "../api/FeatureApi";
 import { Feature, FeatureUpdate } from "../api/FeatureTypes";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
+import { featureCrudApi } from "../api/FeatureCrudApi";
 
 const FeatureEditPage = () => {
   let formRef = useRef(null) as any;
@@ -34,7 +34,7 @@ const FeatureEditPage = () => {
 
   const onSubmit = (data: FeatureUpdate) => {
     if (featureId) {
-      updateFeature(featureId.toString(), data).then(() => {
+      featureCrudApi.update(featureId.toString(), data).then(() => {
         history.push(`/${featureId}/detail`);
       });
     }
@@ -42,7 +42,7 @@ const FeatureEditPage = () => {
 
   useEffect(() => {
     dispatch(setState(Workstates.FeatureEdit));
-    getFeature(featureId).then((feature) => {
+    featureCrudApi.getRecordById(featureId).then((feature) => {
       dispatch(setCurrentRecord(feature));
     });
   }, []);
