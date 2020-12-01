@@ -7,4 +7,4 @@ class FeatureSearchApi extends ConnectorSearch<Feature, FeatureSearchTemplate> {
   }
 }
 
-export const featureCrudApi = new FeatureSearchApi(process.env.REACT_APP_API_URL + "/feature");
+export const featureSearchApi = new FeatureSearchApi(process.env.REACT_APP_API_URL + "/feature");
