@@ -33,39 +33,44 @@ function Main() {
   return (
     <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
       <Panel>
-        <Panel.Header>
-          <AppTabPanel />
-        </Panel.Header>
         <Switch>
-          <Route path="/" exact>
+          <Route path="/feature" exact>
+            <AppTabPanel />
             <FeatureToolbar />
             <FeatureSearchPage />
           </Route>
-          <Route path="/create" exact>
+          <Route path="/feature/create" exact>
+            <AppTabPanel />
             <FeatureToolbar />
             <FeatureCreatePage />
           </Route>
-          <Route path="/:featureId/edit" exact>
+          <Route path="/feature/:featureId/edit" exact>
+            <AppTabPanel />
             <FeatureToolbar />
             <FeatureEditPage />
           </Route>
-          <Route path="/:featureId/detail">
+          <Route path="/feature/:featureId/detail">
+            <AppTabPanel />
             <FeatureToolbar />
             <FeatureDetailPage />
           </Route>
-          <Route path="/list">
+          <Route path="/feature/list">
+            <AppTabPanel />
             <FeatureToolbar />
             <FeatureListPage />
           </Route>
-          <Route path="/:featureId/feature-process" exact>
+          <Route path="/feature/:featureId/feature-process" exact>
+            <AppTabPanel />
             <FeatureProcessToolbar />
             <FeatureProcessListPage />
           </Route>
-          <Route path="/:featureId/feature-process/:featureProcessId/detail">
+          <Route path="/feature/:featureId/feature-process/:featureProcessId/detail">
+            <AppTabPanel />
             <FeatureProcessToolbar />
             <FeatureProcessDetailPage />
           </Route>
-          <Route path="/:featureId/feature-process/create" exact>
+          <Route path="/feature/:featureId/feature-process/create" exact>
+            <AppTabPanel />
             <FeatureProcessToolbar />
             <FeatureProcessCreatePage />
           </Route>

@@ -87,7 +87,7 @@ const ListPage = () => {
             }
           }}
           onDoubleClick={(feature) => {
-            history.push(`/${feature.featureId}/detail`);
+            history.push(`/feature/${feature.featureId}/detail`);
           }}
         />
       )}

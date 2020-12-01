@@ -37,7 +37,7 @@ const FeatureToolbar = () => {
     <Toolbar>
       <ToolbarButtonCreate
         disabled={state === Workstates.FeatureCreate}
-        onClick={() => history.push(`/create`)}
+        onClick={() => history.push(`/feature/create`)}
       />
       <ToolbarButtonSave
         disabled={Workstates.FeatureCreate !== state && Workstates.FeatureEdit !== state}
@@ -53,24 +53,24 @@ const FeatureToolbar = () => {
       <ToolbarButtonEdit
         disabled={!currentRecord}
         onClick={() => {
-          history.push(`/${currentRecord?.featureId}/edit`);
+          history.push(`/feature/${currentRecord?.featureId}/edit`);
         }}
       />
       <ToolbarButtonDelete disabled={!currentRecord} />
       <ToolbarButtonView
         disabled={!currentRecord || Workstates.FeatureDetail === state}
-        onClick={() => history.push(`/${currentRecord?.featureId}/detail`)}
+        onClick={() => history.push(`/feature/${currentRecord?.featureId}/detail`)}
       />
       <ToolbarSplitter />
       <ToolbarButtonBase
         disabled={Workstates.FeatureList !== state && records ? records.length === 0 : true}
-        onClick={() => history.push(`/list/?pageSize=${searchPageSize}&page=${searchPage}`)}
+        onClick={() => history.push(`/feature/list/?pageSize=${searchPageSize}&page=${searchPage}`)}
       >
         {t("toolbar.list")}
       </ToolbarButtonBase>
       <ToolbarButtonFind
         disabled={state === Workstates.FeatureSearch}
-        onClick={() => history.push(`/`)}
+        onClick={() => history.push(`/feature`)}
       />
       <ToolbarButtonBase
         disabled={state !== Workstates.FeatureSearch}

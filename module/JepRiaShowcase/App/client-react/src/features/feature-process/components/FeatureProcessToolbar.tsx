@@ -23,7 +23,6 @@ const FeatureProcessToolbar = () => {
   const dispatch = useDispatch();
   const state: Workstates = useSelector(selectState);
   const currentFeatureProcess = useSelector(selectFeatureProcess);
-  const currentFeature: Feature = useSelector(selectFeature);
 
   return (
     <Toolbar>
@@ -43,12 +42,12 @@ const FeatureProcessToolbar = () => {
       <ToolbarButtonDelete
         disabled={!currentFeatureProcess}
         onClick={() => {
-          if (currentFeature.featureId && currentFeatureProcess.featureProcessId) {
+          if (currentFeatureProcess.featureId && currentFeatureProcess.featureProcessId) {
             deleteFeatureProcess(
-              parseInt(currentFeature.featureId.toString()),
+              parseInt(currentFeatureProcess.featureId.toString()),
               parseInt(currentFeatureProcess.featureProcessId)
             ).then(() => {
-              history.push(`/${currentFeature.featureId}/feature-process`);
+              history.push(`/${currentFeatureProcess.featureId}/feature-process`);
             });
           }
         }}
@@ -57,7 +56,7 @@ const FeatureProcessToolbar = () => {
         disabled={!currentFeatureProcess || Workstates.FeatureProcessDetail === state}
         onClick={() =>
           history.push(
-            `/${currentFeature?.featureId}/feature-process/${currentFeatureProcess?.featureProcessId}/detail`
+            `/feature/${currentFeatureProcess.featureId}/feature-process/${currentFeatureProcess?.featureProcessId}/detail`
           )
         }
       />
@@ -65,7 +64,7 @@ const FeatureProcessToolbar = () => {
       <ToolbarButtonBase
         disabled={Workstates.FeatureProcessList === state}
         onClick={() => {
-          history.push(`/${currentFeature.featureId}/feature-process`);
+          history.push(`/feature/${currentFeatureProcess.featureId}/feature-process`);
         }}
       >
         {t("toolbar.list")}

@@ -38,7 +38,7 @@ const SearchPage = () => {
       query = "&" + query;
     }
 
-    history.push(`/list/?pageSize=25&page=1${query}`);
+    history.push(`/feature/list/?pageSize=25&page=1${query}`);
   };
 
   useEffect(() => {

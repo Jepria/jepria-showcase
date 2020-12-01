@@ -55,7 +55,7 @@ const FeatureProcessListPage = () => {
         }}
         onDoubleClick={(featureProcess) => {
           history.push(
-            `/${featureProcess.featureId}/feature-process/${featureProcess.featureProcessId}/detail`
+            `/feature/${featureProcess.featureId}/feature-process/${featureProcess.featureProcessId}/detail`
           );
         }}
       />
