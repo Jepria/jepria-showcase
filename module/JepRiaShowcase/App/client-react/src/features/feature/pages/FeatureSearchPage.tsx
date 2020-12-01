@@ -16,12 +16,16 @@ import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { selectSearchSubmit, selectSearchTemplate, submitSearch } from "../featureSearchSlice";
 
 const SearchPage = () => {
+  //----------------
   let formRef = useRef(null) as any;
   const { t } = useTranslation();
   const history = useHistory();
-  let [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
+  //----------------
+
+  const [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const selectSearch = useSelector(selectSearchSubmit);
   const searchTemplate: FeatureSearchTemplate = useSelector(selectSearchTemplate);
 
@@ -31,15 +35,6 @@ const SearchPage = () => {
       dispatch(submitSearch(false));
     }
   }, [selectSearch]);
-
-  const onSubmit = (data?: FeatureSearchTemplate) => {
-    let query = queryString.stringify(data);
-    if (query) {
-      query = "&" + query;
-    }
-
-    history.push(`/feature/list/?pageSize=25&page=1${query}`);
-  };
 
   useEffect(() => {
     dispatch(setState(Workstates.FeatureSearch));
@@ -51,10 +46,15 @@ const SearchPage = () => {
 
   const formik = useFormik<FeatureSearchTemplate>({
     initialValues: searchTemplate,
-    onSubmit: (values) => {
-      onSubmit(values);
-    },
     enableReinitialize: true,
+    onSubmit: (values) => {
+      let query = queryString.stringify(values);
+      if (query) {
+        query = "&" + query;
+      }
+
+      history.push(`/feature/list/?pageSize=25&page=1${query}`);
+    },
   });
 
   return (

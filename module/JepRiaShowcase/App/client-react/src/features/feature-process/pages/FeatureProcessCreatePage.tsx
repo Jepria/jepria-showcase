@@ -13,12 +13,15 @@ import {
 } from "../featureProcessSlice";
 
 const FeatureProcessCreatePage = () => {
+  //----------------
   let formRef = useRef(null) as any;
   const { t } = useTranslation();
   const history = useHistory();
-  let { featureId } = useParams();
-  let [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
   const dispatch = useDispatch();
+  //----------------
+  let { featureId } = useParams();
+  const [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
+
   const onSave = useSelector(selectSaveOnCreateFeatureProcess);
 
   useEffect(() => {
@@ -27,14 +30,6 @@ const FeatureProcessCreatePage = () => {
       formRef.current?.dispatchEvent(new Event("submit"));
     }
   }, [onSave]);
-
-  const onSubmit = (data: FeatureProcessCreate) => {
-    if (featureId) {
-      createFeatureProcess(parseInt(featureId), data).then((value) => {
-        history.push(`/${value.featureId}/feature-process/${value.featureProcessId}/detail`);
-      });
-    }
-  };
 
   useEffect(() => {
     dispatch(setState(Workstates.FeatureProcessCreate));
@@ -48,41 +43,18 @@ const FeatureProcessCreatePage = () => {
       featureStatusCode: "",
     },
     onSubmit: (values: FeatureProcessCreate) => {
-      onSubmit(values);
+      if (featureId) {
+        createFeatureProcess(parseInt(featureId), values).then((value) => {
+          history.push(
+            `/feature/${value.featureId}/feature-process/${value.featureProcessId}/detail`
+          );
+        });
+      }
     },
   });
 
   return (
     <>
-      {/* <TabPanel>
-        <Tab
-          selected={mainTabSelected}
-          onClick={() => {
-            history.push("/");
-          }}
-        >
-          {t("feature.header")}
-        </Tab>
-        <Tab selected={!mainTabSelected}>{t("feature-process.header")}</Tab>
-      </TabPanel>
-      <Toolbar>
-        <ToolbarButtonCreate onClick={() => history.push(`/create`)} />
-        <ToolbarButtonSave
-          onClick={() => {
-            let button = document.getElementById("feature-process-save");
-            if (button) {
-              button.click();
-            }
-          }}
-        />
-        <ToolbarButtonEdit onClick={() => history.push(`/${featureId}/edit`)} />
-        <ToolbarButtonDelete />
-        <ToolbarButtonView disabled={true} />
-        <ToolbarSplitter />
-        <ToolbarButtonBase onClick={() => history.goBack()}>{t("toolbar.list")}</ToolbarButtonBase>
-        <ToolbarButtonFind onClick={() => history.push(`/`)} />
-        <ToolbarButtonBase disabled={true}>{t("toolbar.find")}</ToolbarButtonBase>
-      </Toolbar> */}
       <Form onSubmit={formik.handleSubmit} ref={formRef}>
         <Form.Field>
           <Form.Label>{t("feature-process.fields.featureStatusCode")}</Form.Label>

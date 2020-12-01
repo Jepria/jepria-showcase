@@ -6,22 +6,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
 import { Feature, FeatureCreate } from "../api/FeatureTypes";
-import { selectSaveOnCreateFeature, setCreateRecord } from "../featureSlice";
+import { selectSaveOnCreateFeature, setCreateRecord, submitSavedOnCreate } from "../featureSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { featureCrudApi } from "../api/FeatureCrudApi";
 
 const FeatureCreatePage = () => {
+  //----------------
   let formRef = useRef(null) as any;
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const onCreateFeature = useSelector(selectSaveOnCreateFeature);
+  //----------------
 
-  const onSubmit = (data: FeatureCreate) => {
-    featureCrudApi.create(data).then((feature: Feature) => {
-      history.push(`/${feature.featureId}/detail`);
-    });
-  };
+  const onCreateFeature = useSelector(selectSaveOnCreateFeature);
+  useEffect(() => {
+    if (onCreateFeature) {
+      dispatch(submitSavedOnCreate());
+      formRef.current?.dispatchEvent(new Event("submit"));
+    }
+  }, [onCreateFeature]);
 
   const formik = useFormik<FeatureCreate>({
     initialValues: {
@@ -30,19 +33,11 @@ const FeatureCreatePage = () => {
       featureNameEn: "",
     },
     onSubmit: (values: FeatureCreate) => {
-      onSubmit(values);
+      featureCrudApi.create(values).then((feature: Feature) => {
+        history.push(`/feature/${feature.featureId}/detail`);
+      });
     },
   });
-
-  useEffect(() => {
-    if (onCreateFeature) {
-      dispatch(setCreateRecord(false));
-      let button = document.getElementById("create-submit");
-      if (button) {
-        button.click();
-      }
-    }
-  }, [onCreateFeature]);
 
   useEffect(() => {
     dispatch(setState(Workstates.FeatureCreate));

@@ -13,23 +13,22 @@ const useQuery = () => {
 };
 
 const FeatureListPage = () => {
+  //----------------
   const history = useHistory();
   const location = useLocation();
   let query = useQuery();
-  const pageSize: number = parseInt(query.get("pageSize") as string);
-  const page: number = parseInt(query.get("page") as string);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  //----------------
+
+  const pageSize: number = parseInt(query.get("pageSize") as string);
+  const page: number = parseInt(query.get("page") as string);
   const records: Array<Feature> = useSelector(selectSearchResult);
   const isLoading = useSelector(selectIsLoading);
 
-  const find = () => {
-    dispatch(fetchSearchFeatures(location.search, pageSize, page));
-  };
-
   useEffect(() => {
     dispatch(setState(Workstates.FeatureList));
-    find();
+    dispatch(fetchSearchFeatures(location.search, pageSize, page));
   }, [location]);
 
   return (

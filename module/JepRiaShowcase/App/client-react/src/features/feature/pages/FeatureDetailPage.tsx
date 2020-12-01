@@ -8,9 +8,12 @@ import { fetchFeature, selectError, selectFeature } from "../featureSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 
 const FeatureDetailPage = () => {
-  let { featureId } = useParams();
+  //----------------
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  //----------------
+
+  let { featureId } = useParams();
   const currentRecord: Feature = useSelector(selectFeature);
   const error = useSelector(selectError);
 
