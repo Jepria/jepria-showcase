@@ -8,7 +8,7 @@ import { TextInput } from "@jfront/ui-core";
 import {
   selectFeature,
   selectSaveOnEditFeature,
-  setCurrentFeature,
+  setCurrentRecord,
   submitSavedOnEditFeature,
 } from "../featureSlice";
 import { getFeature, updateFeature } from "../api/FeatureApi";
@@ -43,7 +43,7 @@ const EditPage = () => {
   useEffect(() => {
     dispatch(setState(Workstates.FeatureEdit));
     getFeature(featureId).then((feature) => {
-      dispatch(setCurrentFeature(feature));
+      dispatch(setCurrentRecord(feature));
     });
   }, []);
 

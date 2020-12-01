@@ -1,91 +1,66 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { RecordState } from "./../../app/common/recordSlice";
 import { Feature, FeatureCreate } from "./api/FeatureInterface";
 import { AppThunk, RootState } from "./../../app/store";
 import { getFeature, createFeatureApi } from "./api/FeatureApi";
+import { createGenericSlice } from "../../app/common/recordSlice";
 
-interface FeatureState {
-  currentFeature: Feature;
-  error: string;
-  saveOnCreateFeature: boolean;
-  saveOnEditFeature: boolean;
-}
-
-const initialState: FeatureState = {
-  currentFeature: null,
+const initialState: RecordState<Feature> = {
+  currentRecord: null,
   error: null,
-  saveOnCreateFeature: false,
-  saveOnEditFeature: false,
+  saveOnCreate: false,
+  saveOnEdit: false,
 };
 
-export const featureSlice = createSlice({
-  name: "feature",
-  initialState,
-  reducers: {
-    setCreateFeature(state, action) {
-      state.saveOnCreateFeature = action.payload;
-    },
-    setSaveOnEditFeature(state, action) {
-      state.saveOnEditFeature = action.payload;
-    },
-    // setFeatureCreated(state, action) {
-    //   state.saveOnCreateFeature = action.payload;
-    // },
-    setCurrentFeature(state, action) {
-      state.currentFeature = action.payload;
-    },
-    getFeatureError(state, action) {
-      state.error = action.payload;
-      state.currentFeature = null;
-    },
-  },
+export const featureSlice = createGenericSlice({
+  name: "featureSlice",
+  initialState: initialState,
+  reducers: {},
 });
 
-export const { setCurrentFeature } = featureSlice.actions;
-export const { getFeatureError } = featureSlice.actions;
-export const { setCreateFeature } = featureSlice.actions;
-export const { setSaveOnEditFeature } = featureSlice.actions;
+export const { setCurrentRecord } = featureSlice.actions;
+export const { getError } = featureSlice.actions;
+export const { setCreateRecord } = featureSlice.actions;
+export const { setSaveOnEditRecord } = featureSlice.actions;
 
-export const selectFeature = (state: RootState) => state.feature.currentFeature;
+export const selectFeature = (state: RootState) => state.feature.currentRecord;
 export const selectError = (state: RootState) => state.feature.error;
-export const selectSaveOnCreateFeature = (state: RootState) => state.feature.saveOnCreateFeature;
-export const selectSaveOnEditFeature = (state: RootState) => state.feature.saveOnEditFeature;
-// export const selectOnFeatureCreated = (state: RootState) => state.feature.onFeatureCreated;
+export const selectSaveOnCreateFeature = (state: RootState) => state.feature.saveOnCreate;
+export const selectSaveOnEditFeature = (state: RootState) => state.feature.saveOnEdit;
 
 export const fetchFeature = (featureId: string): AppThunk => async (dispatch) => {
   try {
     getFeature(featureId).then((feature) => {
-      dispatch(setCurrentFeature(feature));
+      dispatch(setCurrentRecord(feature));
     });
   } catch (error) {
-    dispatch(getFeatureError(error));
+    dispatch(getError(error));
   }
 };
 
 export const createFeature = (feature: FeatureCreate): AppThunk => async (dispatch) => {
   try {
     createFeatureApi(feature).then((feature) => {
-      dispatch(setCurrentFeature(feature));
-      // dispatch(setCreateFeature(true));
+      dispatch(setCurrentRecord(feature));
     });
   } catch (error) {
-    dispatch(getFeatureError(error));
+    dispatch(getError(error));
   }
 };
 
 export const submitSaveOnCreate = (): AppThunk => async (dispatch) => {
-  dispatch(setCreateFeature(true));
+  dispatch(setCreateRecord(true));
 };
 
 export const submitSavedOnCreate = (): AppThunk => async (dispatch) => {
-  dispatch(setCreateFeature(false));
+  dispatch(setCreateRecord(false));
 };
 
 export const submitSaveOnEditFeature = (): AppThunk => async (dispatch) => {
-  dispatch(setSaveOnEditFeature(true));
+  dispatch(setSaveOnEditRecord(true));
 };
 
 export const submitSavedOnEditFeature = (): AppThunk => async (dispatch) => {
-  dispatch(setSaveOnEditFeature(false));
+  dispatch(setSaveOnEditRecord(false));
 };
 
 export default featureSlice.reducer;

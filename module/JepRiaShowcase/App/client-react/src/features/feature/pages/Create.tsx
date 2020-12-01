@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
 import { Feature, FeatureCreate } from "../api/FeatureInterface";
-import { selectSaveOnCreateFeature, setCreateFeature } from "../featureSlice";
+import { selectSaveOnCreateFeature, setCreateRecord } from "../featureSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { featureCrudApi } from "../api/FeatureCrudApi";
 
@@ -36,7 +36,7 @@ const CreatePage = () => {
 
   useEffect(() => {
     if (onCreateFeature) {
-      dispatch(setCreateFeature(false));
+      dispatch(setCreateRecord(false));
       let button = document.getElementById("create-submit");
       if (button) {
         button.click();

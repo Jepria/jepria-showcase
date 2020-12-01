@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Feature } from "../api/FeatureInterface";
 import { Grid } from "@jfront/ui-core";
-import { setCurrentFeature } from "../featureSlice";
+import { Feature } from "../api/FeatureInterface";
+import { setCurrentRecord } from "../featureSlice";
 import { selectSearchResult, fetchSearchFeatures, selectIsLoading } from "../featureSearchSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 
@@ -81,9 +81,9 @@ const ListPage = () => {
           onSelection={(selectedFeatures) => {
             console.log(selectedFeatures);
             if (selectedFeatures.length === 1) {
-              dispatch(setCurrentFeature(selectedFeatures[0]));
+              dispatch(setCurrentRecord(selectedFeatures[0]));
             } else {
-              dispatch(setCurrentFeature(undefined));
+              dispatch(setCurrentRecord(undefined));
             }
           }}
           onDoubleClick={(feature) => {

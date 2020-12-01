@@ -1,6 +1,6 @@
 import { createSlice, SliceCaseReducers, ValidateSliceCaseReducers } from "@reduxjs/toolkit";
 
-export interface RecordState<RECORD = any, TEMPLATE = any> {
+export interface SearchState<RECORD = any, TEMPLATE = any> {
   searchTemplate?: TEMPLATE;
   error?: string;
   isLoading?: boolean;
@@ -10,18 +10,18 @@ export interface RecordState<RECORD = any, TEMPLATE = any> {
   submit?: boolean;
 }
 
-export const createGenericSlice = <
+export const createGenericSearchSlice = <
   RECORD,
   TEMPLATE,
-  Reducers extends SliceCaseReducers<RecordState<RECORD, TEMPLATE>>
+  Reducers extends SliceCaseReducers<SearchState<RECORD, TEMPLATE>>
 >({
   name = "",
   initialState,
   reducers,
 }: {
   name: string;
-  initialState: RecordState<RECORD, TEMPLATE>;
-  reducers: ValidateSliceCaseReducers<RecordState<RECORD, TEMPLATE>, Reducers>;
+  initialState: SearchState<RECORD, TEMPLATE>;
+  reducers: ValidateSliceCaseReducers<SearchState<RECORD, TEMPLATE>, Reducers>;
 }) => {
   return createSlice({
     name,

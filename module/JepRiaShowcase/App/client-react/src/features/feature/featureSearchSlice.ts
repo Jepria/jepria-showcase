@@ -1,21 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { SearchState, createGenericSearchSlice } from "./../../app/common/recordSearchSlice";
 import queryString from "query-string";
+import { SearchRequest } from "@jfront/core-rest";
 import { Feature, FeatureSearchTemplate } from "./api/FeatureInterface";
 import { featureCrudApi } from "./api/FeatureSearchApi";
 import { AppThunk, RootState } from "./../../app/store";
-import { SearchRequest } from "@jfront/core-rest";
 
-interface FeatureSearchState {
-  searchTemplate?: FeatureSearchTemplate;
-  error?: string;
-  isLoading?: boolean;
-  searchResult?: Array<Feature>;
-  pageSize?: number;
-  page?: number;
-  submit?: boolean;
-}
-
-const initialState: FeatureSearchState = {
+const initialState: SearchState<Feature, FeatureSearchTemplate> = {
   searchTemplate: {},
   error: null,
   isLoading: false,
@@ -25,28 +15,10 @@ const initialState: FeatureSearchState = {
   submit: false,
 };
 
-export const featureSearchSlice = createSlice({
+export const featureSearchSlice = createGenericSearchSlice({
   name: "featureSearch",
-  initialState,
-  reducers: {
-    setSearchTemplate(state: FeatureSearchState, action: PayloadAction<FeatureSearchTemplate>) {
-      state.searchTemplate = action.payload;
-    },
-    searchError(state, action) {
-      state.error = action.payload;
-      state.searchTemplate = null;
-      state.searchResult = [];
-    },
-    isLoading(state, action) {
-      state.isLoading = action.payload;
-    },
-    searchSuccess(state, action: PayloadAction<Array<Feature>>) {
-      state.searchResult = action.payload;
-    },
-    submitSearch(state, action) {
-      state.submit = action.payload;
-    },
-  },
+  initialState: initialState,
+  reducers: {},
 });
 
 export const { setSearchTemplate } = featureSearchSlice.actions;

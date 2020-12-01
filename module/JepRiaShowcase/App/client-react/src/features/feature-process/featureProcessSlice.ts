@@ -1,14 +1,11 @@
 import { FeatureProcess } from "./api/FeatureProcessInterface";
 import { createSlice } from "@reduxjs/toolkit";
-// import { Feature, FeatureCreate } from "./api/FeatureInterface";
 import { AppThunk, RootState } from "./../../app/store";
-// import { getFeature, createFeatureApi } from "./api/FeatureApi";
 
 interface FeatureProcessState {
   currentFeatureProcess: FeatureProcess;
   error: string;
   saveOnCreateFeatureProcess: boolean;
-  // onFeatureCreated: boolean;
 }
 
 const initialState: FeatureProcessState = {
@@ -44,15 +41,11 @@ export const selectError = (state: RootState) => state.featureProcess.error;
 export const selectSaveOnCreateFeatureProcess = (state: RootState) =>
   state.featureProcess.saveOnCreateFeatureProcess;
 
-export const submitSaveOnCreateFeatureProcess = (): AppThunk => async (
-  dispatch
-) => {
+export const submitSaveOnCreateFeatureProcess = (): AppThunk => async (dispatch) => {
   dispatch(setSaveOnCreateFeatureProcess(true));
 };
 
-export const submitSavedOnCreateFeatureProcess = (): AppThunk => async (
-  dispatch
-) => {
+export const submitSavedOnCreateFeatureProcess = (): AppThunk => async (dispatch) => {
   dispatch(setSaveOnCreateFeatureProcess(false));
 };
 
