@@ -8,7 +8,8 @@
     Сборка общего продукта (lib/*.war) на основе компонентов (client-react/build/*.*, service-rest/target/*.war, gwt/lib/*-gwt.war).
 
     Наличие либо отсутствие в проекте компонентов пока что устанавливается вручную
-    комментированием xml-элементов с текстовыми метками "build:gwt", "build:service-rest", "build:client-react".
+    комментированием xml-элементов (ресурсов) с текстовыми метками "build:gwt",
+    "build:service-rest", "build:client-react" в настройках maven-war-plugin.
   -->
 
   <groupId>org.jepria.jepriashowcase</groupId>
@@ -93,7 +94,7 @@
             <configuration>
               <filesets>
                 <fileset>
-                  <directory>${project.parent.basedir}/gwt/lib/${project.build.gwt.productName}-gwt.war</directory>
+                  <directory>${project.parent.basedir}/gwt/lib/${project.build.gwt.productName}.war</directory>
                   <outputDirectory>${project.build.directory}/temp-war-gwt</outputDirectory>
                 </fileset>
               </filesets>
@@ -130,7 +131,7 @@
             <id>build_gwt__check-collisions,build_service-rest__check-collisions</id>
             <phase>prepare-package</phase>
             <configuration>
-              <warGwtPath>${project.parent.basedir}/gwt/lib/${project.build.gwt.productName}-gwt.war</warGwtPath>
+              <warGwtPath>${project.parent.basedir}/gwt/lib/${project.build.gwt.productName}.war</warGwtPath>
               <warServiceRestPath>${project.parent.basedir}/service-rest/target/${project.build.serviceRest.productName}.war</warServiceRestPath>
               <strict>true</strict>
             </configuration>
