@@ -7,7 +7,7 @@ import { Feature } from "../api/FeatureTypes";
 import { fetchFeature, selectError, selectFeature } from "../featureSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 
-const DetailPage = () => {
+const FeatureDetailPage = () => {
   let { featureId } = useParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -90,4 +90,4 @@ const DetailPage = () => {
   );
 };
 
-export default DetailPage;
+export default FeatureDetailPage;

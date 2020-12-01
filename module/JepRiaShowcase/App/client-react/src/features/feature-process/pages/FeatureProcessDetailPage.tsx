@@ -11,7 +11,6 @@ const FeatureProcessDetailPage = () => {
   const { t } = useTranslation();
   let { featureId, featureProcessId } = useParams();
   const [] = useState<boolean>(false);
-  // const [featureProcess, setFeatureProcess] = useState<FeatureProcess>();
   const dispatch = useDispatch();
   const currentRecord = useSelector(selectFeatureProcess);
 

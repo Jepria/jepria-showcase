@@ -10,7 +10,7 @@ import { selectSaveOnCreateFeature, setCreateRecord } from "../featureSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { featureCrudApi } from "../api/FeatureCrudApi";
 
-const CreatePage = () => {
+const FeatureCreatePage = () => {
   let formRef = useRef(null) as any;
   const history = useHistory();
   const { t } = useTranslation();
@@ -83,4 +83,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default FeatureCreatePage;

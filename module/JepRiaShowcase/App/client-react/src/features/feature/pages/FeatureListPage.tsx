@@ -12,7 +12,7 @@ const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
-const ListPage = () => {
+const FeatureListPage = () => {
   const history = useHistory();
   const location = useLocation();
   let query = useQuery();
@@ -95,4 +95,4 @@ const ListPage = () => {
   );
 };
 
-export default ListPage;
+export default FeatureListPage;

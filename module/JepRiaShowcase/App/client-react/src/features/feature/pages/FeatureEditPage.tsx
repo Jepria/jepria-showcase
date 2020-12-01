@@ -15,7 +15,7 @@ import { getFeature, updateFeature } from "../api/FeatureApi";
 import { Feature, FeatureUpdate } from "../api/FeatureTypes";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 
-const EditPage = () => {
+const FeatureEditPage = () => {
   let formRef = useRef(null) as any;
   const history = useHistory();
   let { featureId } = useParams();
@@ -147,4 +147,4 @@ const EditPage = () => {
   );
 };
 
-export default EditPage;
+export default FeatureEditPage;
