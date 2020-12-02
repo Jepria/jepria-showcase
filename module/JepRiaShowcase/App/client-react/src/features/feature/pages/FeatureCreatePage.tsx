@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
 import { Feature, FeatureCreate } from "../api/FeatureTypes";
-import { selectSaveOnCreateFeature, setCreateRecord, submitSavedOnCreate } from "../featureSlice";
+import { selectSaveOnCreateFeature, submitSavedOnCreate } from "../featureSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { featureCrudApi } from "../api/FeatureCrudApi";
 
@@ -37,6 +37,17 @@ const FeatureCreatePage = () => {
         history.push(`/feature/${feature.featureId}/detail`);
       });
     },
+    validate: (values) => {
+      const errors: {
+        featureName?: string;
+        featureNameEn?: string;
+        description?: string;
+      } = {};
+      if (!values.featureName) {
+        errors.featureName = t("validation.notEmpty");
+      }
+      return errors;
+    },
   });
 
   useEffect(() => {
@@ -47,7 +58,7 @@ const FeatureCreatePage = () => {
     <>
       <Form id="create-form" onSubmit={formik.handleSubmit} ref={formRef}>
         <Form.Field>
-          <Form.Label>{t("feature.fields.featureName")}</Form.Label>
+          <Form.Label required>{t("feature.fields.featureName")}</Form.Label>
           <Form.Control error={formik.errors.featureName} style={{ maxWidth: "150px" }}>
             <TextInput
               name="featureName"
