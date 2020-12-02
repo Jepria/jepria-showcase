@@ -28,8 +28,8 @@ import static org.jepria.compat.server.JepRiaServerConstant.*;
 public class FeatureJaxrsAdapterTestIT {
 
   private static final String ENTITY_URL = "http://localhost:8080/jepriashowcase-service-rest/api/feature";
-  private static final String OPERATOR_NAME = "nagornyys";
-  private static final String OPERATOR_PASSWORD = "123";
+  private static final String OPERATOR_NAME = "name";
+  private static final String OPERATOR_PASSWORD = "password";
 
   @Disabled
   @Test
@@ -230,6 +230,7 @@ public class FeatureJaxrsAdapterTestIT {
 
   }
 
+  //TODO: move to another file
   @Test
   public void featureExcelTest() {
     String testUrl = ENTITY_URL + "/search";
