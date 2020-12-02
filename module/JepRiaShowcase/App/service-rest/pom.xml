@@ -15,12 +15,10 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <jersey.version>2.29</jersey.version>
     <antcontrib.version>1.0b3</antcontrib.version>
-    <jepria.version>12.0.0</jepria.version>
+    <jepria.version>12.3.0-SNAPSHOT</jepria.version>
     <jepriatoolkit.version>7.15.0</jepriatoolkit.version>
     <tomcat.version>7.0.68</tomcat.version>
     <log4j.version>1.2.17</log4j.version>
-    <gwtlog.version>3.2.1</gwtlog.version>
-    <gwt.version>2.8.0</gwt.version>
     <commonsfileupload.version>1.2.2</commonsfileupload.version>
     <commonsio.version>2.4</commonsio.version>
     <jakartawsrsapi.version>2.1.5</jakartawsrsapi.version>
@@ -51,17 +49,19 @@
       <scope>test</scope>
     </dependency>
     <!-- Jepria obsolete runtime dependencies -->
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <version>7.9</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jepria</groupId>
+      <artifactId>oauth-sdk</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <!--Комментарий ниже актуален??-->
     <!-- TODO Эти зависимости не нужны для Rest/Jersey, они нужны для функционирования текущей версии Джеприи в целом. Необходимо убрать эти зависимости со временем -->
-    <dependency>
-      <groupId>com.allen-sauer.gwt.log</groupId>
-      <artifactId>gwt-log</artifactId>
-      <version>${gwtlog.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-servlet</artifactId>
-      <version>${gwt.version}-customized</version>
-    </dependency>
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
