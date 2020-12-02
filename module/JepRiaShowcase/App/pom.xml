@@ -9,6 +9,10 @@
 
     Наличие либо отсутствие в проекте компонентов пока что устанавливается вручную
     комментированием xml-элемента "<module>" для соответствующего дочернего проекта.
+    Также необходимо закомментировать соответствующие xml-элементы (ресурсы) с текстовыми
+    метками "build:gwt", "build:service-rest", "build:client-react" в настройках
+    maven-war-plugin из pom.xml дочернего модуля webapp.
+
   -->
 
   <groupId>org.jepria.jepriashowcase</groupId>
@@ -23,9 +27,13 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <project.build.gwt.productName>JepRiaShowcase</project.build.gwt.productName>
+    <project.build.gwt.productName>JepRiaShowcase-gwt</project.build.gwt.productName>
     <project.build.serviceRest.productName>jepriashowcase-service-rest</project.build.serviceRest.productName>
     <project.build.finalName>JepRiaShowcase</project.build.finalName>
+    <deploy.url>http://localhost:8080/manager/text</deploy.url>
+    <deploy.path>/${project.build.finalName}</deploy.path>
+    <deploy.username>username</deploy.username>
+    <deploy.password>password</deploy.password>
   </properties>
 
   <modules>
@@ -103,6 +111,21 @@
           </execution>
         </executions>
         <inherited>false</inherited>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <inherited>false</inherited>
+        <configuration>
+          <ignorePackaging>true</ignorePackaging>
+          <url>${deploy.url}</url>
+          <username>${deploy.username}</username>
+          <password>${deploy.password}</password>
+          <path>${deploy.path}</path>
+          <warFile>${project.basedir}/lib/${project.artifactId}.war</warFile>
+          <update>true</update>
+        </configuration>
       </plugin>
     </plugins>
   </build>

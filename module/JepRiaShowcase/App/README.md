@@ -16,11 +16,7 @@
  
   Build the app.
  
- ### `mvn tomcat7:deploy -pl webapp`
+ ### `mvn tomcat7:deploy -N`
  
- Rebuild only the child project 'webapp' and deploy the app.
- 
- ### `mvn tomcat7:deploy-only -pl webapp`
- 
- Deploy the app.
+  Deploy the app on Tomcat.
  

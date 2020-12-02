@@ -11,9 +11,9 @@
 
   <properties>
     <deploy.url>http://localhost:8080/manager/text</deploy.url>
-    <deploy.username>admin</deploy.username>
-    <deploy.password>admin</deploy.password>
-    <deploy.path>${project.artifactId}</deploy.path>
+    <deploy.username>username</deploy.username>
+    <deploy.password>password</deploy.password>
+    <deploy.path>/${project.artifactId}</deploy.path>
   </properties>
 
   <parent>
@@ -128,21 +128,39 @@
           </execution>
         </executions>
       </plugin-->
-        <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>2.2</version>
-          <configuration>
-            <update>true</update>
-            <ignorePackaging>true</ignorePackaging>
-            <url>${deploy.url}</url>
-            <username>${deploy.username}</username>
-            <password>${deploy.password}</password>
-            <path>/${deploy.path}</path>
-            <warFile>${project.basedir}/lib/${project.artifactId}.war</warFile>
-            <failOnError>true</failOnError>
-          </configuration>
-        </plugin>
-      </plugins>
-    </build>
+
+      <!--
+        Конфигурация может быть задействована при необходимости отдельного деплоя модуля
+        JepRiaShowcase-gwt на Tomcat. Для удобства параметры деплоя могут быть перенесены
+        в секцию properties:
+
+        <properties>
+          ...
+          <deploy.url>http://localhost:8080/manager/text</deploy.url>
+          <deploy.username>username</deploy.username>
+          <deploy.password>password</deploy.password>
+          <deploy.path>/JepRiaShowcase</deploy.path>
+          ...
+        </properties>
+
+      -->
+      <!--
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <update>true</update>
+          <ignorePackaging>true</ignorePackaging>
+          <url>http://localhost:8080/manager/text</url>
+          <username>username</username>
+          <password>password</password>
+          <path>/JepRiaShowcase</path>
+          <warFile>${project.basedir}/lib/${project.artifactId}.war</warFile>
+          <failOnError>true</failOnError>
+        </configuration>
+      </plugin>
+      -->
+    </plugins>
+  </build>
 </project>
