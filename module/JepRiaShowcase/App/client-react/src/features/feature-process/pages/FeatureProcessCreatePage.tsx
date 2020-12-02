@@ -58,22 +58,24 @@ const FeatureProcessCreatePage = () => {
       <Form onSubmit={formik.handleSubmit} ref={formRef}>
         <Form.Field>
           <Form.Label>{t("feature-process.fields.featureStatusCode")}</Form.Label>
-          <ComboBox
-            name="featureStatusCode"
-            value={formik.values.featureStatusCode}
-            onSelectionChange={(name, value) => {
-              formik.setFieldValue("featureStatusCode", value);
-            }}
-          >
-            <ComboBoxItem value={undefined} label="" />
-            {statusOptions
-              ? statusOptions.map((option) => {
-                  return (
-                    <ComboBoxItem key={option.value} value={option.value} label={option.name} />
-                  );
-                })
-              : null}
-          </ComboBox>
+          <Form.Control error={formik.errors.featureStatusCode} style={{ maxWidth: "200px" }}>
+            <ComboBox
+              name="featureStatusCode"
+              value={formik.values.featureStatusCode}
+              onSelectionChange={(name, value) => {
+                formik.setFieldValue("featureStatusCode", value);
+              }}
+            >
+              <ComboBoxItem value={undefined} label="" />
+              {statusOptions
+                ? statusOptions.map((option) => {
+                    return (
+                      <ComboBoxItem key={option.value} value={option.value} label={option.name} />
+                    );
+                  })
+                : null}
+            </ComboBox>
+          </Form.Control>
         </Form.Field>
         <Form.Field>
           <input type="submit" id="feature-process-save" hidden={true} />

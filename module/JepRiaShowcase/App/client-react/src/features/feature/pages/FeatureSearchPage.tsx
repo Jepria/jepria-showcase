@@ -4,7 +4,7 @@ import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Form } from "@jfront/ui-core";
+import { Form, NumberInput } from "@jfront/ui-core";
 import { DatePicker } from "@jfront/ui-core";
 import { CheckBoxGroup } from "@jfront/ui-core";
 import { CheckBox } from "@jfront/ui-core";
@@ -47,12 +47,22 @@ const SearchPage = () => {
   const formik = useFormik<FeatureSearchTemplate>({
     initialValues: searchTemplate,
     enableReinitialize: true,
+    validate: (values) => {
+      const errors: {
+        featureId?: string;
+        featureNameTemplate?: string;
+        featureNameEnTemplate?: string;
+        dateInsFrom?: string;
+        dateInsTo?: string;
+        statusCodeList?: string;
+      } = {};
+      return errors;
+    },
     onSubmit: (values) => {
       let query = queryString.stringify(values);
       if (query) {
         query = "&" + query;
       }
-
       history.push(`/feature/list/?pageSize=25&page=1${query}`);
     },
   });
@@ -60,71 +70,82 @@ const SearchPage = () => {
   return (
     <>
       <Form onSubmit={formik.handleSubmit} ref={formRef}>
-        <Form.Field style={{ display: "inline-block" }}>
+        <Form.Field>
           <Form.Label>{t("feature.fields.featureId")}:</Form.Label>
-          <TextInput
-            name="featureId"
-            value={formik.values?.featureId}
-            onChange={formik.handleChange}
-            type="number"
-            autoComplete="off"
-          />
+          <Form.Control error={formik.errors.featureId} style={{ maxWidth: "150px" }}>
+            <NumberInput
+              name="featureId"
+              value={formik.values?.featureId}
+              onChange={formik.handleChange}
+              autoComplete="off"
+            />
+          </Form.Control>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureNameTemplate")}:</Form.Label>
-          <TextInput
-            name="featureNameTemplate"
-            value={formik.values?.featureNameTemplate}
-            onChange={formik.handleChange}
-            autoComplete="off"
-          />
+          <Form.Control error={formik.errors.featureNameTemplate} style={{ maxWidth: "150px" }}>
+            <TextInput
+              name="featureNameTemplate"
+              value={formik.values?.featureNameTemplate}
+              onChange={formik.handleChange}
+              autoComplete="off"
+            />
+          </Form.Control>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureNameEnTemplate")}:</Form.Label>
-          <TextInput
-            name="featureNameEnTemplate"
-            value={formik.values?.featureNameEnTemplate}
-            onChange={formik.handleChange}
-            autoComplete="off"
-          />
+          <Form.Control error={formik.errors.featureNameEnTemplate} style={{ maxWidth: "150px" }}>
+            <TextInput
+              name="featureNameEnTemplate"
+              value={formik.values?.featureNameEnTemplate}
+              onChange={formik.handleChange}
+              autoComplete="off"
+            />
+          </Form.Control>
         </Form.Field>
         <Form.Field>
-          <Form.Label>{t("feature.fields.dateInsFrom")}</Form.Label>
-          <DatePicker
-            name="dateInsFrom"
-            selected={formik.values?.dateInsFrom}
-            onChange={(date) => {
-              formik.setFieldValue("dateInsFrom", date);
-            }}
-          />
+          <Form.Label>{t("feature.fields.dateInsFrom")}:</Form.Label>
+          <Form.Control error={formik.errors.dateInsFrom as any} style={{ maxWidth: "150px" }}>
+            <DatePicker
+              name="dateInsFrom"
+              selected={formik.values?.dateInsFrom}
+              onChange={(date) => {
+                formik.setFieldValue("dateInsFrom", date);
+              }}
+            />
+          </Form.Control>
         </Form.Field>
         <Form.Field>
-          <Form.Label>{t("feature.fields.dateInsTo")}</Form.Label>
-          <DatePicker
-            name="dateInsTo"
-            selected={formik.values?.dateInsTo}
-            onChange={(date) => {
-              formik.setFieldValue("dateInsTo", date);
-            }}
-          />
+          <Form.Label>{t("feature.fields.dateInsTo")}:</Form.Label>
+          <Form.Control error={formik.errors.dateInsTo as any} style={{ maxWidth: "150px" }}>
+            <DatePicker
+              name="dateInsTo"
+              selected={formik.values?.dateInsTo}
+              onChange={(date) => {
+                formik.setFieldValue("dateInsTo", date);
+              }}
+            />
+          </Form.Control>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.statusCodeList")}</Form.Label>
-          <CheckBoxGroup
-            name="statusCodeList"
-            values={formik.values?.statusCodeList ? formik.values.statusCodeList : []}
-            style={{ width: "142px" }}
-            onChange={(name, newValue) => {
-              formik.setFieldValue("statusCodeList", newValue);
-            }}
-            isLoading={isLoading}
-          >
-            {statusOptions
-              ? statusOptions.map((option) => {
-                  return <CheckBox key={option.value} value={option.value} label={option.name} />;
-                })
-              : null}
-          </CheckBoxGroup>
+          <Form.Control error={formik.errors.statusCodeList as any} style={{ maxWidth: "150px" }}>
+            <CheckBoxGroup
+              name="statusCodeList"
+              values={formik.values?.statusCodeList ? formik.values.statusCodeList : []}
+              style={{ width: "142px" }}
+              onChange={(name, newValue) => {
+                formik.setFieldValue("statusCodeList", newValue);
+              }}
+              isLoading={isLoading}
+            >
+              {statusOptions
+                ? statusOptions.map((option) => {
+                    return <CheckBox key={option.value} value={option.value} label={option.name} />;
+                  })
+                : null}
+            </CheckBoxGroup>
+          </Form.Control>
         </Form.Field>
         <Form.Field>
           <input id="search-submit" type="submit" hidden={true} />

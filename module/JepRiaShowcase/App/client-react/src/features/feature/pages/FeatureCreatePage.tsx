@@ -48,27 +48,33 @@ const FeatureCreatePage = () => {
       <Form id="create-form" onSubmit={formik.handleSubmit} ref={formRef}>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureName")}</Form.Label>
-          <TextInput
-            name="featureName"
-            value={formik.values.featureName}
-            onChange={formik.handleChange}
-          />
+          <Form.Control error={formik.errors.featureName} style={{ maxWidth: "150px" }}>
+            <TextInput
+              name="featureName"
+              value={formik.values.featureName}
+              onChange={formik.handleChange}
+            />
+          </Form.Control>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureNameEn")}</Form.Label>
-          <TextInput
-            name="featureNameEn"
-            value={formik.values.featureNameEn}
-            onChange={formik.handleChange}
-          />
+          <Form.Control error={formik.errors.featureNameEn} style={{ maxWidth: "150px" }}>
+            <TextInput
+              name="featureNameEn"
+              value={formik.values.featureNameEn}
+              onChange={formik.handleChange}
+            />
+          </Form.Control>
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.description")}:</Form.Label>
-          <textarea
-            name="description"
-            value={formik.values.description}
-            onChange={formik.handleChange}
-          />
+          <Form.Control error={formik.errors.description} style={{ maxWidth: "150px" }}>
+            <textarea
+              name="description"
+              value={formik.values.description}
+              onChange={formik.handleChange}
+            />
+          </Form.Control>
         </Form.Field>
         <Form.Field>
           <input id="create-submit" type="submit" hidden={true} />
