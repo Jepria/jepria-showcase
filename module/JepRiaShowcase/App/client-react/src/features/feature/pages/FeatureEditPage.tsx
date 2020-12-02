@@ -137,9 +137,6 @@ const FeatureEditPage = () => {
             {currentRecord?.responsible?.name}
           </Form.Label>
         </Form.Field>
-        <Form.Field>
-          <input id="edit-submit" type="submit" hidden={true} />
-        </Form.Field>
       </Form>
     </>
   );

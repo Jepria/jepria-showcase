@@ -76,9 +76,6 @@ const FeatureCreatePage = () => {
             />
           </Form.Control>
         </Form.Field>
-        <Form.Field>
-          <input id="create-submit" type="submit" hidden={true} />
-        </Form.Field>
       </Form>
     </>
   );

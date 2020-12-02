@@ -147,9 +147,6 @@ const SearchPage = () => {
             </CheckBoxGroup>
           </Form.Control>
         </Form.Field>
-        <Form.Field>
-          <input id="search-submit" type="submit" hidden={true} />
-        </Form.Field>
       </Form>
     </>
   );

@@ -77,9 +77,6 @@ const FeatureProcessCreatePage = () => {
             </ComboBox>
           </Form.Control>
         </Form.Field>
-        <Form.Field>
-          <input type="submit" id="feature-process-save" hidden={true} />
-        </Form.Field>
       </Form>
     </>
   );
