@@ -2,7 +2,7 @@ import { SearchState, createGenericSearchSlice } from "./../../app/common/record
 import queryString from "query-string";
 import { SearchRequest } from "@jfront/core-rest";
 import { Feature, FeatureSearchTemplate } from "./api/FeatureTypes";
-import { featureCrudApi } from "./api/FeatureSearchApi";
+import { featureSearchApi } from "./api/FeatureSearchApi";
 import { AppThunk, RootState } from "./../../app/store";
 
 const initialState: SearchState<Feature, FeatureSearchTemplate> = {
@@ -60,11 +60,11 @@ export const fetchSearchFeatures = (
     };
 
     dispatch(isLoading(true));
-    featureCrudApi.postSearchRequest(searchRequest).then((searchId) => {
-      featureCrudApi.getResultSetSize(searchId).then((resultSize) => {
+    featureSearchApi.postSearchRequest(searchRequest).then((searchId) => {
+      featureSearchApi.getResultSetSize(searchId).then((resultSize) => {
         if (resultSize > 0) {
           if (searchId) {
-            featureCrudApi.search(searchId, pageSize, page).then((features) => {
+            featureSearchApi.search(searchId, pageSize, page).then((features) => {
               dispatch(searchSuccess(features));
               dispatch(setSearchTemplate(JSON.parse(JSON.stringify(searchTemplate))));
               dispatch(isLoading(false));

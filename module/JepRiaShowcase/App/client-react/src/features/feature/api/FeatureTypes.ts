@@ -1,3 +1,4 @@
+//TODO interface to type?
 export interface Feature {
   featureId: number;
   featureName: string;

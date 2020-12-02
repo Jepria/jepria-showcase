@@ -8,10 +8,12 @@ import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { setCurrentFeatureProcess, selectFeatureProcess } from "../featureProcessSlice";
 
 const FeatureProcessDetailPage = () => {
+  //----------------
   const { t } = useTranslation();
-  let { featureId, featureProcessId } = useParams();
-  const [] = useState<boolean>(false);
   const dispatch = useDispatch();
+  //----------------
+  let { featureId, featureProcessId } = useParams();
+
   const currentRecord = useSelector(selectFeatureProcess);
 
   useEffect(() => {

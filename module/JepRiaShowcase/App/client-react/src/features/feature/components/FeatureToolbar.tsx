@@ -24,9 +24,11 @@ import { Feature } from "../api/FeatureTypes";
 import { selectState, Workstates } from "../../../app/WorkstateSlice";
 
 const FeatureToolbar = () => {
+  //----------------
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
+  //----------------
   const state: Workstates = useSelector(selectState);
   const currentRecord: Feature = useSelector(selectFeature);
   const records: Array<Feature> = useSelector(selectSearchResult);
@@ -42,7 +44,6 @@ const FeatureToolbar = () => {
       <ToolbarButtonSave
         disabled={Workstates.FeatureCreate !== state && Workstates.FeatureEdit !== state}
         onClick={() => {
-          
           if (Workstates.FeatureCreate === state) {
             dispatch(submitSaveOnCreate());
           } else if (Workstates.FeatureEdit == state) {

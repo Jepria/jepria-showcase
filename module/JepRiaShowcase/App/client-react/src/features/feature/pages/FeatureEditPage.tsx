@@ -11,38 +11,32 @@ import {
   setCurrentRecord,
   submitSavedOnEditFeature,
 } from "../featureSlice";
-import { getFeature, updateFeature } from "../api/FeatureApi";
 import { Feature, FeatureUpdate } from "../api/FeatureTypes";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
+import { featureCrudApi } from "../api/FeatureCrudApi";
 
 const FeatureEditPage = () => {
+  //----------------
   let formRef = useRef(null) as any;
   const history = useHistory();
-  let { featureId } = useParams();
   const { t } = useTranslation();
-  const onSaveFeature = useSelector(selectSaveOnEditFeature);
-
   const dispatch = useDispatch();
+  //----------------
+
+  let { featureId } = useParams();
   const currentRecord: Feature = useSelector(selectFeature);
 
+  const onSaveFeature = useSelector(selectSaveOnEditFeature);
   useEffect(() => {
     if (onSaveFeature) {
-      dispatch(submitSavedOnEditFeature);
+      dispatch(submitSavedOnEditFeature());
       formRef.current?.dispatchEvent(new Event("submit"));
     }
   }, [onSaveFeature]);
 
-  const onSubmit = (data: FeatureUpdate) => {
-    if (featureId) {
-      updateFeature(featureId.toString(), data).then(() => {
-        history.push(`/${featureId}/detail`);
-      });
-    }
-  };
-
   useEffect(() => {
     dispatch(setState(Workstates.FeatureEdit));
-    getFeature(featureId).then((feature) => {
+    featureCrudApi.getRecordById(featureId).then((feature) => {
       dispatch(setCurrentRecord(feature));
     });
   }, []);
@@ -54,7 +48,11 @@ const FeatureEditPage = () => {
       description: currentRecord?.description ? currentRecord?.description : "",
     },
     onSubmit: (values: FeatureUpdate) => {
-      onSubmit(values);
+      if (featureId) {
+        featureCrudApi.update(featureId.toString(), values).then(() => {
+          history.push(`/feature/${featureId}/detail`);
+        });
+      }
     },
     enableReinitialize: true,
   });
@@ -138,9 +136,6 @@ const FeatureEditPage = () => {
           >
             {currentRecord?.responsible?.name}
           </Form.Label>
-        </Form.Field>
-        <Form.Field>
-          <input id="edit-submit" type="submit" hidden={true} />
         </Form.Field>
       </Form>
     </>

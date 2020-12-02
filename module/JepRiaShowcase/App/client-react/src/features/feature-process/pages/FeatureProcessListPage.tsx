@@ -9,24 +9,21 @@ import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { setCurrentFeatureProcess } from "../featureProcessSlice";
 
 const FeatureProcessListPage = () => {
+  //----------------
   const location = useLocation();
   const history = useHistory();
-  const [] = useState<boolean>(false);
-  const [records, setRecords] = useState<FeatureProcess[]>();
-  let { featureId } = useParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  //----------------
+  const [records, setRecords] = useState<FeatureProcess[]>();
+  let { featureId } = useParams();
 
-  const find = () => {
+  useEffect(() => {
     if (featureId) {
       findFeatureProcess(parseInt(featureId)).then((processes: FeatureProcess[]) => {
         setRecords(processes);
       });
     }
-  };
-
-  useEffect(() => {
-    find();
     dispatch(setState(Workstates.FeatureProcessList));
   }, [location]);
 
