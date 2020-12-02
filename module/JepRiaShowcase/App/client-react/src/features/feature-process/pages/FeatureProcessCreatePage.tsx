@@ -26,7 +26,7 @@ const FeatureProcessCreatePage = () => {
 
   useEffect(() => {
     if (onSave) {
-      dispatch(submitSavedOnCreateFeatureProcess);
+      dispatch(submitSavedOnCreateFeatureProcess());
       formRef.current?.dispatchEvent(new Event("submit"));
     }
   }, [onSave]);
