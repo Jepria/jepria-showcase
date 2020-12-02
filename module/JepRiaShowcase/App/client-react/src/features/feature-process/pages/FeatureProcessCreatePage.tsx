@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { Form } from "@jfront/ui-core";
+import { ComboBox, ComboBoxItem, Form } from "@jfront/ui-core";
 import { FeatureProcessCreate, FeatureStatusOptions } from "../api/FeatureProcessTypes";
 import { createFeatureProcess, getFeatureStatusOptions } from "../api/FeatureProcessApi";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
@@ -58,38 +58,22 @@ const FeatureProcessCreatePage = () => {
       <Form onSubmit={formik.handleSubmit} ref={formRef}>
         <Form.Field>
           <Form.Label>{t("feature-process.fields.featureStatusCode")}</Form.Label>
-          <select
+          <ComboBox
             name="featureStatusCode"
             value={formik.values.featureStatusCode}
-            onChange={formik.handleChange}
+            onSelectionChange={(name, value) => {
+              formik.setFieldValue("featureStatusCode", value);
+            }}
           >
-            <option value={undefined}></option>
+            <ComboBoxItem value={undefined} label="" />
             {statusOptions
               ? statusOptions.map((option) => {
                   return (
-                    <option key={option.value} value={option.value}>
-                      {option.name}
-                    </option>
+                    <ComboBoxItem key={option.value} value={option.value} label={option.name} />
                   );
                 })
               : null}
-          </select>
-          {/* <ComboBox 
-              name="featureStatusCode" 
-              // value={formik.values.featureStatusCode}
-              onChangeValue={
-                (name, value) => {
-                  console.log("name = " + name)
-                  console.log("value = " + value)
-                  // formik.setFieldValue("featureStatusCode", event.target.value)
-                }
-              }
-            >
-              <ComboBoxItem value={undefined} label=""/>
-              {statusOptions ? statusOptions.map(option => {
-                return <ComboBoxItem key={option.value} value={option.value} label={option.name} />
-              }) : null}
-            </ComboBox> */}
+          </ComboBox>
         </Form.Field>
         <Form.Field>
           <input type="submit" id="feature-process-save" hidden={true} />
