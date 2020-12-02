@@ -2,23 +2,34 @@ package com.technology.jep.jepriashowcase.feature.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureSearchDto;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.apache.commons.io.IOUtils;
+import org.jepria.server.data.OptionDto;
 import org.jepria.server.data.SearchRequestDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.MediaType;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static org.jepria.compat.server.JepRiaServerConstant.*;
 
 public class FeatureJaxrsAdapterTestIT {
 
   private static final String ENTITY_URL = "http://localhost:8080/jepriashowcase-service-rest/api/feature";
-  private static final String OPERATOR_NAME = "name";
-  private static final String OPERATOR_PASSWORD = "password";
+  private static final String OPERATOR_NAME = "nagornyys";
+  private static final String OPERATOR_PASSWORD = "123";
 
   @Disabled
   @Test
@@ -184,6 +195,19 @@ public class FeatureJaxrsAdapterTestIT {
     return gson.fromJson(response.asString(), FeatureDto.class);
   }
 
+  private List<FeatureDto> getFeatureResultset(String location) {
+    RequestSpecification request =
+        RestAssured.given().auth().basic(OPERATOR_NAME, OPERATOR_PASSWORD);
+
+    Response response = request.get(location);
+
+    Assertions.assertEquals(200, response.statusCode());
+
+    Gson gson = new GsonBuilder().create();
+    Type founderListType = new TypeToken<ArrayList<FeatureDto>>() {}.getType();
+    return gson.fromJson(response.asString(), founderListType);
+  }
+
   @Disabled
   @Test
   public void featureSearchTest() {
@@ -204,5 +228,61 @@ public class FeatureJaxrsAdapterTestIT {
       getFeatureResult(searchLocation);
     }
 
+  }
+
+  @Test
+  public void featureExcelTest() {
+    String testUrl = ENTITY_URL + "/search";
+
+    SearchRequestDto<FeatureSearchDto> searchRequestDto = new SearchRequestDto<>();
+
+    FeatureSearchDto searchDto = new FeatureSearchDto();
+    searchDto.setMaxRowCount(25);
+    searchRequestDto.setTemplate(searchDto);
+
+    Response postSearchRequestResponse = RestAssured.given()
+        .auth().basic(OPERATOR_NAME, OPERATOR_PASSWORD)
+        .contentType(ContentType.JSON)
+        .header("Cache-Control", "no-cache")
+        .body(searchRequestDto)
+        .post(testUrl);
+    postSearchRequestResponse.then().assertThat().statusCode(201);
+    Response searchResponse = RestAssured.given()
+        .auth().basic(OPERATOR_NAME, OPERATOR_PASSWORD)
+        .header("Cache-Control", "no-cache")
+        .param("pageSize", "1")
+        .param("page", "1")
+        .cookie("JSESSIONID", postSearchRequestResponse.getCookie("JSESSIONID"))
+        .get(postSearchRequestResponse.getHeader("Location") + "/resultset");
+    searchResponse.then().assertThat().statusCode(200);
+    String location = postSearchRequestResponse.getHeader("Location");
+    Response response = RestAssured.given()
+        .auth()
+        .basic(OPERATOR_NAME, OPERATOR_PASSWORD)
+        .param(SEARCH_ID_PARAMETER, location.substring(location.lastIndexOf("/") + 1))
+        .param(EXCEL_REPORT_HEADERS, new ArrayList<String>(){{
+          add("Feature ID");
+          add("Feature Name");
+          add("Feature Name En");
+          add("Description");
+          add("Date ins");
+        }})
+        .param(EXCEL_REPORT_FIELDS, new ArrayList<String>(){{
+          add("featureId");
+          add("featureName");
+          add("featureNameEn");
+          add("description");
+          add("dateIns");
+        }})
+        .cookie("JSESSIONID", postSearchRequestResponse.getCookie("JSESSIONID"))
+        .get(ENTITY_URL + "/excel");
+    response.then().assertThat().statusCode(200);
+//    try(OutputStream outputStream = new FileOutputStream(new File("\\text.xls"))) {
+//      IOUtils.copy(response.asInputStream(), outputStream);
+//    } catch (FileNotFoundException e) {
+//      e.printStackTrace();
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
   }
 }
