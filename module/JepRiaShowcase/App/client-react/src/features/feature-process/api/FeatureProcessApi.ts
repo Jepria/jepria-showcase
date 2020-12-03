@@ -1,11 +1,12 @@
 import axios from "axios";
+import { API_PATH } from "../../../config";
 import {
   FeatureProcess,
   FeatureProcessCreate,
   FeatureStatusOptions,
 } from "./FeatureProcessTypes";
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = API_PATH;
 const withCredentials = false;
 
 export const findFeatureProcess = (featureId: number): Promise<FeatureProcess[]> => {

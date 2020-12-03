@@ -1,5 +1,6 @@
 import { Feature, FeatureSearchTemplate } from "./FeatureTypes";
 import { ConnectorSearch } from "@jfront/core-rest";
+import { API_PATH } from "../../../config";
 
 class FeatureSearchApi extends ConnectorSearch<Feature, FeatureSearchTemplate> {
   constructor(baseUrl: string) {
@@ -7,4 +8,4 @@ class FeatureSearchApi extends ConnectorSearch<Feature, FeatureSearchTemplate> {
   }
 }
 
-export const featureSearchApi = new FeatureSearchApi(process.env.REACT_APP_API_URL + "/feature");
+export const featureSearchApi = new FeatureSearchApi(API_PATH + "/feature");

@@ -1,4 +1,5 @@
 import { ConnectorCrud } from "@jfront/core-rest";
+import { API_PATH } from "../../../config";
 import { Feature, FeatureCreate, FeatureUpdate } from "./FeatureTypes";
 
 class FeatureCrudApi extends ConnectorCrud<Feature, FeatureCreate, FeatureUpdate> {
@@ -7,4 +8,4 @@ class FeatureCrudApi extends ConnectorCrud<Feature, FeatureCreate, FeatureUpdate
   }
 }
 
-export const featureCrudApi = new FeatureCrudApi(process.env.REACT_APP_API_URL + "/feature");
+export const featureCrudApi = new FeatureCrudApi(API_PATH + "/feature");
