@@ -12,19 +12,12 @@
     "build:service-rest", "build:client-react" в настройках maven-war-plugin.
   -->
 
-  <groupId>org.jepria.jepriashowcase</groupId>
-  <artifactId>webapp</artifactId>
+  <artifactId>jepriashowcase-webapp</artifactId>
   <version>12.0.0</version>
   <packaging>war</packaging>
 
-  <properties>
-    <deploy.url>http://localhost:8080/manager/text</deploy.url>
-    <deploy.path>/${project.build.finalName}</deploy.path>
-    <deploy.username>username</deploy.username>
-    <deploy.password>password</deploy.password>
-  </properties>
-
   <parent>
+    <!-- Эти параметры должны в точности совпадать с аналогичными параметрами в родительском pom.xml -->
     <groupId>org.jepria.jepriashowcase</groupId>
     <artifactId>JepRiaShowcase</artifactId>
     <version>12.0.0</version>
@@ -167,20 +160,26 @@
         </executions>
       </plugin>
 
+      <!--
+        Конфигурация может быть задействована при необходимости отдельного деплоя модуля
+        gwt на Tomcat.
+      -->
+      <!--
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
           <update>true</update>
-          <url>${deploy.url}</url>
-          <username>${deploy.username}</username>
-          <password>${deploy.password}</password>
-          <path>${deploy.path}</path>
+          <url>http://localhost:8080/manager/text</url>
+          <username>username</username>
+          <password>password</password>
+          <path>/${project.build.finalName}</path>
           <failOnError>true</failOnError>
         </configuration>
       </plugin>
-
+      -->
+      
     </plugins>
   </build>
 

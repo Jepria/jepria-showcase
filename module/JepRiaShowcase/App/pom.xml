@@ -15,25 +15,26 @@
 
   -->
 
+  <!-- Эти параметры должны в точности совпадать с аналогичными параметрами во всех дочерних pom.xml -->
   <groupId>org.jepria.jepriashowcase</groupId>
   <artifactId>JepRiaShowcase</artifactId>
   <version>12.0.0</version>
   <packaging>pom</packaging>
 
   <name>JepRiaShowcase</name>
-  <url>http://jepria.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.finalName>JepRiaShowcase</project.build.finalName>
+    <!-- Название варника, собираемого посредством ant в модуле gwt -->
     <project.build.gwt.productName>JepRiaShowcase-gwt</project.build.gwt.productName>
     <project.build.serviceRest.productName>jepriashowcase-service-rest</project.build.serviceRest.productName>
-    <project.build.finalName>JepRiaShowcase</project.build.finalName>
-    <deploy.url>http://localhost:8080/manager/text</deploy.url>
-    <deploy.path>/${project.build.finalName}</deploy.path>
-    <deploy.username>username</deploy.username>
-    <deploy.password>password</deploy.password>
+    <deploy.url>http://vsmlapprfid1:8080/manager/text</deploy.url>
+    <deploy.path>/JepRiaShowcase</deploy.path>
+    <deploy.username>admin</deploy.username>
+    <deploy.password>admin0</deploy.password>
   </properties>
 
   <modules>
