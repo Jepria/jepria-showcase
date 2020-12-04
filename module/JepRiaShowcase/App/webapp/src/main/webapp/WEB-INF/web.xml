@@ -248,7 +248,7 @@
   </security-role>
   
   Allow request for Custom Module, Search Module and related resources without authorization
-        <!-- <security-constraint>
+          <!-- <security-constraint>
     <web-resource-collection>
       <web-resource-name>Public resources</web-resource-name>
       <url-pattern>/JepRiaShowcaseCustom.jsp</url-pattern>
@@ -330,9 +330,17 @@
     <location>/WEB-INF/security/Login.jsp</location>
   </error-page>
 
-  <error-page>
+  <!-- <error-page>
     <error-code>404</error-code>
     <location>/react/index.html</location>
-  </error-page>
+  </error-page> -->
+  <filter>
+    <filter-name>client-react-filter</filter-name>
+    <filter-class>com.technology.jep.jepriashowcase.main.rest.ClientReactFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>client-react-filter</filter-name>
+    <url-pattern>/react/*</url-pattern>
+  </filter-mapping>
 
 </web-app>
