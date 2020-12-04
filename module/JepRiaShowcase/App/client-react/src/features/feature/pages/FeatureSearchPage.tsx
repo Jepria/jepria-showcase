@@ -15,7 +15,7 @@ import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProces
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { selectSearchSubmit, selectSearchTemplate, submitSearch } from "../featureSearchSlice";
 
-const SearchPage = () => {
+const FeatureSearchPage = () => {
   //----------------
   let formRef = useRef(null) as any;
   const { t } = useTranslation();
@@ -47,6 +47,13 @@ const SearchPage = () => {
   const formik = useFormik<FeatureSearchTemplate>({
     initialValues: searchTemplate,
     enableReinitialize: true,
+    onSubmit: (values) => {
+      let query = queryString.stringify(values);
+      if (query) {
+        query = "&" + query;
+      }
+      history.push(`/feature/list/?pageSize=25&page=1${query}`);
+    },
     validate: (values) => {
       const errors: {
         featureId?: string;
@@ -57,13 +64,6 @@ const SearchPage = () => {
         statusCodeList?: string;
       } = {};
       return errors;
-    },
-    onSubmit: (values) => {
-      let query = queryString.stringify(values);
-      if (query) {
-        query = "&" + query;
-      }
-      history.push(`/feature/list/?pageSize=25&page=1${query}`);
     },
   });
 
@@ -152,4 +152,4 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default FeatureSearchPage;

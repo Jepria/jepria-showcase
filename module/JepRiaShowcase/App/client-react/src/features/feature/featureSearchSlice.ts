@@ -36,13 +36,12 @@ export const selectSearchPage = (state: RootState) => state.featureSearch.page;
 export const selectSearchSubmit = (state: RootState) => state.featureSearch.submit;
 
 /**
- * Fetch features and update search result
+ * Fetch records and update search result
  * @param {string} searchRequestString template string from query
  * @param {number} pageSize page size
  * @param {number} page page index
  */
-
-export const fetchSearchFeatures = (
+export const fetchFeatureSearchResultset = (
   searchRequestString: string,
   pageSize,
   page
@@ -64,8 +63,8 @@ export const fetchSearchFeatures = (
       featureSearchApi.getResultSetSize(searchId).then((resultSize) => {
         if (resultSize > 0) {
           if (searchId) {
-            featureSearchApi.search(searchId, pageSize, page).then((features) => {
-              dispatch(searchSuccess(features));
+            featureSearchApi.search(searchId, pageSize, page).then((records) => {
+              dispatch(searchSuccess(records));
               dispatch(setSearchTemplate(JSON.parse(JSON.stringify(searchTemplate))));
               dispatch(isLoading(false));
             });

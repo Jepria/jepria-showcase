@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
 import { setCurrentRecord } from "../featureSlice";
-import { selectSearchResult, fetchSearchFeatures, selectIsLoading } from "../featureSearchSlice";
+import { selectSearchResult, fetchFeatureSearchResultset, selectIsLoading } from "../featureSearchSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 
 const useQuery = () => {
@@ -28,7 +28,7 @@ const FeatureListPage = () => {
 
   useEffect(() => {
     dispatch(setState(Workstates.FeatureList));
-    dispatch(fetchSearchFeatures(location.search, pageSize, page));
+    dispatch(fetchFeatureSearchResultset(location.search, pageSize, page));
   }, [location]);
 
   return (
@@ -77,16 +77,16 @@ const FeatureListPage = () => {
             },
           ]}
           data={records}
-          onSelection={(selectedFeatures) => {
-            console.log(selectedFeatures);
-            if (selectedFeatures.length === 1) {
-              dispatch(setCurrentRecord(selectedFeatures[0]));
+          onSelection={(selectedRecords) => {
+            console.log(selectedRecords);
+            if (selectedRecords.length === 1) {
+              dispatch(setCurrentRecord(selectedRecords[0]));
             } else {
               dispatch(setCurrentRecord(undefined));
             }
           }}
-          onDoubleClick={(feature) => {
-            history.push(`/feature/${feature.featureId}/detail`);
+          onDoubleClick={(record) => {
+            history.push(`/feature/${record.featureId}/detail`);
           }}
         />
       )}
