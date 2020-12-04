@@ -33,9 +33,6 @@ const FeatureListPage = () => {
 
   return (
     <>
-      {isLoading ? (
-        <div style={{ textAlign: "center" }}>Loading...</div>
-      ) : (
         <Grid
           id="table"
           columns={[
@@ -87,8 +84,8 @@ const FeatureListPage = () => {
           onDoubleClick={(feature) => {
             history.push(`/feature/${feature.featureId}/detail`);
           }}
+          isLoading={isLoading}
         />
-      )}
     </>
   );
 };
