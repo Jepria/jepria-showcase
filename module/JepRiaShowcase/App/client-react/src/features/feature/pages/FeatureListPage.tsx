@@ -78,7 +78,6 @@ const FeatureListPage = () => {
           ]}
           data={records}
           onSelection={(selectedFeatures) => {
-            console.log(selectedFeatures);
             if (selectedFeatures.length === 1) {
               dispatch(setCurrentRecord(selectedFeatures[0]));
             } else {

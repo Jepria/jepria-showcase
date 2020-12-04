@@ -5,6 +5,7 @@
   "homepage": "/JepRiaShowcase/react",
   "dependencies": {
     "@jfront/core-rest": "^0.1.0-rc.0",
+    "@jfront/oauth-ui": "^0.2.4",
     "@jfront/ui-core": "^0.3.4",
     "@jfront/ui-label": "^0.3.3",
     "@reduxjs/toolkit": "^1.4.0",
@@ -54,6 +55,8 @@
     ]
   },
   "devDependencies": {
+    "@jfront/oauth-context": "^0.1.9",
+    "@jfront/oauth-core": "^0.1.2",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.36",
     "@types/react": "^16.9.34",

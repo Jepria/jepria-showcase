@@ -1,5 +1,11 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5" >
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <context-param>
+    <param-name>oauthClientId</param-name>
+    <param-value>JepRiaShowcase</param-value>
+  </context-param>
+
   <servlet>
     <servlet-name>remoteLoggerServiceImpl</servlet-name>
     <servlet-class>com.allen_sauer.gwt.log.server.RemoteLoggerServiceImpl</servlet-class>
@@ -44,7 +50,7 @@
     <servlet-name>SupplierServlet</servlet-name>
     <url-pattern>/JepRiaShowcase/ProtectedServices/SupplierService</url-pattern>
   </servlet-mapping>
-  
+
   <servlet>
     <servlet-name>GoodsServlet</servlet-name>
     <servlet-class>com.technology.jep.jepriashowcase.goods.server.service.GoodsServiceImpl</servlet-class>
@@ -70,7 +76,7 @@
     <servlet-name>downloadServlet</servlet-name>
     <url-pattern>/JepRiaShowcase/download</url-pattern>
   </servlet-mapping>
-  
+
   <servlet>
     <servlet-name>ArsenicServlet</servlet-name>
     <servlet-class>com.technology.jep.jepriashowcase.arsenic.server.service.ArsenicServiceImpl</servlet-class>
@@ -79,7 +85,7 @@
     <servlet-name>ArsenicServlet</servlet-name>
     <url-pattern>/JepRiaShowcase/ProtectedServices/ArsenicService</url-pattern>
   </servlet-mapping>
-  
+
   <servlet>
     <servlet-name>ShopGoodsServlet</servlet-name>
     <servlet-class>com.technology.jep.jepriashowcase.shopgoods.server.service.ShopGoodsServiceImpl</servlet-class>
@@ -106,7 +112,7 @@
     <servlet-name>RequestServlet</servlet-name>
     <url-pattern>/JepRiaShowcase/ProtectedServices/RequestService</url-pattern>
   </servlet-mapping>
-  
+
   <servlet>
     <servlet-name>FeatureServletJson</servlet-name>
     <servlet-class>com.technology.jep.jepriashowcase.feature.server.service.FeatureServiceJsonImpl</servlet-class>
@@ -115,7 +121,7 @@
     <servlet-name>FeatureServletJson</servlet-name>
     <url-pattern>/JepRiaShowcase/ProtectedServices/FeatureServiceJson/*</url-pattern>
   </servlet-mapping>
-  
+
   <servlet>
     <servlet-name>FeatureServlet</servlet-name>
     <servlet-class>com.technology.jep.jepriashowcase.feature.server.service.FeatureServiceImpl</servlet-class>
@@ -124,7 +130,7 @@
     <servlet-name>FeatureServlet</servlet-name>
     <url-pattern>/JepRiaShowcase/ProtectedServices/FeatureService</url-pattern>
   </servlet-mapping>
-  
+
   <servlet>
     <servlet-name>FeatureOperatorServlet</servlet-name>
     <servlet-class>com.technology.jep.jepriashowcase.featureoperator.server.service.FeatureOperatorServiceImpl</servlet-class>
@@ -133,7 +139,7 @@
     <servlet-name>FeatureOperatorServlet</servlet-name>
     <url-pattern>/JepRiaShowcase/ProtectedServices/FeatureOperatorService</url-pattern>
   </servlet-mapping>
-  
+
   <servlet>
     <servlet-name>FeatureProcessServlet</servlet-name>
     <servlet-class>com.technology.jep.jepriashowcase.featureprocess.server.service.FeatureProcessServiceImpl</servlet-class>
@@ -236,21 +242,17 @@
   <security-role>
     <role-name>JrsEditAllFeature</role-name>
   </security-role>
-  
+
   <security-role>
     <role-name>JrsOperatorFeature</role-name>
   </security-role>
   
-  <!-- Allow request for Custom Module, Search Module and related resources without authorization -->
-  <security-constraint>
+  Allow request for Custom Module, Search Module and related resources without authorization
+        <!-- <security-constraint>
     <web-resource-collection>
       <web-resource-name>Public resources</web-resource-name>
       <url-pattern>/JepRiaShowcaseCustom.jsp</url-pattern>
       <url-pattern>/JepRiaShowcaseSearch.jsp</url-pattern>
-      <!-- ВАЖНО: OC4J воспринимает шаблон /abc/* как /abc*, поэтому следующая секция
-      приводит к открытию JepRiaShowcase.jsp и JepRiaShowcaseEmbedded.jsp без запроса
-      аутентификации. Workaround: переименовать JepRiaShowcase*.jsp в Showcase*.jsp.
-      В Tomcat данная проблема отсутствует. -->
       <url-pattern>/JepRiaShowcase/*</url-pattern>
       <url-pattern>/autoLogonServlet</url-pattern>
       <url-pattern>/js/*</url-pattern>
@@ -258,9 +260,9 @@
       <url-pattern>/images/*</url-pattern>
     </web-resource-collection>
   </security-constraint>
-  
+   -->
   <!-- Protect all resources of Application -->
-  <security-constraint>
+  <!-- <security-constraint>
     <web-resource-collection>
       <web-resource-name>Protected resources</web-resource-name>
       <url-pattern>/*</url-pattern>
@@ -268,13 +270,12 @@
       <url-pattern>/authenticationServlet</url-pattern>
     </web-resource-collection>
     <auth-constraint>
-      <!-- At least user has to possess one of the specified roles -->
       <role-name>*</role-name>
     </auth-constraint>
   </security-constraint>
-  
+   -->
   <!-- Allow request for Login page resources without authorization -->
-  <security-constraint>
+  <!-- <security-constraint>
     <web-resource-collection>
       <web-resource-name>Login page resources</web-resource-name>
       <url-pattern>/security/*</url-pattern>
@@ -293,12 +294,37 @@
     <auth-method>FORM</auth-method>
     <form-login-config>
       <form-login-page>/WEB-INF/security/Login.jsp</form-login-page>
-      <!-- Попадание на form-error-page невозможно (так как авторизация проходит не через это приложение, 
-          а через SsoUi, поэтому можно указать любой ресурс) -->
       <form-error-page>/WEB-INF/security/Login.jsp</form-error-page>
     </form-login-config>
-  </login-config>
-  
+  </login-config> -->
+
+  <filter>
+    <filter-name>SecurityFilter</filter-name>
+    <filter-class>com.technology.jep.jepria.server.security.servlet.oauth.OAuthEntrySecurityFilter</filter-class>
+    <init-param>
+      <param-name>security-constraint</param-name>
+      <param-value>*</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>Public</filter-name>
+    <filter-class>com.technology.jep.jepria.server.security.servlet.oauth.OAuthEntrySecurityFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Public</filter-name>
+    <url-pattern>/api</url-pattern>
+    <url-pattern>/api-docs</url-pattern>
+    <url-pattern>/api/*</url-pattern>
+    <url-pattern>/api-docs/*</url-pattern>
+    <url-pattern>/react</url-pattern>
+    <url-pattern>/react/*</url-pattern>
+  </filter-mapping>
+
   <error-page>
     <error-code>403</error-code>
     <location>/WEB-INF/security/Login.jsp</location>
