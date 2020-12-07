@@ -10,6 +10,7 @@ import org.jepria.server.service.rest.JaxrsAdapterBase;
 import org.jepria.server.service.security.HttpBasic;
 
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -19,8 +20,15 @@ import java.util.List;
 @RolesAllowed({"JrsEditFeature", "JrsEditAllFeature"})
 public class FeatureProcessJaxrsAdapter extends JaxrsAdapterBase {
 
-  protected final EntityEndpointAdapter entityEndpointAdapter = new EntityEndpointAdapter(() -> FeatureProcessServerFactory.getInstance().getEntityService());
-
+  protected final FeatureProcessServerFactory serverFactory;
+  protected final EntityEndpointAdapter entityEndpointAdapter;
+  
+  @Inject
+  public FeatureProcessJaxrsAdapter(FeatureProcessServerFactory serverFactory) {
+    this.serverFactory = serverFactory;
+    entityEndpointAdapter = new EntityEndpointAdapter(() -> this.serverFactory.getEntityService());
+  }
+  
   //------------ application-specific methods ------------//
 
   @GET
@@ -28,7 +36,7 @@ public class FeatureProcessJaxrsAdapter extends JaxrsAdapterBase {
     // convert path params to internal dto by adding foreign key
     FeatureProcessSearchDtoInternal dto = new FeatureProcessSearchDtoInternal();
     dto.setFeatureId(featureId);
-    List<FeatureProcessDto> result = FeatureProcessServerFactory.getInstance().getService().findFeatureProcess(dto, securityContext.getCredential());
+    List<FeatureProcessDto> result = serverFactory.getService().findFeatureProcess(dto, securityContext.getCredential());
     return Response.ok(result).build();
   }
 

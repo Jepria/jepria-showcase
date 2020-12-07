@@ -24,10 +24,15 @@ public class GoodsJaxrsAdapter extends JaxrsAdapterBase {
 
   @Inject
   protected GoodsServerFactory serverFactory;
-
-  protected final EntityEndpointAdapter entityEndpointAdapter = new EntityEndpointAdapter(() -> serverFactory.getEntityService());
-
-  protected final SearchEndpointAdapter searchEndpointAdapter = new SearchEndpointAdapter(() -> serverFactory.getSearchService(() -> request.getSession()));
+  protected final EntityEndpointAdapter entityEndpointAdapter;
+  protected final SearchEndpointAdapter searchEndpointAdapter;
+  
+  @Inject
+  public GoodsJaxrsAdapter(GoodsServerFactory serverFactory) {
+    this.serverFactory = serverFactory;
+    entityEndpointAdapter = new EntityEndpointAdapter(() -> this.serverFactory.getEntityService());
+    searchEndpointAdapter = new SearchEndpointAdapter(() -> this.serverFactory.getSearchService(() -> request.getSession()));
+  }
 
 //  protected GoodsService service;
 

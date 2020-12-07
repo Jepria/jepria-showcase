@@ -5,6 +5,9 @@ import com.technology.jep.jepriashowcase.feature.FeatureServerFactoryImpl;
 import com.technology.jep.jepriashowcase.feature.dao.FeatureDao;
 import com.technology.jep.jepriashowcase.feature.dao.FeatureDaoImpl;
 import com.technology.jep.jepriashowcase.feature.rest.FeatureJaxrsAdapter;
+import com.technology.jep.jepriashowcase.featureprocess.FeatureProcessServerFactory;
+import com.technology.jep.jepriashowcase.featureprocess.dao.FeatureProcessDao;
+import com.technology.jep.jepriashowcase.featureprocess.dao.FeatureProcessDaoImpl;
 import com.technology.jep.jepriashowcase.featureprocess.rest.FeatureProcessJaxrsAdapter;
 import com.technology.jep.jepriashowcase.goods.GoodsServerFactory;
 import com.technology.jep.jepriashowcase.goods.dao.GoodsDao;
@@ -22,6 +25,24 @@ import java.io.PrintStream;
 public class ApplicationConfig extends ApplicationConfigBase {
   
   public ApplicationConfig() {
+    registerFeature();
+    registerFeatureProcess();
+    registerGoods();
+
+    register((ExceptionMapper<ApplicationException>) e -> {
+      e.printStackTrace();
+
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      e.printStackTrace(new PrintStream(baos));
+      String stackTraceString = baos.toString();
+
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+              .entity(stackTraceString)
+              .type("text/plain;charset=UTF-8").build();
+    });
+  }
+  
+  protected void registerFeature() {
     register(new AbstractBinder() {
       @Override
       protected void configure() {
@@ -35,23 +56,22 @@ public class ApplicationConfig extends ApplicationConfigBase {
       }
     });
     register(FeatureJaxrsAdapter.class);
-    register(FeatureProcessJaxrsAdapter.class);
-    registerGoods();
-
-    register(new ExceptionMapper<ApplicationException>() {
+  }
+  
+  protected void registerFeatureProcess() {
+    register(new AbstractBinder() {
       @Override
-      public Response toResponse(ApplicationException e) {
-        e.printStackTrace();
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        e.printStackTrace(new PrintStream(baos));
-        String stackTraceString = baos.toString();
-
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                .entity(stackTraceString)
-                .type("text/plain;charset=UTF-8").build();
+      protected void configure() {
+        bind(FeatureProcessDaoImpl.class).to(FeatureProcessDao.class);
       }
     });
+    register(new AbstractBinder() {
+      @Override
+      protected void configure() {
+        bind(FeatureProcessServerFactory.class).to(FeatureProcessServerFactory.class);
+      }
+    });
+    register(FeatureProcessJaxrsAdapter.class);
   }
 
   protected void registerGoods() {

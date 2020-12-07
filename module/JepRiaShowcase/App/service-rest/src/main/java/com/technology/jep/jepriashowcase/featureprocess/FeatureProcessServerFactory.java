@@ -6,18 +6,17 @@ import org.jepria.server.ServerFactory;
 import org.jepria.server.service.rest.EntityService;
 import org.jepria.server.service.rest.EntityServiceImpl;
 
+import javax.inject.Inject;
+
 public class FeatureProcessServerFactory extends ServerFactory<FeatureProcessDao> {
 
-  private FeatureProcessServerFactory() {
-    super(new FeatureProcessDaoImpl(), "jdbc/ITMDS");
-  }
-
-  public static FeatureProcessServerFactory getInstance() {
-    return new FeatureProcessServerFactory();
+  @Inject
+  private FeatureProcessServerFactory(FeatureProcessDao dao) {
+    super(dao, "jdbc/ITMDS");
   }
 
   public FeatureProcessService getService() {
-    return new FeatureProcessService();
+    return new FeatureProcessService(getDao());
   }
 
   /**
