@@ -1,6 +1,7 @@
 package com.technology.jep.jepriashowcase.goods.rest;
 
 import com.technology.jep.jepriashowcase.goods.GoodsServerFactory;
+import com.technology.jep.jepriashowcase.goods.GoodsServerFactoryImpl;
 import com.technology.jep.jepriashowcase.goods.dto.GoodsCreateDto;
 import com.technology.jep.jepriashowcase.goods.dto.GoodsDto;
 import com.technology.jep.jepriashowcase.goods.dto.GoodsSearchDto;
@@ -22,8 +23,7 @@ import java.util.List;
 @RolesAllowed({"JrsEditGoods"})
 public class GoodsJaxrsAdapter extends JaxrsAdapterBase {
 
-  @Inject
-  protected GoodsServerFactory serverFactory;
+  protected final GoodsServerFactory serverFactory;
   protected final EntityEndpointAdapter entityEndpointAdapter;
   protected final SearchEndpointAdapter searchEndpointAdapter;
   
@@ -34,7 +34,6 @@ public class GoodsJaxrsAdapter extends JaxrsAdapterBase {
     searchEndpointAdapter = new SearchEndpointAdapter(() -> this.serverFactory.getSearchService(() -> request.getSession()));
   }
 
-//  protected GoodsService service;
 
 //------------ application-specific methods ------------//
 

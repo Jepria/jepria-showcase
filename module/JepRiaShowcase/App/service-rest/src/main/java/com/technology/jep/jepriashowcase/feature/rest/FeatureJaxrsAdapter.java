@@ -23,7 +23,7 @@ import java.util.List;
 @RolesAllowed({"JrsEditFeature", "JrsAssignResponsibleFeature", "JrsEditAllFeature"})
 public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
 
-  protected FeatureServerFactory serverFactory;
+  protected final FeatureServerFactory serverFactory;
   protected final EntityEndpointAdapter entityEndpointAdapter;
   protected final SearchEndpointAdapter searchEndpointAdapter;
   
