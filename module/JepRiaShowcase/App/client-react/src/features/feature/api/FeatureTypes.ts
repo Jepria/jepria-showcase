@@ -39,4 +39,5 @@ export interface FeatureSearchTemplate {
   dateInsFrom?: Date;
   dateInsTo?: Date;
   statusCodeList?: string[];
+  maxRowCount?: number;
 }

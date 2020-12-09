@@ -63,6 +63,9 @@ const FeatureSearchPage = () => {
         dateInsTo?: string;
         statusCodeList?: string;
       } = {};
+
+      let query = queryString.stringify(values);
+      history.replace(`?${query}`);
       return errors;
     },
   });
@@ -109,6 +112,7 @@ const FeatureSearchPage = () => {
             <DatePicker
               name="dateInsFrom"
               selected={formik.values?.dateInsFrom}
+              dateFormat="dd.MM.yyyy"
               onChange={(date) => {
                 formik.setFieldValue("dateInsFrom", date);
               }}
@@ -128,7 +132,7 @@ const FeatureSearchPage = () => {
           </Form.Control>
         </Form.Field>
         <Form.Field>
-          <Form.Label>{t("feature.fields.statusCodeList")}</Form.Label>
+          <Form.Label>{t("feature.fields.statusCodeList")}:</Form.Label>
           <Form.Control error={formik.errors.statusCodeList as any} style={{ maxWidth: "150px" }}>
             <CheckBoxGroup
               name="statusCodeList"
@@ -141,10 +145,21 @@ const FeatureSearchPage = () => {
             >
               {statusOptions
                 ? statusOptions.map((option) => {
-                    return <CheckBox key={option.value} value={option.value} label={option.name} />;
-                  })
+                  return <CheckBox key={option.value} value={option.value} label={option.name} />;
+                })
                 : null}
             </CheckBoxGroup>
+          </Form.Control>
+        </Form.Field>
+        <Form.Field>
+          <Form.Label>{t("feature.fields.maxRowCount")}:</Form.Label>
+          <Form.Control style={{ maxWidth: "150px" }}>
+            <NumberInput
+              name="maxRowCount"
+              value={formik.values.maxRowCount}
+              onChange={formik.handleChange}
+              autoComplete="off"
+            />
           </Form.Control>
         </Form.Field>
       </Form>
