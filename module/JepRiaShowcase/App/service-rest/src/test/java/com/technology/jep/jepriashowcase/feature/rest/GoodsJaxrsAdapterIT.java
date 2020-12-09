@@ -30,7 +30,7 @@ public class GoodsJaxrsAdapterIT {
     createDto.setGoodsPortfolioMimeType("image/jpeg");
     Response response = RestAssured.given()
         .auth()
-        .basic("nagornyys", "123")
+        .basic("name", "password")
         .contentType(ContentType.JSON)
         .body(createDto)
         .post("http://localhost:8080/jepriashowcase-service-rest/api/goods");
@@ -60,7 +60,7 @@ public class GoodsJaxrsAdapterIT {
     assertTrue(IOUtils.contentEquals(res2.asInputStream(), GoodsJaxrsAdapterIT.class.getClassLoader().getResourceAsStream("test.jpg")));
     Response res3 = RestAssured.given()
         .auth()
-        .basic("nagornyys", "123")
+        .basic("name", "password")
         .when().delete("http://localhost:8080/jepriashowcase-service-rest/api/goods/" + id);
     res3.then().assertThat().statusCode(200);
   }

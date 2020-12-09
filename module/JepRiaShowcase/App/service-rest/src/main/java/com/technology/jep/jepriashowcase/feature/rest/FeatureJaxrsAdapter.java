@@ -1,7 +1,6 @@
 package com.technology.jep.jepriashowcase.feature.rest;
 
 import com.technology.jep.jepriashowcase.feature.FeatureServerFactory;
-import com.technology.jep.jepriashowcase.feature.FeatureService;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureCreateDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureSearchDto;
@@ -24,14 +23,16 @@ import java.util.List;
 @RolesAllowed({"JrsEditFeature", "JrsAssignResponsibleFeature", "JrsEditAllFeature"})
 public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
 
+  protected final FeatureServerFactory serverFactory;
+  protected final EntityEndpointAdapter entityEndpointAdapter;
+  protected final SearchEndpointAdapter searchEndpointAdapter;
+  
   @Inject
-  protected FeatureServerFactory serverFactory;
-
-  protected final EntityEndpointAdapter entityEndpointAdapter = new EntityEndpointAdapter(() -> serverFactory.getEntityService());
-
-  protected final SearchEndpointAdapter searchEndpointAdapter = new SearchEndpointAdapter(() -> serverFactory.getSearchService(() -> request.getSession()));
-
-  protected FeatureService service;
+  public FeatureJaxrsAdapter(FeatureServerFactory serverFactory) {
+    this.serverFactory = serverFactory;
+    entityEndpointAdapter = new EntityEndpointAdapter(() -> this.serverFactory.getEntityService());
+    searchEndpointAdapter = new SearchEndpointAdapter(() -> this.serverFactory.getSearchService(() -> request.getSession()));
+  }
 
 //------------ application-specific methods ------------//
 
