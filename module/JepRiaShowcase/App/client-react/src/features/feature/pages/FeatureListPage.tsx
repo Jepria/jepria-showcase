@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
 import { setCurrentRecord } from "../featureSlice";
-import { selectSearchResult, fetchFeatureSearchResultset, selectIsLoading } from "../featureSearchSlice";
+import { selectSearchResult, fetchFeatureSearchResultset, selectIsLoading, selectResultSetSize, selectSearchId, fetchSearchFeatures } from "../featureSearchSlice";
 import { setState, Workstates } from "../../../app/WorkstateSlice";
 
 const useQuery = () => {
@@ -25,6 +25,8 @@ const FeatureListPage = () => {
   const page: number = parseInt(query.get("page") as string);
   const records: Array<Feature> = useSelector(selectSearchResult);
   const isLoading = useSelector(selectIsLoading);
+  const resultSetSize = useSelector(selectResultSetSize);
+  const searchId = useSelector(selectSearchId);
 
   useEffect(() => {
     dispatch(setState(Workstates.FeatureList));
@@ -33,9 +35,6 @@ const FeatureListPage = () => {
 
   return (
     <>
-      {isLoading ? (
-        <div style={{ textAlign: "center" }}>Loading...</div>
-      ) : (
         <Grid
           id="table"
           columns={[
@@ -76,9 +75,10 @@ const FeatureListPage = () => {
               accessor: "responsible.name",
             },
           ]}
+          isLoading={isLoading}
           data={records}
+          totalRowCount={resultSetSize}
           onSelection={(selectedRecords) => {
-            console.log(selectedRecords);
             if (selectedRecords.length === 1) {
               dispatch(setCurrentRecord(selectedRecords[0]));
             } else {
@@ -88,8 +88,13 @@ const FeatureListPage = () => {
           onDoubleClick={(record) => {
             history.push(`/feature/${record.featureId}/detail`);
           }}
+          onPaging={(pageNumber, pageSize) => {
+            if (searchId) {
+              console.log(`pageNumber = ${pageNumber}, pageSize = ${pageSize}`)
+              dispatch(fetchSearchFeatures(searchId, pageSize, pageNumber));
+            }
+          }}
         />
-      )}
     </>
   );
 };

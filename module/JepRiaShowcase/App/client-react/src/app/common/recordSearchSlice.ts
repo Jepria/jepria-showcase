@@ -4,7 +4,9 @@ export interface SearchState<RECORD = any, TEMPLATE = any> {
   searchTemplate?: TEMPLATE;
   error?: string;
   isLoading?: boolean;
+  searchId?: string;
   searchResult?: Array<RECORD>;
+  resultSetSize?: number;
   pageSize?: number;
   page?: number;
   submit?: boolean;
@@ -29,6 +31,12 @@ export const createGenericSearchSlice = <
     reducers: {
       setSearchTemplate(state, action) {
         state.searchTemplate = action.payload;
+      },
+      setResultSetSize(state, action){
+        state.resultSetSize = action.payload;
+      },
+      setSearchId(state, action) {
+        state.searchId = action.payload;
       },
       searchError(state, action) {
         state.error = action.payload;
