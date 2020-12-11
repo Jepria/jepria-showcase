@@ -1,5 +1,5 @@
 import queryString from "query-string";
-import { SearchRequest } from "@jfront/core-rest";
+import { ColumnSortConfiguration, SearchRequest } from "@jfront/core-rest";
 import {
   SearchState,
   createGenericSearchSlice,
@@ -59,7 +59,8 @@ export const selectSearchId = (state: RootState) => state.featureSearch.searchId
 export const fetchFeatureSearchResultset = (
   searchRequestString: string,
   pageSize,
-  page
+  page,
+  listSortConfiguration?: Array<ColumnSortConfiguration>
 ): AppThunk => async (dispatch) => {
   try {
     let searchTemplate = queryString.parse(searchRequestString);
@@ -71,6 +72,7 @@ export const fetchFeatureSearchResultset = (
     }
     let searchRequest: SearchRequest<FeatureSearchTemplate> = {
       template: searchTemplate,
+      listSortConfiguration
     };
 
     dispatch(isLoading(true));
