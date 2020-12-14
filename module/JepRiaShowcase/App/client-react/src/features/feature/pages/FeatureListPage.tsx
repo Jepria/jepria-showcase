@@ -44,6 +44,7 @@ const FeatureListPage = () => {
             },
             {
               Header: t("feature.fields.featureStatus"),
+              id: "featureStatus",
               accessor: "featureStatus.name",
             },
             {
@@ -93,6 +94,24 @@ const FeatureListPage = () => {
               console.log(`pageNumber = ${pageNumber}, pageSize = ${pageSize}`)
               dispatch(fetchSearchFeatures(searchId, pageSize, pageNumber));
             }
+          }}
+          onSort={(sortConfig) => {
+
+            dispatch(fetchFeatureSearchResultset(location.search, pageSize, page, sortConfig));
+            // if (searchRequest) {
+            //   const newSearchRequest = {
+            //     ...searchRequest,
+            //     listSortConfiguration: sortConfig
+            //   }
+            //   dispatch(postSearchClientRequest(newSearchRequest, t("dataLoadingMessage")));
+            // } else {
+            //   if (pageSize && page) {
+            //     dispatch(postSearchClientRequest({ template: searchTemplate as unknown as ClientSearchTemplate, listSortConfiguration: sortConfig }, t("dataLoadingMessage")));
+            //   } else {
+            //     dispatch(postSearchClientRequest({ template: { maxRowCount: 25 }, listSortConfiguration: sortConfig }, t("dataLoadingMessage")));
+            //   }
+            // }
+
           }}
         />
     </>
