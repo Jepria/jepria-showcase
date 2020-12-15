@@ -80,7 +80,7 @@ const FeatureEditPage = () => {
         <Form.Field>
           <Form.Label>{t("feature.fields.featureName")}:</Form.Label>
           <TextInput
-            style={{ width: "350px", textAlign: "left" }}
+            style={{ textAlign: "left" }}
             defaultValue={currentRecord?.featureName}
             name="featureName"
             value={formik.values.featureName}
@@ -90,7 +90,7 @@ const FeatureEditPage = () => {
         <Form.Field>
           <Form.Label>{t("feature.fields.featureNameEn")}:</Form.Label>
           <TextInput
-            style={{ width: "350px", textAlign: "left" }}
+            style={{ textAlign: "left" }}
             defaultValue={currentRecord?.featureNameEn}
             name="featureNameEn"
             value={formik.values.featureNameEn}
@@ -113,7 +113,7 @@ const FeatureEditPage = () => {
         <Form.Field>
           <Form.Label>{t("feature.fields.description")}:</Form.Label>
           <TextInput
-            style={{ width: "350px", textAlign: "left" }}
+            style={{ textAlign: "left" }}
             defaultValue={currentRecord?.description}
             name="description"
             value={formik.values.description}

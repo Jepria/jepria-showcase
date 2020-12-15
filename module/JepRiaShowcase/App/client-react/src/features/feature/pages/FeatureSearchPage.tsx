@@ -75,7 +75,7 @@ const FeatureSearchPage = () => {
       <Form onSubmit={formik.handleSubmit} ref={formRef}>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureId")}:</Form.Label>
-          <Form.Control error={formik.errors.featureId} style={{ maxWidth: "150px" }}>
+          <Form.Control error={formik.errors.featureId}>
             <NumberInput
               name="featureId"
               value={formik.values?.featureId}
@@ -86,7 +86,7 @@ const FeatureSearchPage = () => {
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureNameTemplate")}:</Form.Label>
-          <Form.Control error={formik.errors.featureNameTemplate} style={{ maxWidth: "150px" }}>
+          <Form.Control error={formik.errors.featureNameTemplate}>
             <TextInput
               name="featureNameTemplate"
               value={formik.values?.featureNameTemplate}
@@ -97,7 +97,7 @@ const FeatureSearchPage = () => {
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureNameEnTemplate")}:</Form.Label>
-          <Form.Control error={formik.errors.featureNameEnTemplate} style={{ maxWidth: "150px" }}>
+          <Form.Control error={formik.errors.featureNameEnTemplate}>
             <TextInput
               name="featureNameEnTemplate"
               value={formik.values?.featureNameEnTemplate}
@@ -108,7 +108,7 @@ const FeatureSearchPage = () => {
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.dateInsFrom")}:</Form.Label>
-          <Form.Control error={formik.errors.dateInsFrom as any} style={{ maxWidth: "150px" }}>
+          <Form.Control error={formik.errors.dateInsFrom as any}>
             <DatePicker
               name="dateInsFrom"
               selected={formik.values?.dateInsFrom}
@@ -121,7 +121,7 @@ const FeatureSearchPage = () => {
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.dateInsTo")}:</Form.Label>
-          <Form.Control error={formik.errors.dateInsTo as any} style={{ maxWidth: "150px" }}>
+          <Form.Control error={formik.errors.dateInsTo as any}>
             <DatePicker
               name="dateInsTo"
               selected={formik.values?.dateInsTo}
@@ -133,7 +133,7 @@ const FeatureSearchPage = () => {
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.statusCodeList")}:</Form.Label>
-          <Form.Control error={formik.errors.statusCodeList as any} style={{ maxWidth: "150px" }}>
+          <Form.Control error={formik.errors.statusCodeList as any}>
             <CheckBoxGroup
               name="statusCodeList"
               values={formik.values?.statusCodeList ? formik.values.statusCodeList : []}
@@ -153,7 +153,7 @@ const FeatureSearchPage = () => {
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.maxRowCount")}:</Form.Label>
-          <Form.Control style={{ maxWidth: "150px" }}>
+          <Form.Control>
             <NumberInput
               name="maxRowCount"
               value={formik.values.maxRowCount}

@@ -59,7 +59,7 @@ const FeatureCreatePage = () => {
       <Form id="create-form" onSubmit={formik.handleSubmit} ref={formRef}>
         <Form.Field>
           <Form.Label required>{t("feature.fields.featureName")}</Form.Label>
-          <Form.Control error={formik.errors.featureName} style={{ maxWidth: "150px" }}>
+          <Form.Control error={formik.errors.featureName}>
             <TextInput
               name="featureName"
               value={formik.values.featureName}
@@ -69,7 +69,7 @@ const FeatureCreatePage = () => {
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureNameEn")}</Form.Label>
-          <Form.Control error={formik.errors.featureNameEn} style={{ maxWidth: "150px" }}>
+          <Form.Control error={formik.errors.featureNameEn}>
             <TextInput
               name="featureNameEn"
               value={formik.values.featureNameEn}
@@ -79,7 +79,7 @@ const FeatureCreatePage = () => {
         </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.description")}:</Form.Label>
-          <Form.Control error={formik.errors.description} style={{ maxWidth: "150px" }}>
+          <Form.Control error={formik.errors.description}>
             <textarea
               name="description"
               value={formik.values.description}
