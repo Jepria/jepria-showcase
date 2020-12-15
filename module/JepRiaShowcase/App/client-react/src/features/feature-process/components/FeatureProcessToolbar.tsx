@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import {
   Toolbar,
   ToolbarButtonBase,
@@ -11,7 +11,6 @@ import {
   ToolbarButtonView,
   ToolbarSplitter,
 } from "@jfront/ui-core";
-// import { selectState, Workstates } from "../../../app/WorkstateSlice";
 import { selectFeatureProcess, submitSaveOnCreateFeatureProcess } from "../featureProcessSlice";
 import { deleteFeatureProcess } from "../api/FeatureProcessApi";
 import { useWorkstate, Workstates } from "../../../app/common/useWorkstate";
@@ -21,6 +20,7 @@ const FeatureProcessToolbar = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
+  const { featureId } = useParams();
   //----------------
   const state: Workstates = useWorkstate(history.location.pathname);
   const currentFeatureProcess = useSelector(selectFeatureProcess);
@@ -29,7 +29,7 @@ const FeatureProcessToolbar = () => {
     <Toolbar>
       <ToolbarButtonCreate
         disabled={Workstates.Create === state}
-        onClick={() => history.push(`feature-process/create`)}
+        onClick={() => history.push(`/feature/${featureId}/feature-process/create`)}
       />
       <ToolbarButtonSave
         disabled={Workstates.Create !== state}
@@ -47,7 +47,7 @@ const FeatureProcessToolbar = () => {
               parseInt(currentFeatureProcess.featureId.toString()),
               parseInt(currentFeatureProcess.featureProcessId)
             ).then(() => {
-              history.push(`/feature/${currentFeatureProcess.featureId}/feature-process`);
+              history.push(`/feature/${featureId}/feature-process/list`);
             });
           }
         }}
