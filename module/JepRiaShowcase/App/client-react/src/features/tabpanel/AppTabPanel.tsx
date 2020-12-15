@@ -52,7 +52,7 @@ const AppTabPanel = () => {
         <Tab
           selected={!mainTabSelected}
           onClick={() => {
-            history.push(`/feature/${featureId}/feature-process`);
+            history.push(`/feature/${featureId}/feature-process/list`);
           }}
         >
           {t("feature-process.header")}

@@ -33,6 +33,7 @@ function Main() {
   return (
     <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
       <Panel>
+        {/* <AppTabPanel /> */}
         <Switch>
           <Route path="/feature" exact>
             <AppTabPanel />
@@ -59,7 +60,7 @@ function Main() {
             <FeatureToolbar />
             <FeatureListPage />
           </Route>
-          <Route path="/feature/:featureId/feature-process" exact>
+          <Route path="/feature/:featureId/feature-process/list" exact>
             <AppTabPanel />
             <FeatureProcessToolbar />
             <FeatureProcessListPage />

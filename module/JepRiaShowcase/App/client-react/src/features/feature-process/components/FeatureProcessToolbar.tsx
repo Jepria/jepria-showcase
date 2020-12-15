@@ -11,9 +11,10 @@ import {
   ToolbarButtonView,
   ToolbarSplitter,
 } from "@jfront/ui-core";
-import { selectState, Workstates } from "../../../app/WorkstateSlice";
+// import { selectState, Workstates } from "../../../app/WorkstateSlice";
 import { selectFeatureProcess, submitSaveOnCreateFeatureProcess } from "../featureProcessSlice";
 import { deleteFeatureProcess } from "../api/FeatureProcessApi";
+import { useWorkstate, Workstates } from "../../../app/common/useWorkstate";
 
 const FeatureProcessToolbar = () => {
   //----------------
@@ -21,19 +22,19 @@ const FeatureProcessToolbar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   //----------------
-  const state: Workstates = useSelector(selectState);
+  const state: Workstates = useWorkstate(history.location.pathname);
   const currentFeatureProcess = useSelector(selectFeatureProcess);
 
   return (
     <Toolbar>
       <ToolbarButtonCreate
-        disabled={Workstates.FeatureProcessCreate === state}
+        disabled={Workstates.Create === state}
         onClick={() => history.push(`feature-process/create`)}
       />
       <ToolbarButtonSave
-        disabled={Workstates.FeatureProcessCreate !== state}
+        disabled={Workstates.Create !== state}
         onClick={() => {
-          if (Workstates.FeatureProcessCreate === state) {
+          if (Workstates.Create === state) {
             dispatch(submitSaveOnCreateFeatureProcess());
           }
         }}
@@ -52,7 +53,7 @@ const FeatureProcessToolbar = () => {
         }}
       />
       <ToolbarButtonView
-        disabled={!currentFeatureProcess || Workstates.FeatureProcessDetail === state}
+        disabled={!currentFeatureProcess || Workstates.Detail === state}
         onClick={() =>
           history.push(
             `/feature/${currentFeatureProcess.featureId}/feature-process/${currentFeatureProcess?.featureProcessId}/detail`
@@ -61,15 +62,13 @@ const FeatureProcessToolbar = () => {
       />
       <ToolbarSplitter />
       <ToolbarButtonBase
-        disabled={Workstates.FeatureProcessList === state}
+        disabled={Workstates.List === state}
         onClick={() => {
-          history.push(`/feature/${currentFeatureProcess.featureId}/feature-process`);
+          history.push(`/feature/${currentFeatureProcess.featureId}/feature-process/list`);
         }}
       >
         {t("toolbar.list")}
       </ToolbarButtonBase>
-      {/* <ToolbarButtonFind disabled={!currentFeatureProcess} /> */}
-      {/* <ToolbarButtonBase disabled={!currentFeatureProcess}>{t("toolbar.find")}</ToolbarButtonBase> */}
     </Toolbar>
   );
 };
