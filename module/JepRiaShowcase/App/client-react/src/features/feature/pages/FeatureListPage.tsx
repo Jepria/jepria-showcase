@@ -6,7 +6,6 @@ import { Grid } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
 import { setCurrentRecord } from "../featureSlice";
 import { selectSearchResult, fetchFeatureSearchResultset, selectIsLoading, selectResultSetSize, selectSearchId, fetchSearchFeatures } from "../featureSearchSlice";
-import { setState, Workstates } from "../../../app/WorkstateSlice";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -29,7 +28,6 @@ const FeatureListPage = () => {
   const searchId = useSelector(selectSearchId);
 
   useEffect(() => {
-    dispatch(setState(Workstates.FeatureList));
     dispatch(fetchFeatureSearchResultset(location.search, pageSize, page));
   }, [location]);
 

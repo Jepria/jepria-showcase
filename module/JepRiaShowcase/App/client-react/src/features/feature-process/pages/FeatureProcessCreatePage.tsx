@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ComboBox, ComboBoxItem, Form } from "@jfront/ui-core";
 import { FeatureProcessCreate, FeatureStatusOptions } from "../api/FeatureProcessTypes";
 import { createFeatureProcess, getFeatureStatusOptions } from "../api/FeatureProcessApi";
-import { setState, Workstates } from "../../../app/WorkstateSlice";
 import {
   selectSaveOnCreateFeatureProcess,
   submitSavedOnCreateFeatureProcess,
@@ -32,7 +31,6 @@ const FeatureProcessCreatePage = () => {
   }, [onSave]);
 
   useEffect(() => {
-    dispatch(setState(Workstates.FeatureProcessCreate));
     getFeatureStatusOptions().then((options) => {
       setStatusOptions(options);
     });
@@ -63,7 +61,7 @@ const FeatureProcessCreatePage = () => {
               name="featureStatusCode"
               value={formik.values.featureStatusCode}
               onSelectionChange={(name, value) => {
-                console.log(`value = ${value}`)
+                console.log(`value = ${value}`);
                 formik.setFieldValue("featureStatusCode", value);
               }}
             >

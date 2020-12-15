@@ -21,7 +21,6 @@ import {
   submitSearch,
 } from "../featureSearchSlice";
 import { Feature } from "../api/FeatureTypes";
-// import { selectState, Workstates } from "../../../app/WorkstateSlice";
 import { Workstates, useWorkstate } from "../../../app/common/useWorkstate";
 
 const FeatureToolbar = () => {
@@ -30,13 +29,12 @@ const FeatureToolbar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   //----------------
-  // const state: Workstates = useSelector(selectState);
   const currentRecord: Feature = useSelector(selectFeature);
   const records: Array<Feature> = useSelector(selectSearchResult);
   const searchPage: number = useSelector(selectSearchPage);
   const searchPageSize: number = useSelector(selectSearchPageSize);
   const state = useWorkstate(history.location.pathname);
-  console.log(`workstate: ${state}`);
+
   return (
     <Toolbar>
       <ToolbarButtonCreate
