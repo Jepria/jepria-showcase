@@ -7,7 +7,6 @@ import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
 import { Feature, FeatureCreate } from "../api/FeatureTypes";
 import { selectSaveOnCreateFeature, submitSavedOnCreate } from "../featureSlice";
-import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { featureCrudApi } from "../api/FeatureCrudApi";
 
 const FeatureCreatePage = () => {
@@ -49,10 +48,6 @@ const FeatureCreatePage = () => {
       return errors;
     },
   });
-
-  useEffect(() => {
-    dispatch(setState(Workstates.FeatureCreate));
-  }, []);
 
   return (
     <>

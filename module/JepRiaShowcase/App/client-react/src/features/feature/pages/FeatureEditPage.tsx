@@ -12,7 +12,6 @@ import {
   submitSavedOnEditFeature,
 } from "../featureSlice";
 import { Feature, FeatureUpdate } from "../api/FeatureTypes";
-import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { featureCrudApi } from "../api/FeatureCrudApi";
 
 const FeatureEditPage = () => {
@@ -35,7 +34,6 @@ const FeatureEditPage = () => {
   }, [onSaveFeature]);
 
   useEffect(() => {
-    dispatch(setState(Workstates.FeatureEdit));
     featureCrudApi.getRecordById(featureId).then((feature) => {
       dispatch(setCurrentRecord(feature));
     });

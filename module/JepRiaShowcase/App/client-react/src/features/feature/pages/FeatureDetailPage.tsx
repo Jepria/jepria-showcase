@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
 import { fetchFeature, selectError, selectFeature } from "../featureSlice";
-import { setState, Workstates } from "../../../app/WorkstateSlice";
 
 const FeatureDetailPage = () => {
   //----------------
@@ -18,7 +17,6 @@ const FeatureDetailPage = () => {
   const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(setState(Workstates.FeatureDetail));
     dispatch(fetchFeature(featureId));
   }, []);
 

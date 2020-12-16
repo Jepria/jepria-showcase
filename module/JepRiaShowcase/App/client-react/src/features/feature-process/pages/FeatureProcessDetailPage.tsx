@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { getFeatureProcess } from "../api/FeatureProcessApi";
-import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { setCurrentFeatureProcess, selectFeatureProcess } from "../featureProcessSlice";
 
 const FeatureProcessDetailPage = () => {
@@ -21,7 +20,6 @@ const FeatureProcessDetailPage = () => {
       getFeatureProcess(parseInt(featureId), featureProcessId).then((featureProcess) => {
         dispatch(setCurrentFeatureProcess(featureProcess));
       });
-      dispatch(setState(Workstates.FeatureProcessDetail));
     }
   }, []);
 

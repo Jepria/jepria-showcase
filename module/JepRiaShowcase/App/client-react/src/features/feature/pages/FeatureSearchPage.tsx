@@ -12,7 +12,6 @@ import { TextInput } from "@jfront/ui-core";
 import { FeatureSearchTemplate } from "../api/FeatureTypes";
 import { FeatureStatusOptions } from "../../feature-process/api/FeatureProcessTypes";
 import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProcessApi";
-import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { selectSearchSubmit, selectSearchTemplate, submitSearch } from "../featureSearchSlice";
 
 const FeatureSearchPage = () => {
@@ -37,7 +36,6 @@ const FeatureSearchPage = () => {
   }, [selectSearch]);
 
   useEffect(() => {
-    dispatch(setState(Workstates.FeatureSearch));
     getFeatureStatusOptions().then((options) => {
       setStatusOptions(options);
       setIsLoading(false);

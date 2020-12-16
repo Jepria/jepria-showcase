@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ComboBox, ComboBoxItem, Form } from "@jfront/ui-core";
 import { FeatureProcessCreate, FeatureStatusOptions } from "../api/FeatureProcessTypes";
 import { createFeatureProcess, getFeatureStatusOptions } from "../api/FeatureProcessApi";
-import { setState, Workstates } from "../../../app/WorkstateSlice";
 import {
   selectSaveOnCreateFeatureProcess,
   submitSavedOnCreateFeatureProcess,
@@ -32,7 +31,6 @@ const FeatureProcessCreatePage = () => {
   }, [onSave]);
 
   useEffect(() => {
-    dispatch(setState(Workstates.FeatureProcessCreate));
     getFeatureStatusOptions().then((options) => {
       setStatusOptions(options);
     });
@@ -58,15 +56,16 @@ const FeatureProcessCreatePage = () => {
       <Form onSubmit={formik.handleSubmit} ref={formRef}>
         <Form.Field>
           <Form.Label>{t("feature-process.fields.featureStatusCode")}</Form.Label>
-          <Form.Control error={formik.errors.featureStatusCode} style={{ maxWidth: "200px" }}>
+          <Form.Control error={formik.errors.featureStatusCode}>
             <ComboBox
               name="featureStatusCode"
               value={formik.values.featureStatusCode}
               onSelectionChange={(name, value) => {
+                console.log(`value = ${value}`);
                 formik.setFieldValue("featureStatusCode", value);
               }}
             >
-              <ComboBoxItem value={undefined} label="" />
+              {/* <ComboBoxItem value={undefined} label="" /> */}
               {statusOptions
                 ? statusOptions.map((option) => {
                     return (
