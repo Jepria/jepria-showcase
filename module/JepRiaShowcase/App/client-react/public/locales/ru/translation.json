@@ -36,5 +36,18 @@
     "onlyDigits": "Значение должно состоять из цифр",
     "onlySymbolsAndDigits": "Значение должно состоять из букв английского алфавита и цифр",
     "maxLength": "Максимальная длина значения не больше 32 символов"
+  },
+  "goods": {
+    "header": "Товар",
+    "fields": {
+      "goodsId": "ID товара",
+      "supplierId": "ID поставщика",
+      "goodsName": "Наименование товара",
+      "goodsSegmentType": "Сегмент товара",
+      "goodsTypeCode": "Тип товара",
+      "UnitCode": "Единицы измерения",
+      "purchasingPrice": "Закупочная цена",    
+      "maxRowCount": "Количество записей"
+    }
   }
 }

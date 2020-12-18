@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 import java.util.function.Supplier;
 
 public interface GoodsServerFactory {
+  GoodsService getService();
+
   EntityService getEntityService();
   
   SearchService getSearchService(Supplier<HttpSession> session);

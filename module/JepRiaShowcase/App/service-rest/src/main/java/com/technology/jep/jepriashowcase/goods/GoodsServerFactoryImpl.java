@@ -13,12 +13,20 @@ import java.util.function.Supplier;
 
 public class GoodsServerFactoryImpl extends ServerFactory<GoodsDao> implements GoodsServerFactory {
 
+  private GoodsService service;
   private EntityService entityService;
   private SearchService searchService;
 
   @Inject
   public GoodsServerFactoryImpl(GoodsDao dao) {
     super(dao, "jdbc/ITMDS");
+  }
+
+  public GoodsService getService() {
+    if (null  == this.service) {
+      this.service = new GoodsServiceImpl(getDao());
+    }
+    return this.service;
   }
 
   /**

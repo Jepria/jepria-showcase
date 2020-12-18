@@ -6,6 +6,7 @@ import com.technology.jep.jepriashowcase.goods.dto.GoodsCreateDto;
 import com.technology.jep.jepriashowcase.goods.dto.GoodsDto;
 import com.technology.jep.jepriashowcase.goods.dto.GoodsSearchDto;
 import com.technology.jep.jepriashowcase.goods.dto.GoodsUpdateDto;
+import org.jepria.server.data.OptionDto;
 import org.jepria.server.data.SearchRequestDto;
 import org.jepria.server.service.rest.ExtendedResponse;
 import org.jepria.server.service.rest.JaxrsAdapterBase;
@@ -121,4 +122,33 @@ public class GoodsJaxrsAdapter extends JaxrsAdapterBase {
     List<GoodsDto> result = (List<GoodsDto>) searchEndpointAdapter.getResultsetPaged(searchId, pageSize, page, cacheControl);
     return result == null ? Response.noContent().build() : Response.ok(result).build();
   }
+
+  @GET
+  @Path("/option/goods-segment")
+  public Response getGoodsSegment() {
+    List<OptionDto<String>> result = serverFactory.getService().getGoodsSegment();
+    return Response.ok(result).build();
+  }
+
+  @GET
+  @Path("/option/unit")
+  public Response getUnit() {
+    List<OptionDto<String>> result = serverFactory.getService().getUnit();
+    return Response.ok(result).build();
+  }
+
+  @GET
+  @Path("/option/goods-type")
+  public Response getGoodsType() {
+    List<OptionDto<String>> result = serverFactory.getService().getGoodsType();
+    return Response.ok(result).build();
+  }
+
+  @GET
+  @Path("/option/motivation-type")
+  public Response getMotivationType() {
+    List<OptionDto<String>> result = serverFactory.getService().getMotivationType();
+    return Response.ok(result).build();
+  }
+
 }

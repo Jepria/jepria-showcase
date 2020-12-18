@@ -7,9 +7,9 @@ import org.jepria.server.data.OptionDto;
 import java.util.List;
 
 public interface GoodsDao extends Dao {
-  List<OptionDto> getGoodsType();
-  List<OptionDto> getUnit();
-  List<OptionDto> getMotivationType();
+  List<OptionDto<String>>  getGoodsType();
+  List<OptionDto<String>>  getUnit();
+  List<OptionDto<String>>  getMotivationType();
   List<GoodsTreeNodeDto> getGoodsCatalog(Integer parentGoodsCatalogId, Integer goodsId);
-  List<OptionDto> getGoodsSegment();
+  List<OptionDto<String>>  getGoodsSegment();
 }

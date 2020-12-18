@@ -236,7 +236,7 @@ public class GoodsDaoImpl implements GoodsDao {
   }
 
   @Override
-  public List<OptionDto> getGoodsType() {
+  public List<OptionDto<String>>  getGoodsType() {
     String sqlQuery =
         " begin "
             + " ? := pkg_jepriashowcase.getGoodsType;"
@@ -255,7 +255,7 @@ public class GoodsDaoImpl implements GoodsDao {
   }
 
   @Override
-  public List<OptionDto> getUnit() {
+  public List<OptionDto<String>>  getUnit() {
     String sqlQuery =
         " begin "
             + " ? := pkg_jepriashowcase.getUnit;"
@@ -274,7 +274,7 @@ public class GoodsDaoImpl implements GoodsDao {
   }
 
   @Override
-  public List<OptionDto> getMotivationType() {
+  public List<OptionDto<String>>  getMotivationType() {
     String sqlQuery =
         " begin "
             + " ? := pkg_jepriashowcase.getMotivationType;"
@@ -319,7 +319,7 @@ public class GoodsDaoImpl implements GoodsDao {
   }
 
   @Override
-  public List<OptionDto> getGoodsSegment() {
+  public List<OptionDto<String>> getGoodsSegment() {
     String sqlQuery =
         " begin "
             + " ? := pkg_jepriashowcase.getGoodsSegment;"
