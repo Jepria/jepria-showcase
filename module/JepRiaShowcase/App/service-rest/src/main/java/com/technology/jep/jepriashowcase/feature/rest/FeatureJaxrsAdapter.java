@@ -27,6 +27,7 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
   protected final EntityEndpointAdapter entityEndpointAdapter;
   protected final SearchEndpointAdapter searchEndpointAdapter;
   
+  // Inject делаем в конструктор
   @Inject
   public FeatureJaxrsAdapter(FeatureServerFactory serverFactory) {
     this.serverFactory = serverFactory;
