@@ -27,6 +27,8 @@ const FeatureListPage = () => {
     pageNumber: parseInt(query.get("page") as string),
   });
 
+  const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
+
   const { records, searchId, searchTemplate, isLoading, resultSetSize } = useSelector(
     (state: RootState) => state.feature.featureSearchSlice
   );
@@ -93,14 +95,20 @@ const FeatureListPage = () => {
         isLoading={isLoading}
         data={records}
         totalRowCount={resultSetSize}
-        onSelection={(selectedRecords: Feature[]) => {
-          if (selectedRecords.length === 1) {
-            dispatch(crudActions.setCurrentRecord({ currentRecord: selectedRecords[0] }));
-          } else {
-            dispatch(crudActions.setCurrentRecord({}));
+        onSelection={(records) => {
+          if (records) {
+            if (records.length === 1) {
+              if (records[0] !== currentRecord) {
+                dispatch(crudActions.setCurrentRecord({ currentRecord: records[0] }));
+                dispatch(crudActions.selectRecords({ selectedRecords: records }));
+              }
+            } else if (currentRecord) {
+              dispatch(crudActions.setCurrentRecord({} as any));
+              dispatch(crudActions.selectRecords({ selectedRecords: records }));
+            }
           }
         }}
-        onDoubleClick={(record) => {
+        onDoubleClick={(record: Feature) => {
           history.push(`/feature/${record.featureId}/detail`);
         }}
         onPaging={(pageNumber, pageSize) => {

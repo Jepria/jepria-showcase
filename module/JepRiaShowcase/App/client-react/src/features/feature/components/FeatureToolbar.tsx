@@ -23,6 +23,8 @@ import {
 import { Feature } from "../api/FeatureTypes";
 import { Workstates, useWorkstate } from "../../../app/common/useWorkstate";
 import { FeatureState } from "../../../app/reducer";
+import { deleteRecord } from "../state/featureSlice";
+import { RootState } from "../../../app/store";
 
 const FeatureToolbar = ({ formRef }) => {
   //----------------
@@ -34,9 +36,11 @@ const FeatureToolbar = ({ formRef }) => {
   // const records: Array<Feature> = useSelector(selectSearchResult);
   // const searchPage: number = useSelector(selectSearchPage);
   // const searchPageSize: number = useSelector(selectSearchPageSize);
-  const { records } = useSelector((state: FeatureState) => state.feature.featureSearchSlice);
-  const { currentRecord, error } = useSelector(
-    (state: FeatureState) => state.feature.featureCrudSlice
+  const { records } = useSelector(
+    (state: RootState) => state.feature.featureSearchSlice
+  );
+  const { currentRecord, selectedRecords, error } = useSelector(
+    (state: RootState) => state.feature.featureCrudSlice
   );
   const state = useWorkstate(history.location.pathname);
 
@@ -65,7 +69,16 @@ const FeatureToolbar = ({ formRef }) => {
           history.push(`/feature/${currentRecord?.featureId}/edit`);
         }}
       />
-      <ToolbarButtonDelete disabled={!currentRecord} />
+      <ToolbarButtonDelete
+        disabled={!currentRecord}
+        onClick={() => {
+          dispatch(
+            deleteRecord({
+              primaryKeys: selectedRecords.map((selectRecord: Feature) => selectRecord.featureId),
+            })
+          );
+        }}
+      />
       <ToolbarButtonView
         disabled={!currentRecord || Workstates.Detail === state}
         onClick={() => history.push(`/feature/${currentRecord?.featureId}/detail`)}
