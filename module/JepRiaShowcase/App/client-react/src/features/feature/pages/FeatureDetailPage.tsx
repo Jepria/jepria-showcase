@@ -4,7 +4,9 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
-import { fetchFeature, selectError, selectFeature } from "../featureSlice";
+import { actions as crudActions, getRecordById } from "../state/featureSlice";
+import { RootState } from "../../../app/store";
+// import { fetchFeature, selectError, selectFeature } from "../featureSlice";
 
 const FeatureDetailPage = () => {
   //----------------
@@ -13,16 +15,20 @@ const FeatureDetailPage = () => {
   //----------------
 
   let { featureId } = useParams();
-  const currentRecord: Feature = useSelector(selectFeature);
-  const error = useSelector(selectError);
+  const { currentRecord, error } = useSelector(
+    (state: RootState) => state.feature.featureCrudSlice
+  );
+  // const currentRecord: Feature = useSelector(selectFeature);
+  // const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(fetchFeature(featureId));
+    // dispatch(fetchFeature(featureId));
+    dispatch(getRecordById({ primaryKey: featureId }));
   }, []);
 
   return (
     <>
-      {error ? <div>{error}</div> : null}
+      {error ? <div>{error.message}</div> : null}
       <Form>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureId")}:</Form.Label>

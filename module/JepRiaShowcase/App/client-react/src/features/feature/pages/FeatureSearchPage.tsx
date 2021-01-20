@@ -10,46 +10,51 @@ import { CheckBoxGroup } from "@jfront/ui-core";
 import { CheckBox } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
 import { FeatureSearchTemplate } from "../api/FeatureTypes";
-import { FeatureStatusOptions } from "../../feature-process/api/FeatureProcessTypes";
-import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProcessApi";
-import { selectSearchSubmit, selectSearchTemplate, submitSearch } from "../featureSearchSlice";
+// import { FeatureStatusOptions } from "../../feature-process/api/FeatureProcessTypes";
+// import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProcessApi";
+import { FeatureState } from "../../../app/reducer";
+// import { selectSearchSubmit, selectSearchTemplate, submitSearch } from "../featureSearchSlice";
 
-const FeatureSearchPage = () => {
+const FeatureSearchPage = ({ formRef }) => {
   //----------------
-  let formRef = useRef(null) as any;
+  // let formRef = useRef(null) as any;
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
   //----------------
 
-  const [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const selectSearch = useSelector(selectSearchSubmit);
-  const searchTemplate: FeatureSearchTemplate = useSelector(selectSearchTemplate);
+  // const selectSearch = useSelector(selectSearchSubmit);
+  // const searchTemplate: FeatureSearchTemplate = useSelector(selectSearchTemplate);
+  const { records, searchId, searchTemplate, isLoading, resultSetSize } = useSelector(
+    (state: FeatureState) => state.feature.featureSearchSlice
+  );
+
+  // useEffect(() => {
+  //   if (selectSearch) {
+  //     formRef.current?.dispatchEvent(new Event("submit"));
+  //     dispatch(submitSearch(false));
+  //   }
+  // }, [selectSearch]);
 
   useEffect(() => {
-    if (selectSearch) {
-      formRef.current?.dispatchEvent(new Event("submit"));
-      dispatch(submitSearch(false));
-    }
-  }, [selectSearch]);
-
-  useEffect(() => {
-    getFeatureStatusOptions().then((options) => {
-      setStatusOptions(options);
-      setIsLoading(false);
-    });
+    // getFeatureStatusOptions().then((options) => {
+    //   setStatusOptions(options);
+    // });
   }, []);
 
   const formik = useFormik<FeatureSearchTemplate>({
-    initialValues: searchTemplate,
+    initialValues: searchTemplate.template,
     enableReinitialize: true,
     onSubmit: (values) => {
+      console.log("values: ", values)
       let query = queryString.stringify(values);
       if (query) {
         query = "&" + query;
       }
+      console.log("query: ", query)
       history.push(`/feature/list/?pageSize=25&page=1${query}`);
     },
     validate: (values) => {
@@ -129,7 +134,7 @@ const FeatureSearchPage = () => {
             />
           </Form.Control>
         </Form.Field>
-        <Form.Field>
+        {/* <Form.Field>
           <Form.Label>{t("feature.fields.statusCodeList")}:</Form.Label>
           <Form.Control error={formik.errors.statusCodeList as any}>
             <CheckBoxGroup
@@ -148,7 +153,7 @@ const FeatureSearchPage = () => {
                 : null}
             </CheckBoxGroup>
           </Form.Control>
-        </Form.Field>
+        </Form.Field> */}
         <Form.Field>
           <Form.Label>{t("feature.fields.maxRowCount")}:</Form.Label>
           <Form.Control>

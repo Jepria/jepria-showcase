@@ -13,26 +13,31 @@ import {
   ToolbarButtonView,
   ToolbarSplitter,
 } from "@jfront/ui-core";
-import { selectFeature, submitSaveOnCreate, submitSaveOnEditFeature } from "../featureSlice";
-import {
-  selectSearchPage,
-  selectSearchPageSize,
-  selectSearchResult,
-  submitSearch,
-} from "../featureSearchSlice";
+// import { selectFeature, submitSaveOnCreate, submitSaveOnEditFeature } from "../state/featureSlice";
+// import {
+//   selectSearchPage,
+//   selectSearchPageSize,
+//   selectSearchResult,
+//   submitSearch,
+// } from "../featureSearchSlice";
 import { Feature } from "../api/FeatureTypes";
 import { Workstates, useWorkstate } from "../../../app/common/useWorkstate";
+import { FeatureState } from "../../../app/reducer";
 
-const FeatureToolbar = () => {
+const FeatureToolbar = ({ formRef }) => {
   //----------------
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
   //----------------
-  const currentRecord: Feature = useSelector(selectFeature);
-  const records: Array<Feature> = useSelector(selectSearchResult);
-  const searchPage: number = useSelector(selectSearchPage);
-  const searchPageSize: number = useSelector(selectSearchPageSize);
+  // const currentRecord: Feature = useSelector(selectFeature);
+  // const records: Array<Feature> = useSelector(selectSearchResult);
+  // const searchPage: number = useSelector(selectSearchPage);
+  // const searchPageSize: number = useSelector(selectSearchPageSize);
+  const { records } = useSelector((state: FeatureState) => state.feature.featureSearchSlice);
+  const { currentRecord, error } = useSelector(
+    (state: FeatureState) => state.feature.featureCrudSlice
+  );
   const state = useWorkstate(history.location.pathname);
 
   return (
@@ -44,12 +49,15 @@ const FeatureToolbar = () => {
       <ToolbarButtonSave
         disabled={Workstates.Create !== state && Workstates.Edit !== state}
         onClick={() => {
-          if (Workstates.Create === state) {
-            dispatch(submitSaveOnCreate());
-          } else if (Workstates.Edit == state) {
-            dispatch(submitSaveOnEditFeature());
-          }
+          formRef.current?.dispatchEvent(new Event("submit"));
         }}
+        // onClick={() => {
+        //   if (Workstates.Create === state) {
+        //     dispatch(submitSaveOnCreate());
+        //   } else if (Workstates.Edit == state) {
+        //     dispatch(submitSaveOnEditFeature());
+        //   }
+        // }}
       />
       <ToolbarButtonEdit
         disabled={!currentRecord}
@@ -65,7 +73,7 @@ const FeatureToolbar = () => {
       <ToolbarSplitter />
       <ToolbarButtonBase
         disabled={Workstates.List !== state && records ? records.length === 0 : true}
-        onClick={() => history.push(`/feature/list/?pageSize=${searchPageSize}&page=${searchPage}`)}
+        // onClick={() => history.push(`/feature/list/?pageSize=${searchPageSize}&page=${searchPage}`)}
       >
         {t("toolbar.list")}
       </ToolbarButtonBase>
@@ -77,8 +85,12 @@ const FeatureToolbar = () => {
         disabled={state !== Workstates.Search}
         type="submit"
         onClick={() => {
-          dispatch(submitSearch(true));
+          formRef.current?.dispatchEvent(new Event("submit"));
+          console.log(formRef);
         }}
+        // onClick={() => {
+        //   dispatch(submitSearch(true));
+        // }}
       >
         {t("toolbar.find")}
       </ToolbarButtonBase>

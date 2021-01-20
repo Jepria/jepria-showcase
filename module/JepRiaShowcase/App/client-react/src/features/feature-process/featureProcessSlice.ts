@@ -36,7 +36,7 @@ export const { getFeatureError } = featureProcessSlice.actions;
 export const { setSaveOnCreateFeatureProcess } = featureProcessSlice.actions;
 
 export const selectFeatureProcess = (state: RootState) =>
-  state.featureProcess.currentFeatureProcess;
+  state.featureProcess.currentFeatureProcess; 
 export const selectError = (state: RootState) => state.featureProcess.error;
 export const selectSaveOnCreateFeatureProcess = (state: RootState) =>
   state.featureProcess.saveOnCreateFeatureProcess;

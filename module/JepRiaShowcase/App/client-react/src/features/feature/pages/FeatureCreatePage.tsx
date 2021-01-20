@@ -6,24 +6,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
 import { Feature, FeatureCreate } from "../api/FeatureTypes";
-import { selectSaveOnCreateFeature, submitSavedOnCreate } from "../featureSlice";
+// import { selectSaveOnCreateFeature, submitSavedOnCreate } from "../state/featureSlice";
 import { featureCrudApi } from "../api/FeatureCrudApi";
 
-const FeatureCreatePage = () => {
+const FeatureCreatePage = ({ formRef }) => {
   //----------------
-  let formRef = useRef(null) as any;
+  // let formRef = useRef(null) as any;
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   //----------------
 
-  const onCreateFeature = useSelector(selectSaveOnCreateFeature);
-  useEffect(() => {
-    if (onCreateFeature) {
-      dispatch(submitSavedOnCreate());
-      formRef.current?.dispatchEvent(new Event("submit"));
-    }
-  }, [onCreateFeature]);
+  // const onCreateFeature = useSelector(selectSaveOnCreateFeature);
+  // useEffect(() => {
+  //   if (onCreateFeature) {
+  //     dispatch(submitSavedOnCreate());
+  //     formRef.current?.dispatchEvent(new Event("submit"));
+  //   }
+  // }, [onCreateFeature]);
 
   const formik = useFormik<FeatureCreate>({
     initialValues: {

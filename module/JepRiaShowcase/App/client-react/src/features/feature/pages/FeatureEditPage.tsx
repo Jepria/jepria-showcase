@@ -5,39 +5,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
-import {
-  selectFeature,
-  selectSaveOnEditFeature,
-  setCurrentRecord,
-  submitSavedOnEditFeature,
-} from "../featureSlice";
+// import {
+//   selectFeature,
+//   selectSaveOnEditFeature,
+//   setCurrentRecord,
+//   submitSavedOnEditFeature,
+// } from "../state/featureSlice";
 import { Feature, FeatureUpdate } from "../api/FeatureTypes";
 import { featureCrudApi } from "../api/FeatureCrudApi";
+import { RootState } from "../../../app/store";
 
-const FeatureEditPage = () => {
+const FeatureEditPage = ({ formRef }) => {
   //----------------
-  let formRef = useRef(null) as any;
+  // let formRef = useRef(null) as any;
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   //----------------
 
   let { featureId } = useParams();
-  const currentRecord: Feature = useSelector(selectFeature);
+  const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
 
-  const onSaveFeature = useSelector(selectSaveOnEditFeature);
-  useEffect(() => {
-    if (onSaveFeature) {
-      dispatch(submitSavedOnEditFeature());
-      formRef.current?.dispatchEvent(new Event("submit"));
-    }
-  }, [onSaveFeature]);
+  // const onSaveFeature = useSelector(selectSaveOnEditFeature);
+  // useEffect(() => {
+  //   if (onSaveFeature) {
+  //     dispatch(submitSavedOnEditFeature());
+  //     formRef.current?.dispatchEvent(new Event("submit"));
+  //   }
+  // }, [onSaveFeature]);
 
-  useEffect(() => {
-    featureCrudApi.getRecordById(featureId).then((feature) => {
-      dispatch(setCurrentRecord(feature));
-    });
-  }, []);
+  // useEffect(() => {
+  //   featureCrudApi.getRecordById(featureId).then((feature) => {
+  //     dispatch(setCurrentRecord(feature));
+  //   });
+  // }, []);
 
   const formik = useFormik<FeatureUpdate>({
     initialValues: {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { Route, useRouteMatch, useHistory, useParams } from "react-router-dom";
 import FeatureDetailPage from "./pages/FeatureDetailPage";
@@ -9,14 +9,16 @@ import FeatureEditPage from "./pages/FeatureEditPage";
 import FeatureToolbar from "./components/FeatureToolbar";
 import { Panel, Tab, TabPanel } from "@jfront/ui-core";
 import { useTranslation } from "react-i18next";
-import { selectFeature } from "./featureSlice";
+// import { selectFeature } from "./state/featureSlice";
 import { Feature } from "./api/FeatureTypes";
+// import { AppState } from "../../app";
 
 function FeatureRoute() {
   const { path } = useRouteMatch();
   const history = useHistory();
   const { t } = useTranslation();
-  const currentFeature: Feature = useSelector(selectFeature);
+  const { currentRecord } = { currentRecord: { featureId: "1" } }; //;useSelector((state: AppState) => state.feature.featureCrudSlice);
+  let formRef = useRef<HTMLFormElement>(null);
 
   return (
     <Panel>
@@ -25,33 +27,33 @@ function FeatureRoute() {
           <Tab
             selected={true}
             onClick={() => {
-              history.push(`/feature/${currentFeature?.featureId}/detail`);
+              history.push(`/feature/${currentRecord?.featureId}/detail`);
             }}
           >
             {t("feature.header")}
           </Tab>
-          {currentFeature?.featureId ? (
+          {currentRecord?.featureId ? (
             <Tab
               selected={false}
               onClick={() => {
-                history.push(`/feature/${currentFeature?.featureId}/feature-process/list`);
+                history.push(`/feature/${currentRecord?.featureId}/feature-process/list`);
               }}
             >
               {t("feature-process.header")}
             </Tab>
           ) : null}
         </TabPanel>
-        <FeatureToolbar />
+        <FeatureToolbar formRef={formRef} />
       </Panel.Header>
       <Panel.Content>
         <Route path={`${path}`} exact>
-          <FeatureSearchPage />
+          <FeatureSearchPage formRef={formRef} />
         </Route>
         <Route path={`${path}/create`} exact>
-          <FeatureCreatePage />
+          <FeatureCreatePage formRef={formRef} />
         </Route>
         <Route path={`${path}/:featureId/edit`} exact>
-          <FeatureEditPage />
+          <FeatureEditPage formRef={formRef} />
         </Route>
         <Route path={`${path}/:featureId/detail`}>
           <FeatureDetailPage />

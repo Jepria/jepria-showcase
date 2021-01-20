@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, useRouteMatch } from "react-router-dom";
 import FeatureRoute from "./FeatureRoute";
-import FeatureProcessRoute from "../feature-process/FeatureProcessRoute";
+// import FeatureProcessRoute from "../feature-process/FeatureProcessRoute";
 
 function FeatureModuleRoute() {
   const { path } = useRouteMatch();
@@ -9,7 +9,7 @@ function FeatureModuleRoute() {
   return (
     <>
       <Route path={`${path}/:featureId/feature-process`}>
-        <FeatureProcessRoute />
+        {/* <FeatureProcessRoute /> */}
       </Route>
       <Route path={`${path}`}>
         <FeatureRoute />
