@@ -11,13 +11,14 @@ import { Panel, Tab, TabPanel } from "@jfront/ui-core";
 import { useTranslation } from "react-i18next";
 // import { selectFeature } from "./state/featureSlice";
 import { Feature } from "./api/FeatureTypes";
+import { RootState } from "../../app/store";
 // import { AppState } from "../../app";
 
 function FeatureRoute() {
   const { path } = useRouteMatch();
   const history = useHistory();
   const { t } = useTranslation();
-  const { currentRecord } = { currentRecord: { featureId: "1" } }; //;useSelector((state: AppState) => state.feature.featureCrudSlice);
+  const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
   let formRef = useRef<HTMLFormElement>(null);
 
   return (

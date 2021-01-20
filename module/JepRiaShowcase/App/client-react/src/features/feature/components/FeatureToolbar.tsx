@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   Toolbar,
   ToolbarButtonBase,
@@ -24,21 +24,29 @@ import { Feature } from "../api/FeatureTypes";
 import { Workstates, useWorkstate } from "../../../app/common/useWorkstate";
 import { FeatureState } from "../../../app/reducer";
 import { deleteRecord } from "../state/featureSlice";
-import { RootState } from "../../../app/store";
+import { RootState, useAppDispatch } from "../../../app/store";
+import { search } from "../featureSearchSlice";
+
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
 const FeatureToolbar = ({ formRef }) => {
   //----------------
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const dispatch = useAppDispatch();
+  let query = useQuery();
   //----------------
-  // const currentRecord: Feature = useSelector(selectFeature);
-  // const records: Array<Feature> = useSelector(selectSearchResult);
-  // const searchPage: number = useSelector(selectSearchPage);
-  // const searchPageSize: number = useSelector(selectSearchPageSize);
-  const { records } = useSelector(
-    (state: RootState) => state.feature.featureSearchSlice
-  );
+
+  //TODO move to redux state, now doesnot work.
+  const [page] = useState({
+    pageSize: parseInt(query.get("pageSize") as string),
+    pageNumber: parseInt(query.get("page") as string),
+  });
+
+  const { records, searchId } = useSelector((state: RootState) => state.feature.featureSearchSlice);
   const { currentRecord, selectedRecords, error } = useSelector(
     (state: RootState) => state.feature.featureCrudSlice
   );
@@ -76,7 +84,13 @@ const FeatureToolbar = ({ formRef }) => {
             deleteRecord({
               primaryKeys: selectedRecords.map((selectRecord: Feature) => selectRecord.featureId),
             })
-          );
+          ).then(() => {
+            if (pathname.endsWith("/list") && searchId) {
+              dispatch(search({ searchId, pageSize: 25, page: 1 }));
+            } else {
+              history.push("/react/feature/list");
+            }
+          });
         }}
       />
       <ToolbarButtonView
@@ -86,7 +100,9 @@ const FeatureToolbar = ({ formRef }) => {
       <ToolbarSplitter />
       <ToolbarButtonBase
         disabled={Workstates.List !== state && records ? records.length === 0 : true}
-        // onClick={() => history.push(`/feature/list/?pageSize=${searchPageSize}&page=${searchPage}`)}
+        onClick={
+          () => history.push(`/feature/list/?pageSize=${page.pageSize}&page=${page.pageNumber}`) // TODO full template
+        }
       >
         {t("toolbar.list")}
       </ToolbarButtonBase>

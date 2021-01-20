@@ -10,8 +10,8 @@ import { CheckBoxGroup } from "@jfront/ui-core";
 import { CheckBox } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
 import { FeatureSearchTemplate } from "../api/FeatureTypes";
-// import { FeatureStatusOptions } from "../../feature-process/api/FeatureProcessTypes";
-// import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProcessApi";
+import { FeatureStatusOptions } from "../../feature-process/api/FeatureProcessTypes";
+import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProcessApi";
 import { FeatureState } from "../../../app/reducer";
 // import { selectSearchSubmit, selectSearchTemplate, submitSearch } from "../featureSearchSlice";
 
@@ -23,7 +23,7 @@ const FeatureSearchPage = ({ formRef }) => {
   const dispatch = useDispatch();
   //----------------
 
-  // const [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
+  const [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
   // const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // const selectSearch = useSelector(selectSearchSubmit);
@@ -40,9 +40,9 @@ const FeatureSearchPage = ({ formRef }) => {
   // }, [selectSearch]);
 
   useEffect(() => {
-    // getFeatureStatusOptions().then((options) => {
-    //   setStatusOptions(options);
-    // });
+    getFeatureStatusOptions().then((options) => {
+      setStatusOptions(options);
+    });
   }, []);
 
   const formik = useFormik<FeatureSearchTemplate>({
@@ -134,7 +134,7 @@ const FeatureSearchPage = ({ formRef }) => {
             />
           </Form.Control>
         </Form.Field>
-        {/* <Form.Field>
+        <Form.Field>
           <Form.Label>{t("feature.fields.statusCodeList")}:</Form.Label>
           <Form.Control error={formik.errors.statusCodeList as any}>
             <CheckBoxGroup
@@ -153,7 +153,7 @@ const FeatureSearchPage = ({ formRef }) => {
                 : null}
             </CheckBoxGroup>
           </Form.Control>
-        </Form.Field> */}
+        </Form.Field>
         <Form.Field>
           <Form.Label>{t("feature.fields.maxRowCount")}:</Form.Label>
           <Form.Control>
