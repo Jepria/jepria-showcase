@@ -28,7 +28,7 @@ const FeatureSearchPage = ({ formRef }) => {
 
   // const selectSearch = useSelector(selectSearchSubmit);
   // const searchTemplate: FeatureSearchTemplate = useSelector(selectSearchTemplate);
-  const { records, searchId, searchTemplate, isLoading, resultSetSize } = useSelector(
+  const { records, searchId, searchRequest, isLoading, resultSetSize } = useSelector(
     (state: FeatureState) => state.feature.featureSearchSlice
   );
 
@@ -46,7 +46,7 @@ const FeatureSearchPage = ({ formRef }) => {
   }, []);
 
   const formik = useFormik<FeatureSearchTemplate>({
-    initialValues: searchTemplate.template,
+    initialValues: searchRequest.template,
     enableReinitialize: true,
     onSubmit: (values) => {
       console.log("values: ", values)

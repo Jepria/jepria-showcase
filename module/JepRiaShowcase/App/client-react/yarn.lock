@@ -1353,17 +1353,17 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jfront/core-redux-thunk@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@jfront/core-redux-thunk/-/core-redux-thunk-0.1.1.tgz#043fb6d01ed39b92d4e3d23197974255eba028a4"
-  integrity sha512-i0QuOWMjE7J4RHF430bObmPmbaNO17MFye6vdo+oqeoSYbJHr4FZbOzfyjHGIseJLLBnPa2Q305RpJe/HvYe1g==
+"@jfront/core-redux-thunk@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@jfront/core-redux-thunk/-/core-redux-thunk-0.1.2.tgz#e1d5499a3ea8ce76d0200e1a3bf637a4d7920b23"
+  integrity sha512-8rnqtaCJUCHMPp0RVGb36mwfwEPteNagPOmmDGlF5Rd0Oz35pCEAP5Q8xnw49KTsJdoxAPmTA3ovsQ3O8Aq5Kw==
   dependencies:
-    "@jfront/core-rest" "^0.1.1"
+    "@jfront/core-rest" "^0.1.2"
 
-"@jfront/core-rest@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@jfront/core-rest/-/core-rest-0.1.1.tgz#e7574569740796b189a60d715ed5228ca7869f5c"
-  integrity sha512-ZfiX4VXuCbh+keprAvPofPE4ox1+PzCF/wyNfBlXycKBVGMwNOINhsUqTz1o7FVymE3QKp0C8Gl7UIp7CbLZLg==
+"@jfront/core-rest@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@jfront/core-rest/-/core-rest-0.1.2.tgz#0e220113a76ffd2dcfabea56455af1ae20ac1657"
+  integrity sha512-XWzqvhxtIR0VTUUbS/QzNk3Bhzx8q2bYunBjuQXQIu7Jj0VUQT6iJRJLMrsX8bi0c1c59isjaP7D09vo9+X3gQ==
   dependencies:
     axios "0.20.0"
 

@@ -86,7 +86,7 @@ const FeatureToolbar = ({ formRef }) => {
             })
           ).then(() => {
             if (pathname.endsWith("/list") && searchId) {
-              dispatch(search({ searchId, pageSize: 25, page: 1 }));
+              dispatch(search({ searchId, pageSize: 25, pageNumber: 1 }));
             } else {
               history.push("/react/feature/list");
             }

@@ -29,20 +29,20 @@ const FeatureListPage = () => {
 
   const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
 
-  const { records, searchId, searchTemplate, isLoading, resultSetSize } = useSelector(
+  const { records, searchId, searchRequest, isLoading, resultSetSize } = useSelector(
     (state: RootState) => state.feature.featureSearchSlice
   );
 
   useEffect(() => {
     if (searchId) {
-      dispatch(search({ searchId: searchId, pageSize: page.pageSize, page: page.pageNumber }));
+      dispatch(search({ searchId: searchId, pageSize: page.pageSize, pageNumber: page.pageNumber }));
     } else {
       let searchTemplate = queryString.parse(location.search);
       console.log("searchTemplate ", searchTemplate);
       dispatch(
         postSearch({
           searchTemplate: { template: searchTemplate },
-          page: page.pageNumber,
+          pageNumber: page.pageNumber,
           pageSize: page.pageSize,
         })
       );
@@ -125,7 +125,7 @@ const FeatureListPage = () => {
             template: {
               maxRowCount: 25,
               ...query,
-              ...searchTemplate?.template,
+              ...searchRequest?.template,
             },
             listSortConfiguration: sortConfig,
           };

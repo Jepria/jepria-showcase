@@ -3,13 +3,13 @@ import { createSearchSlice, SearchState } from "@jfront/core-redux-thunk";
 import { featureSearchApi } from "./api/FeatureSearchApi";
 
 export const initialSearchState: SearchState<FeatureSearchTemplate, Feature> = {
-  searchTemplate: { template: { maxRowCount: 250 } },
+  searchRequest: { template: { maxRowCount: 250 } },
   error: null,
   isLoading: false,
   records: [],
   searchId: null,
-  // pageSize: 25,
-  // page: 1,
+  pageSize: 25,
+  pageNumber: 1,
   // submit: false,
   resultSetSize: null,
 };

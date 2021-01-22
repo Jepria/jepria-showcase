@@ -4,8 +4,8 @@
   "private": true,
   "homepage": "/JepRiaShowcase/react",
   "dependencies": {
-    "@jfront/core-redux-thunk": "^0.1.1",
-    "@jfront/core-rest": "^0.1.1",
+    "@jfront/core-redux-thunk": "^0.1.2",
+    "@jfront/core-rest": "^0.1.2",
     "@jfront/ui-core": "^0.4.0",
     "@jfront/ui-textarea": "^0.2.0",
     "@reduxjs/toolkit": "^1.4.0",
