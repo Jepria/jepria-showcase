@@ -18,11 +18,8 @@ const FeatureDetailPage = () => {
   const { currentRecord, error } = useSelector(
     (state: RootState) => state.feature.featureCrudSlice
   );
-  // const currentRecord: Feature = useSelector(selectFeature);
-  // const error = useSelector(selectError);
 
   useEffect(() => {
-    // dispatch(fetchFeature(featureId));
     dispatch(getRecordById({ primaryKey: featureId }));
   }, []);
 
