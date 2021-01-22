@@ -40,13 +40,7 @@ const FeatureToolbar = ({ formRef }) => {
   let query = useQuery();
   //----------------
 
-  //TODO move to redux state, now doesnot work.
-  const [page] = useState({
-    pageSize: parseInt(query.get("pageSize") as string),
-    pageNumber: parseInt(query.get("page") as string),
-  });
-
-  const { records, searchId } = useSelector((state: RootState) => state.feature.featureSearchSlice);
+  const { records, searchId, pageSize, pageNumber, } = useSelector((state: RootState) => state.feature.featureSearchSlice);
   const { currentRecord, selectedRecords, error } = useSelector(
     (state: RootState) => state.feature.featureCrudSlice
   );
@@ -63,13 +57,6 @@ const FeatureToolbar = ({ formRef }) => {
         onClick={() => {
           formRef.current?.dispatchEvent(new Event("submit"));
         }}
-        // onClick={() => {
-        //   if (Workstates.Create === state) {
-        //     dispatch(submitSaveOnCreate());
-        //   } else if (Workstates.Edit == state) {
-        //     dispatch(submitSaveOnEditFeature());
-        //   }
-        // }}
       />
       <ToolbarButtonEdit
         disabled={!currentRecord}
@@ -86,9 +73,9 @@ const FeatureToolbar = ({ formRef }) => {
             })
           ).then(() => {
             if (pathname.endsWith("/list") && searchId) {
-              dispatch(search({ searchId, pageSize: 25, pageNumber: 1 }));
+              dispatch(search({ searchId, pageSize: pageSize, pageNumber: pageNumber }));
             } else {
-              history.push("/react/feature/list");
+              history.push(`/feature/list?pageSize=${pageSize}&page=${pageNumber}`);
             }
           });
         }}
@@ -101,7 +88,7 @@ const FeatureToolbar = ({ formRef }) => {
       <ToolbarButtonBase
         disabled={Workstates.List !== state && records ? records.length === 0 : true}
         onClick={
-          () => history.push(`/feature/list/?pageSize=${page.pageSize}&page=${page.pageNumber}`) // TODO full template
+          () => history.push(`/feature/list/?pageSize=${pageSize}&page=${pageNumber}`) // TODO full template
         }
       >
         {t("toolbar.list")}
@@ -117,9 +104,6 @@ const FeatureToolbar = ({ formRef }) => {
           formRef.current?.dispatchEvent(new Event("submit"));
           console.log(formRef);
         }}
-        // onClick={() => {
-        //   dispatch(submitSearch(true));
-        // }}
       >
         {t("toolbar.find")}
       </ToolbarButtonBase>
