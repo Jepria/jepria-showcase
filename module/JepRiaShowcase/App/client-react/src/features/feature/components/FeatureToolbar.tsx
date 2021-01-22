@@ -115,11 +115,7 @@ const FeatureToolbar = ({ formRef }) => {
         type="submit"
         onClick={() => {
           formRef.current?.dispatchEvent(new Event("submit"));
-          console.log(formRef);
         }}
-        // onClick={() => {
-        //   dispatch(submitSearch(true));
-        // }}
       >
         {t("toolbar.find")}
       </ToolbarButtonBase>

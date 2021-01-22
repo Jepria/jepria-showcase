@@ -49,12 +49,10 @@ const FeatureSearchPage = ({ formRef }) => {
     initialValues: searchRequest.template,
     enableReinitialize: true,
     onSubmit: (values) => {
-      console.log("values: ", values)
       let query = queryString.stringify(values);
       if (query) {
         query = "&" + query;
       }
-      console.log("query: ", query)
       history.push(`/feature/list/?pageSize=25&page=1${query}`);
     },
     validate: (values) => {
@@ -148,8 +146,8 @@ const FeatureSearchPage = ({ formRef }) => {
             >
               {statusOptions
                 ? statusOptions.map((option) => {
-                  return <CheckBox key={option.value} value={option.value} label={option.name} />;
-                })
+                    return <CheckBox key={option.value} value={option.value} label={option.name} />;
+                  })
                 : null}
             </CheckBoxGroup>
           </Form.Control>

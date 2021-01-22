@@ -35,10 +35,11 @@ const FeatureListPage = () => {
 
   useEffect(() => {
     if (searchId) {
-      dispatch(search({ searchId: searchId, pageSize: page.pageSize, pageNumber: page.pageNumber }));
+      dispatch(
+        search({ searchId: searchId, pageSize: page.pageSize, pageNumber: page.pageNumber })
+      );
     } else {
       let searchTemplate = queryString.parse(location.search);
-      console.log("searchTemplate ", searchTemplate);
       dispatch(
         postSearch({
           searchTemplate: { template: searchTemplate },
@@ -113,7 +114,6 @@ const FeatureListPage = () => {
         }}
         onPaging={(pageNumber, pageSize) => {
           if (pageNumber !== page.pageNumber || pageSize !== page.pageSize) {
-            console.log("onPaging ", pageNumber, pageSize);
             setPage({
               pageNumber: pageNumber,
               pageSize: pageSize,
