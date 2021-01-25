@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 import {
@@ -13,16 +13,8 @@ import {
   ToolbarButtonView,
   ToolbarSplitter,
 } from "@jfront/ui-core";
-// import { selectFeature, submitSaveOnCreate, submitSaveOnEditFeature } from "../state/featureSlice";
-// import {
-//   selectSearchPage,
-//   selectSearchPageSize,
-//   selectSearchResult,
-//   submitSearch,
-// } from "../featureSearchSlice";
 import { Feature } from "../api/FeatureTypes";
 import { Workstates, useWorkstate } from "../../../app/common/useWorkstate";
-import { FeatureState } from "../../../app/reducer";
 import { deleteRecord } from "../state/featureSlice";
 import { RootState, useAppDispatch } from "../../../app/store";
 import { search } from "../featureSearchSlice";
@@ -37,11 +29,10 @@ const FeatureToolbar = ({ formRef }) => {
   const history = useHistory();
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
-  let query = useQuery();
   //----------------
 
   const { records, searchId, pageSize, pageNumber, } = useSelector((state: RootState) => state.feature.featureSearchSlice);
-  const { currentRecord, selectedRecords, error } = useSelector(
+  const { currentRecord, selectedRecords } = useSelector(
     (state: RootState) => state.feature.featureCrudSlice
   );
   const state = useWorkstate(history.location.pathname);

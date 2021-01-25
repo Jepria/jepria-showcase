@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import queryString from "query-string";
 import { Grid } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
 import { postSearch, postSearchRequest, search } from "../featureSearchSlice";
 import { actions as crudActions } from "../state/featureSlice";
-import { actions as searchActions } from "../featureSearchSlice";
 import { RootState } from "../../../app/store";
 
 const useQuery = () => {
@@ -26,7 +24,7 @@ const FeatureListPage = () => {
     pageSize: parseInt(query.get("pageSize") as string),
     pageNumber: parseInt(query.get("page") as string),
   });
-
+  console.log(`page: ${page.pageNumber}`)
   const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
 
   const { records, searchId, searchRequest, isLoading, resultSetSize } = useSelector(
@@ -37,15 +35,6 @@ const FeatureListPage = () => {
     if (searchId) {
       dispatch(
         search({ searchId: searchId, pageSize: page.pageSize, pageNumber: page.pageNumber })
-      );
-    } else {
-      let searchTemplate = queryString.parse(location.search);
-      dispatch(
-        postSearch({
-          searchTemplate: { template: searchTemplate },
-          pageNumber: page.pageNumber,
-          pageSize: page.pageSize,
-        })
       );
     }
   }, [searchId, page, dispatch]);
@@ -96,6 +85,8 @@ const FeatureListPage = () => {
         isLoading={isLoading}
         data={records}
         totalRowCount={resultSetSize}
+        defaultPageSize={page.pageSize}
+        pageNumber={page.pageNumber}
         onSelection={(records) => {
           if (records) {
             if (records.length === 1) {
@@ -113,14 +104,14 @@ const FeatureListPage = () => {
           history.push(`/feature/${record.featureId}/detail`);
         }}
         onPaging={(pageNumber, pageSize) => {
-          if (pageNumber !== page.pageNumber || pageSize !== page.pageSize) {
-            setPage({
-              pageNumber: pageNumber,
-              pageSize: pageSize,
-            });
-          }
+          console.log(`pageNumber = ${pageNumber}`)
+          setPage({
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+          });
         }}
         onSort={(sortConfig) => {
+          console.log("onSort!!!!!!!!!!")
           const newSearchRequest = {
             template: {
               maxRowCount: 25,
