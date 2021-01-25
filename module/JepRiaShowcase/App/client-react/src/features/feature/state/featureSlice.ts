@@ -1,6 +1,6 @@
+import { createCrudSlice, EntityState } from "@jfront/core-redux-thunk";
 import { Feature } from "../api/FeatureTypes";
 import { featureCrudApi } from "../api/FeatureCrudApi";
-import { createCrudSlice, EntityState } from "@jfront/core-redux-thunk";
 
 export const initialEntityState: EntityState<Feature> = {
   currentRecord: null,

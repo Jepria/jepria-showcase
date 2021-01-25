@@ -10,7 +10,6 @@ export const initialSearchState: SearchState<FeatureSearchTemplate, Feature> = {
   searchId: null,
   pageSize: 25,
   pageNumber: 1,
-  // submit: false,
   resultSetSize: null,
 };
 
