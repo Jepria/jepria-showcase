@@ -6,8 +6,6 @@ import {
   initialSearchState,
   reducer as searchReducer,
 } from "../features/feature/featureSearchSlice";
-// import { FeatureProcess } from "../features/feature-process/api/FeatureProcessTypes";
-// import { initialOptionsState, reducer as optionsReducer } from "../../list/state/listOptionsSlice";
 
 export interface FeatureState {
   feature: {
@@ -15,9 +13,6 @@ export interface FeatureState {
     featureCrudSlice: EntityState<Feature>;
     // featureOptionsSlice: OptionState<string>;
   };
-  // featureProcess: {
-  //   featureProcessCrud: EntityState<FeatureProcess>;
-  // }
 }
 
 export const initialState: FeatureState = {
@@ -26,9 +21,6 @@ export const initialState: FeatureState = {
     featureCrudSlice: initialEntityState,
     // featureOptionsSlice: initialOptionsState,
   },
-  // featureProcess: {
-  //   featureProcessCrud: initialFeatureProcessState,
-  // }
 };
 
 export const featureReducer = combineReducers({
@@ -36,7 +28,3 @@ export const featureReducer = combineReducers({
   featureCrudSlice: crudReducer,
   // featureOptionsSlice: optionsReducer,
 });
-
-// export const reducer: Reducer<FeatureState> = combineReducers<FeatureState>({
-//   feature: featureReducer,
-// });

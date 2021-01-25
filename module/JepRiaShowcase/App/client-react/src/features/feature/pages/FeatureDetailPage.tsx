@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
-import { Feature } from "../api/FeatureTypes";
-import { actions as crudActions, getRecordById } from "../state/featureSlice";
+import { getRecordById } from "../state/featureSlice";
 import { RootState } from "../../../app/store";
 // import { fetchFeature, selectError, selectFeature } from "../featureSlice";
 

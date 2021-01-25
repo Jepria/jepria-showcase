@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Form, NumberInput } from "@jfront/ui-core";
 import { DatePicker } from "@jfront/ui-core";
 import { CheckBoxGroup } from "@jfront/ui-core";
@@ -13,31 +13,18 @@ import { FeatureSearchTemplate } from "../api/FeatureTypes";
 import { FeatureStatusOptions } from "../../feature-process/api/FeatureProcessTypes";
 import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProcessApi";
 import { FeatureState } from "../../../app/reducer";
-// import { selectSearchSubmit, selectSearchTemplate, submitSearch } from "../featureSearchSlice";
 
 const FeatureSearchPage = ({ formRef }) => {
   //----------------
-  // let formRef = useRef(null) as any;
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useDispatch();
   //----------------
 
   const [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
-  // const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // const selectSearch = useSelector(selectSearchSubmit);
-  // const searchTemplate: FeatureSearchTemplate = useSelector(selectSearchTemplate);
-  const { records, searchId, searchRequest, isLoading, resultSetSize } = useSelector(
+  const { searchRequest, isLoading } = useSelector(
     (state: FeatureState) => state.feature.featureSearchSlice
   );
-
-  // useEffect(() => {
-  //   if (selectSearch) {
-  //     formRef.current?.dispatchEvent(new Event("submit"));
-  //     dispatch(submitSearch(false));
-  //   }
-  // }, [selectSearch]);
 
   useEffect(() => {
     getFeatureStatusOptions().then((options) => {
