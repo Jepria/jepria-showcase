@@ -4,8 +4,8 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
-import { postSearch, postSearchRequest, search } from "../featureSearchSlice";
-import { actions as crudActions } from "../state/featureSlice";
+import { postSearch, postSearchRequest, search } from "../state/FeatureSearchSlice";
+import { actions as crudActions } from "../state/FeatureSlice";
 import { RootState } from "../../../app/store";
 
 const useQuery = () => {

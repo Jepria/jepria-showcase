@@ -1,7 +1,10 @@
 import { useDispatch } from "react-redux";
 import { Action, configureStore, getDefaultMiddleware, ThunkAction } from "@reduxjs/toolkit";
 import logger from "redux-logger";
-import { initialState as FeatureInitialState, featureReducer } from "./reducer";
+import {
+  initialState as FeatureInitialState,
+  featureReducer,
+} from "../features/feature/state/FeatureReducer";
 import featureProcessReducer from "../features/feature-process/featureProcessSlice";
 
 export const store = configureStore({

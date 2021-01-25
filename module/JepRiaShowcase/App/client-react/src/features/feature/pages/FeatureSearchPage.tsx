@@ -12,7 +12,7 @@ import { TextInput } from "@jfront/ui-core";
 import { FeatureSearchTemplate } from "../api/FeatureTypes";
 import { FeatureStatusOptions } from "../../feature-process/api/FeatureProcessTypes";
 import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProcessApi";
-import { FeatureState } from "../../../app/reducer";
+import { FeatureState } from "../state/FeatureReducer";
 
 const FeatureSearchPage = ({ formRef }) => {
   //----------------

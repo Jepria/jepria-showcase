@@ -3,9 +3,8 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
-import { getRecordById } from "../state/featureSlice";
+import { getRecordById } from "../state/FeatureSlice";
 import { RootState } from "../../../app/store";
-// import { fetchFeature, selectError, selectFeature } from "../featureSlice";
 
 const FeatureDetailPage = () => {
   //----------------

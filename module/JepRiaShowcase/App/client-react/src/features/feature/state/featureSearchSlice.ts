@@ -1,6 +1,6 @@
-import { Feature, FeatureSearchTemplate } from "./api/FeatureTypes";
 import { createSearchSlice, SearchState } from "@jfront/core-redux-thunk";
-import { featureSearchApi } from "./api/FeatureSearchApi";
+import { Feature, FeatureSearchTemplate } from "../api/FeatureTypes";
+import { featureSearchApi } from "../api/FeatureSearchApi";
 
 export const initialSearchState: SearchState<FeatureSearchTemplate, Feature> = {
   searchRequest: { template: { maxRowCount: 250 } },

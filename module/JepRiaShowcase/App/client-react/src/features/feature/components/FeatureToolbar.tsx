@@ -15,9 +15,9 @@ import {
 } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
 import { Workstates, useWorkstate } from "../../../app/common/useWorkstate";
-import { deleteRecord } from "../state/featureSlice";
+import { deleteRecord } from "../state/FeatureSlice";
 import { RootState, useAppDispatch } from "../../../app/store";
-import { search } from "../featureSearchSlice";
+import { search } from "../state/FeatureSearchSlice";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);

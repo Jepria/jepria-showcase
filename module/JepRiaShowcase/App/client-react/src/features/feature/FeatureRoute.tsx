@@ -9,10 +9,7 @@ import FeatureEditPage from "./pages/FeatureEditPage";
 import FeatureToolbar from "./components/FeatureToolbar";
 import { Panel, Tab, TabPanel } from "@jfront/ui-core";
 import { useTranslation } from "react-i18next";
-// import { selectFeature } from "./state/featureSlice";
-import { Feature } from "./api/FeatureTypes";
 import { RootState } from "../../app/store";
-// import { AppState } from "../../app";
 
 function FeatureRoute() {
   const { path } = useRouteMatch();
