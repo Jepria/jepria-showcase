@@ -61,7 +61,6 @@ const FeatureProcessCreatePage = () => {
               name="featureStatusCode"
               value={formik.values.featureStatusCode}
               onSelectionChange={(name, value) => {
-                console.log(`value = ${value}`);
                 formik.setFieldValue("featureStatusCode", value);
               }}
             >

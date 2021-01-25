@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Form, NumberInput } from "@jfront/ui-core";
 import { DatePicker } from "@jfront/ui-core";
 import { CheckBoxGroup } from "@jfront/ui-core";
@@ -12,38 +12,28 @@ import { TextInput } from "@jfront/ui-core";
 import { FeatureSearchTemplate } from "../api/FeatureTypes";
 import { FeatureStatusOptions } from "../../feature-process/api/FeatureProcessTypes";
 import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProcessApi";
-import { selectSearchSubmit, selectSearchTemplate, submitSearch } from "../featureSearchSlice";
+import { FeatureState } from "../state/FeatureReducer";
 
-const FeatureSearchPage = () => {
+const FeatureSearchPage = ({ formRef }) => {
   //----------------
-  let formRef = useRef(null) as any;
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useDispatch();
   //----------------
 
   const [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const selectSearch = useSelector(selectSearchSubmit);
-  const searchTemplate: FeatureSearchTemplate = useSelector(selectSearchTemplate);
-
-  useEffect(() => {
-    if (selectSearch) {
-      formRef.current?.dispatchEvent(new Event("submit"));
-      dispatch(submitSearch(false));
-    }
-  }, [selectSearch]);
+  const { searchRequest, isLoading } = useSelector(
+    (state: FeatureState) => state.feature.featureSearchSlice
+  );
 
   useEffect(() => {
     getFeatureStatusOptions().then((options) => {
       setStatusOptions(options);
-      setIsLoading(false);
     });
   }, []);
 
   const formik = useFormik<FeatureSearchTemplate>({
-    initialValues: searchTemplate,
+    initialValues: searchRequest.template,
     enableReinitialize: true,
     onSubmit: (values) => {
       let query = queryString.stringify(values);
@@ -143,8 +133,8 @@ const FeatureSearchPage = () => {
             >
               {statusOptions
                 ? statusOptions.map((option) => {
-                  return <CheckBox key={option.value} value={option.value} label={option.name} />;
-                })
+                    return <CheckBox key={option.value} value={option.value} label={option.name} />;
+                  })
                 : null}
             </CheckBoxGroup>
           </Form.Control>
