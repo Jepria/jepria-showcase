@@ -86,7 +86,7 @@ const FeatureListPage = () => {
         data={records}
         totalRowCount={resultSetSize}
         defaultPageSize={page.pageSize}
-        pageNumber={page.pageNumber}
+        defaultPageNumber={page.pageNumber}
         onSelection={(records) => {
           if (records) {
             if (records.length === 1) {
@@ -104,7 +104,6 @@ const FeatureListPage = () => {
           history.push(`/feature/${record.featureId}/detail`);
         }}
         onPaging={(pageNumber, pageSize) => {
-          console.log(`pageNumber = ${pageNumber}`)
           setPage({
             pageNumber: pageNumber,
             pageSize: pageSize,
