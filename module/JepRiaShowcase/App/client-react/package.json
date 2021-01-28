@@ -8,6 +8,7 @@
     "@jfront/core-rest": "^0.1.2",
     "@jfront/ui-core": "^0.7.0",
     "@jfront/oauth-ui": "^0.2.4",
+    "@jfront/oauth-user": "0.1.4",
     "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
