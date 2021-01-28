@@ -7,7 +7,7 @@
     "@jfront/core-redux-thunk": "^0.1.2",
     "@jfront/core-rest": "^0.1.2",
     "@jfront/ui-core": "^0.7.0",
-    "@jfront/ui-textarea": "^0.2.0",
+    "@jfront/oauth-ui": "^0.2.4",
     "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -58,6 +58,8 @@
     ]
   },
   "devDependencies": {
+    "@jfront/oauth-context": "^0.1.9",
+    "@jfront/oauth-core": "^0.1.2",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.36",
     "@types/react": "^16.9.34",
