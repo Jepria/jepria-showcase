@@ -1,45 +1,22 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
-import {
-  selectFeature,
-  selectSaveOnEditFeature,
-  setCurrentRecord,
-  submitSavedOnEditFeature,
-} from "../featureSlice";
-import { Feature, FeatureUpdate } from "../api/FeatureTypes";
-import { setState, Workstates } from "../../../app/WorkstateSlice";
+import { FeatureUpdate } from "../api/FeatureTypes";
 import { featureCrudApi } from "../api/FeatureCrudApi";
+import { RootState } from "../../../app/store";
 
-const FeatureEditPage = () => {
+const FeatureEditPage = ({ formRef }) => {
   //----------------
-  let formRef = useRef(null) as any;
   const history = useHistory();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   //----------------
 
   let { featureId } = useParams();
-  const currentRecord: Feature = useSelector(selectFeature);
-
-  const onSaveFeature = useSelector(selectSaveOnEditFeature);
-  useEffect(() => {
-    if (onSaveFeature) {
-      dispatch(submitSavedOnEditFeature());
-      formRef.current?.dispatchEvent(new Event("submit"));
-    }
-  }, [onSaveFeature]);
-
-  useEffect(() => {
-    dispatch(setState(Workstates.FeatureEdit));
-    featureCrudApi.getRecordById(featureId).then((feature) => {
-      dispatch(setCurrentRecord(feature));
-    });
-  }, []);
+  const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
 
   const formik = useFormik<FeatureUpdate>({
     initialValues: {
@@ -80,7 +57,7 @@ const FeatureEditPage = () => {
         <Form.Field>
           <Form.Label>{t("feature.fields.featureName")}:</Form.Label>
           <TextInput
-            style={{ width: "350px", textAlign: "left" }}
+            style={{ textAlign: "left" }}
             defaultValue={currentRecord?.featureName}
             name="featureName"
             value={formik.values.featureName}
@@ -90,7 +67,7 @@ const FeatureEditPage = () => {
         <Form.Field>
           <Form.Label>{t("feature.fields.featureNameEn")}:</Form.Label>
           <TextInput
-            style={{ width: "350px", textAlign: "left" }}
+            style={{ textAlign: "left" }}
             defaultValue={currentRecord?.featureNameEn}
             name="featureNameEn"
             value={formik.values.featureNameEn}
@@ -113,7 +90,7 @@ const FeatureEditPage = () => {
         <Form.Field>
           <Form.Label>{t("feature.fields.description")}:</Form.Label>
           <TextInput
-            style={{ width: "350px", textAlign: "left" }}
+            style={{ textAlign: "left" }}
             defaultValue={currentRecord?.description}
             name="description"
             value={formik.values.description}

@@ -31,7 +31,7 @@
     <!-- Название варника, собираемого посредством ant в модуле gwt -->
     <project.build.gwt.productName>JepRiaShowcase-gwt</project.build.gwt.productName>
     <project.build.serviceRest.productName>jepriashowcase-service-rest</project.build.serviceRest.productName>
-    <deploy.url>http://vsmlapprfid1:8080/manager/text</deploy.url>
+    <deploy.url>http://localhost:8080/manager/text</deploy.url>
     <deploy.path>/JepRiaShowcase</deploy.path>
     <deploy.username>admin</deploy.username>
     <deploy.password>admin0</deploy.password>
@@ -62,9 +62,6 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
-          <configuration>
-            <skipTests>true</skipTests>
-          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>

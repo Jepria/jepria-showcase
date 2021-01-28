@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { Grid } from "@jfront/ui-core";
 import { FeatureProcess } from "../api/FeatureProcessTypes";
 import { findFeatureProcess } from "../api/FeatureProcessApi";
-import { setState, Workstates } from "../../../app/WorkstateSlice";
 import { setCurrentFeatureProcess } from "../featureProcessSlice";
 
 const FeatureProcessListPage = () => {
@@ -24,7 +23,6 @@ const FeatureProcessListPage = () => {
         setRecords(processes);
       });
     }
-    dispatch(setState(Workstates.FeatureProcessList));
   }, [location]);
 
   return (
@@ -43,7 +41,6 @@ const FeatureProcessListPage = () => {
         ]}
         data={records ? records : []} //todo: bug in library
         onSelection={(selected) => {
-          console.log(selected);
           if (selected.length === 1) {
             dispatch(setCurrentFeatureProcess(selected[0]));
           } else {

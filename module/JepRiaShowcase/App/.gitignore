@@ -181,6 +181,8 @@ fabric.properties
 *.zip
 *.tar.gz
 *.rar
+gwt/lib/JepRiaShowcase-gwt.war
+service-rest/target/jepriashowcase-service-rest.war
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

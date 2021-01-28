@@ -19,7 +19,8 @@
       "description": "Описание",
       "author": "Автор",
       "responsible": "Ответственный",
-      "workSequence": "Порядок выполнения"
+      "workSequence": "Порядок выполнения",
+      "maxRowCount": "Количество записей"
     }
   },
   "feature-process": {

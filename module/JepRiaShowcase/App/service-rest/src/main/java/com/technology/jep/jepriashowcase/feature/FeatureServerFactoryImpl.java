@@ -17,6 +17,7 @@ public class FeatureServerFactoryImpl extends ServerFactory<FeatureDao> implemen
   private EntityService entityService;
   private SearchService searchService;
 
+  // Inject делаем в конструктор
   @Inject
   public FeatureServerFactoryImpl(FeatureDao dao) {
     super(dao, "jdbc/ITMDS");

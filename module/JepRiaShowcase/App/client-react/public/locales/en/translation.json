@@ -19,7 +19,8 @@
       "description": "Description",
       "author": "Author",
       "responsible": "Responsible",
-      "workSequence": "Work Sequence"
+      "workSequence": "Work Sequence",
+      "maxRowCount": "Max Row Count"
     }
   },
   "feature-process": {
