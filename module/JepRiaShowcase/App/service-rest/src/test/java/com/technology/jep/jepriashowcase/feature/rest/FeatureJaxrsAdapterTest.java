@@ -60,6 +60,7 @@ class FeatureJaxrsAdapterTest extends JepriaTest {
     };
   }
 
+  @Disabled
   @Test
   void success_getFeatureOperator() {
     // arrange
@@ -81,6 +82,7 @@ class FeatureJaxrsAdapterTest extends JepriaTest {
     Assertions.assertEquals(new Gson().toJson(expectedOptions), actual);
   }
 
+  @Disabled
   @Test
   void success_getFeatureStatus() {
     // arrange
@@ -102,6 +104,7 @@ class FeatureJaxrsAdapterTest extends JepriaTest {
     Assertions.assertEquals(new Gson().toJson(expectedOptions), actual);
   }
 
+  @Disabled
   @Test
   void success_getRecordById() {
     // arrange
