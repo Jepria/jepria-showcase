@@ -1,4 +1,4 @@
-package com.technology.jep.jepriashowcase.main.rest;
+package com.technology.jep.jepriashowcase.main;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

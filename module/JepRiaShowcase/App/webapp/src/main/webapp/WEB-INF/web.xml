@@ -336,7 +336,7 @@
   </error-page> -->
   <filter>
     <filter-name>client-react-filter</filter-name>
-    <filter-class>com.technology.jep.jepriashowcase.main.rest.ClientReactFilter</filter-class>
+    <filter-class>com.technology.jep.jepriashowcase.main.ClientReactFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>client-react-filter</filter-name>

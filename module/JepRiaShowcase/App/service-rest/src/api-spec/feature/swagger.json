@@ -2,11 +2,16 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "JepriaShowcase REST API"
+    "title": "JepRiaShowcase REST API"
   },
   "servers": [
     {
       "url": "/{appContextPath}/{apiEndpoint}"
+    }
+  ],
+  "security": [
+    {
+      "OAuth": []
     }
   ],
   "tags": [
@@ -578,6 +583,25 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "OAuth": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/api/authorize",
+            "tokenUrl": "/oauth/api/token"
+          },
+          "password": {
+            "tokenUrl": "/oauth/api/token",
+            "refreshUrl": "/oauth/api/token"
+          },
+          "clientCredentials": {
+            "tokenUrl": "/oauth/api/token",
+            "refreshUrl": "/oauth/api/token"
+          }
+        }
+      }
+    },
     "schemas": {
       "FeatureUpdateDto": {
         "type": "object",

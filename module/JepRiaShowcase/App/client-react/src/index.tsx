@@ -2,14 +2,15 @@ import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
+import {Provider} from "react-redux";
 import axios from 'axios'
-import { OAuthWebContext, OAuthSecuredFragment } from "@jfront/oauth-ui"
+import {OAuthWebContext, OAuthSecuredFragment} from "@jfront/oauth-ui"
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./i18n";
-import { store } from "./app/store";
+import {store} from "./app/store";
+import {UserContextProvider} from "@jfront/oauth-user";
 
 ReactDOM.render(
   // <React.StrictMode>
@@ -21,9 +22,12 @@ ReactDOM.render(
     configureAxios
   >
     <Provider store={store}>
-      <OAuthSecuredFragment>
-        <App />
-      </OAuthSecuredFragment>
+      <UserContextProvider
+        baseUrl={'/JepRiaShowcase/api'}>
+        <OAuthSecuredFragment>
+          <App/>
+        </OAuthSecuredFragment>
+      </UserContextProvider>
     </Provider>
   </OAuthWebContext>,
   // </React.StrictMode>
