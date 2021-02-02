@@ -1,4 +1,6 @@
 {
+  "loadingRoles": "Checking roles",
+  "loadingUser": "Loading user data",
   "toolbar": {
     "list": "List",
     "find": "Find"

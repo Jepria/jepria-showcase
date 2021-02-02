@@ -1,7 +1,7 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   Toolbar,
   ToolbarButtonBase,
@@ -13,26 +13,28 @@ import {
   ToolbarButtonView,
   ToolbarSplitter,
 } from "@jfront/ui-core";
-import { selectFeature, submitSaveOnCreate, submitSaveOnEditFeature } from "../featureSlice";
-import {
-  selectSearchPage,
-  selectSearchPageSize,
-  selectSearchResult,
-  submitSearch,
-} from "../featureSearchSlice";
 import { Feature } from "../api/FeatureTypes";
 import { Workstates, useWorkstate } from "../../../app/common/useWorkstate";
+import { deleteRecord } from "../state/FeatureSlice";
+import { RootState, useAppDispatch } from "../../../app/store";
+import { search } from "../state/FeatureSearchSlice";
 
-const FeatureToolbar = () => {
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
+
+const FeatureToolbar = ({ formRef }) => {
   //----------------
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const dispatch = useAppDispatch();
   //----------------
-  const currentRecord: Feature = useSelector(selectFeature);
-  const records: Array<Feature> = useSelector(selectSearchResult);
-  const searchPage: number = useSelector(selectSearchPage);
-  const searchPageSize: number = useSelector(selectSearchPageSize);
+
+  const { records, searchId, pageSize, pageNumber, } = useSelector((state: RootState) => state.feature.featureSearchSlice);
+  const { currentRecord, selectedRecords } = useSelector(
+    (state: RootState) => state.feature.featureCrudSlice
+  );
   const state = useWorkstate(history.location.pathname);
 
   return (
@@ -44,11 +46,7 @@ const FeatureToolbar = () => {
       <ToolbarButtonSave
         disabled={Workstates.Create !== state && Workstates.Edit !== state}
         onClick={() => {
-          if (Workstates.Create === state) {
-            dispatch(submitSaveOnCreate());
-          } else if (Workstates.Edit == state) {
-            dispatch(submitSaveOnEditFeature());
-          }
+          formRef.current?.dispatchEvent(new Event("submit"));
         }}
       />
       <ToolbarButtonEdit
@@ -57,7 +55,22 @@ const FeatureToolbar = () => {
           history.push(`/feature/${currentRecord?.featureId}/edit`);
         }}
       />
-      <ToolbarButtonDelete disabled={!currentRecord} />
+      <ToolbarButtonDelete
+        disabled={!currentRecord}
+        onClick={() => {
+          dispatch(
+            deleteRecord({
+              primaryKeys: selectedRecords.map((selectRecord: Feature) => selectRecord.featureId),
+            })
+          ).then(() => {
+            if (pathname.endsWith("/list") && searchId) {
+              dispatch(search({ searchId, pageSize: pageSize, pageNumber: pageNumber }));
+            } else {
+              history.push(`/feature/list?pageSize=${pageSize}&page=${pageNumber}`);
+            }
+          });
+        }}
+      />
       <ToolbarButtonView
         disabled={!currentRecord || Workstates.Detail === state}
         onClick={() => history.push(`/feature/${currentRecord?.featureId}/detail`)}
@@ -65,7 +78,9 @@ const FeatureToolbar = () => {
       <ToolbarSplitter />
       <ToolbarButtonBase
         disabled={Workstates.List !== state && records ? records.length === 0 : true}
-        onClick={() => history.push(`/feature/list/?pageSize=${searchPageSize}&page=${searchPage}`)}
+        onClick={
+          () => history.push(`/feature/list/?pageSize=${pageSize}&page=${pageNumber}`) // TODO full template
+        }
       >
         {t("toolbar.list")}
       </ToolbarButtonBase>
@@ -77,7 +92,7 @@ const FeatureToolbar = () => {
         disabled={state !== Workstates.Search}
         type="submit"
         onClick={() => {
-          dispatch(submitSearch(true));
+          formRef.current?.dispatchEvent(new Event("submit"));
         }}
       >
         {t("toolbar.find")}

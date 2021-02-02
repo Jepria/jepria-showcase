@@ -1,18 +1,15 @@
-import React, { Suspense, useEffect } from "react";
+import React, {Suspense, useContext, useEffect} from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import FeatureModuleRoute from "./features/feature/FeatureModuleRoute";
-import GoodsModuleRoute from "./features/goods/GoodsModuleRoute";
-
-const Loader = () => (
-  <div>
-    <div>Loading...</div>
-  </div>
-);
+import { UserPanel } from '@jfront/oauth-ui';
+import { UserContext } from "@jfront/oauth-user";
+import { Loader } from '@jfront/oauth-ui'
 
 function Main() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const language = new URLSearchParams(window.location.search).get("locale");
+  const { currentUser, isUserLoading } = useContext(UserContext);
 
   useEffect(() => {
     if (language) {
@@ -21,22 +18,24 @@ function Main() {
   }, [language]);
 
   return (
-    <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
-      <Switch>
-        <Route path="/feature">
-          <FeatureModuleRoute />
-        </Route>
-        <Route path="/goods">
-          <GoodsModuleRoute />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <>
+      {currentUser.username !== "Guest" && !isUserLoading &&
+        <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
+          <Switch>
+            <Route path="/feature">
+              <UserPanel/>
+              <FeatureModuleRoute />
+            </Route>
+          </Switch>
+        </BrowserRouter>}
+      {isUserLoading && <Loader title="JepRiaShowcase" text={t("loadingUser")} />}
+    </>
   );
 }
 
 const App = () => {
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader title="JepRiaShowcase" text="Загрузка приложения..." />}>
       <Main />
     </Suspense>
   );

@@ -41,7 +41,6 @@ const FeatureProcessListPage = () => {
         ]}
         data={records ? records : []} //todo: bug in library
         onSelection={(selected) => {
-          console.log(selected);
           if (selected.length === 1) {
             dispatch(setCurrentFeatureProcess(selected[0]));
           } else {

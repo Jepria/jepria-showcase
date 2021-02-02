@@ -9,6 +9,7 @@ import com.technology.jep.jepriashowcase.featureprocess.dto.FeatureProcessDto;
 import com.technology.jep.jepriashowcase.featureprocess.dto.FeatureProcessSearchDtoInternal;
 import org.jepria.server.service.rest.JaxrsAdapterBase;
 import org.jepria.server.service.security.HttpBasic;
+import org.jepria.server.service.security.oauth.OAuth;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -17,7 +18,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/feature/{featureId}/feature-process")
-@HttpBasic(passwordType = HttpBasic.PASSWORD)
+@OAuth
 @RolesAllowed({"JrsEditFeature", "JrsEditAllFeature"})
 public class FeatureProcessJaxrsAdapter extends JaxrsAdapterBase {
 
