@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { Goods } from "../api/GoodsTypes";
-import { fetchFeature, selectError, selectCurrentRecord } from "../GoodsSlice";
+import { RootState } from "../../../app/store";
+import { getRecordById } from "../state/GoodsCrudSlice";
 
 const GoodsDetailPage = () => {
   //----------------
@@ -12,17 +13,18 @@ const GoodsDetailPage = () => {
   const dispatch = useDispatch();
   //----------------
 
-  let { featureId } = useParams();
-  const currentRecord: Goods = useSelector(selectCurrentRecord);
-  const error = useSelector(selectError);
+  let { goodsId } = useParams();
+  const { currentRecord, error } = useSelector(
+    (state: RootState) => state.goods.goodsCrudSlice
+  );
 
   useEffect(() => {
-    dispatch(fetchFeature(featureId));
+    dispatch(getRecordById({ primaryKey: goodsId }));
   }, []);
 
   return (
     <>
-      {error ? <div>{error}</div> : null}
+      {error ? <div>{error.message}</div> : null}
       <Form>
         <Form.Field>
           <Form.Label>{t("feature.fields.featureId")}:</Form.Label>
@@ -52,7 +54,7 @@ const GoodsDetailPage = () => {
           <Form.Label style={{ width: "350px", justifyContent: "flex-start" }}>
             {currentRecord?.supplierId}
           </Form.Label>
-        </Form.Field>        
+        </Form.Field>
       </Form>
     </>
   );

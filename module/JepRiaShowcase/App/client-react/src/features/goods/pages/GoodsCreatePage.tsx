@@ -1,39 +1,25 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
 import { Goods, GoodsCreate } from "../api/GoodsTypes";
-import { selectSaveOnCreateFeature, submitSavedOnCreate } from "../GoodsSlice";
 import { goodsCrudApi } from "../api/GoodsCrudApi";
 
-const GoodsCreatePage = () => {
+const GoodsCreatePage = ({ formRef }) => {
   //----------------
-  let formRef = useRef(null) as any;
   const history = useHistory();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   //----------------
 
-  const onCreateFeature = useSelector(selectSaveOnCreateFeature);
-  useEffect(() => {
-    if (onCreateFeature) {
-      dispatch(submitSavedOnCreate());
-      formRef.current?.dispatchEvent(new Event("submit"));
-    }
-  }, [onCreateFeature]);
-
   const formik = useFormik<GoodsCreate>({
-    initialValues: {
-      
-    },
+    initialValues: {},
     onSubmit: (values: GoodsCreate) => {
       goodsCrudApi.create(values).then((good: Goods) => {
         history.push(`/goods/${good.goodsId}/detail`);
       });
-    },    
+    },
   });
 
   return (

@@ -1,10 +1,11 @@
-import React, {Suspense, useContext, useEffect} from "react";
+import React, { Suspense, useContext, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import FeatureModuleRoute from "./features/feature/FeatureModuleRoute";
-import { UserPanel } from '@jfront/oauth-ui';
+import { UserPanel } from "@jfront/oauth-ui";
 import { UserContext } from "@jfront/oauth-user";
-import { Loader } from '@jfront/oauth-ui'
+import { Loader } from "@jfront/oauth-ui";
+import FeatureModuleRoute from "./features/feature/FeatureModuleRoute";
+import GoodsModuleRoute from "./features/goods/GoodsModuleRoute";
 
 function Main() {
   const { i18n, t } = useTranslation();
@@ -19,15 +20,20 @@ function Main() {
 
   return (
     <>
-      {currentUser.username !== "Guest" && !isUserLoading &&
+      {currentUser.username !== "Guest" && !isUserLoading && (
         <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
           <Switch>
             <Route path="/feature">
-              <UserPanel/>
+              <UserPanel />
               <FeatureModuleRoute />
             </Route>
+            <Route path="/goods">
+              <UserPanel />
+              <GoodsModuleRoute />
+            </Route>
           </Switch>
-        </BrowserRouter>}
+        </BrowserRouter>
+      )}
       {isUserLoading && <Loader title="JepRiaShowcase" text={t("loadingUser")} />}
     </>
   );

@@ -1,45 +1,49 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckBox, CheckBoxGroup, ComboBox, ComboBoxItem, Form, NumberInput } from "@jfront/ui-core";
+import {
+  CheckBox,
+  CheckBoxGroup,
+  ComboBox,
+  ComboBoxItem,
+  Form,
+  NumberInput,
+} from "@jfront/ui-core";
 import { GoodsSearchTemplate } from "../api/GoodsTypes";
-import { selectSearchSubmit, selectSearchTemplate, submitSearch } from "../GoodsSearchSlice";
-import { getGoodsSegmentOptions, getGoodsTypeOptions } from "../GoodsOptionsSlice";
 import { RootState } from "../../../app/store";
+import { getGoodsSegmentOptions, getGoodsTypeOptions } from "../state/GoodsOptionsSlice";
 
-const FeatureSearchPage = () => {
+const FeatureSearchPage = ({ formRef }) => {
   //----------------
-  let formRef = useRef(null) as any;
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
   //----------------
 
-  const selectSearch = useSelector(selectSearchSubmit);
-  const searchTemplate: GoodsSearchTemplate = useSelector(selectSearchTemplate);
+  const { searchRequest, isLoading } = useSelector(
+    (state: RootState) => state.goods.goodsSearchSlice
+  );
 
-  const goodsType = useSelector((state: RootState) => state.goodsOptions.goodsType.options);
-  const goodsTypeIsLoading = useSelector((state: RootState) => state.goodsOptions.goodsType.isLoading);
-  const goodsSegment = useSelector((state: RootState) => state.goodsOptions.goodsSegment.options);
-  const goodsSegmentIsLoading = useSelector((state: RootState) => state.goodsOptions.goodsSegment.isLoading);
-
-  useEffect(() => {
-    if (selectSearch) {
-      formRef.current?.dispatchEvent(new Event("submit"));
-      dispatch(submitSearch(false));
-    }
-  }, [selectSearch]);
+  const goodsType = useSelector((state: RootState) => state.goods.goodsOptionsSlice.goodsType.options);
+  const goodsTypeIsLoading = useSelector(
+    (state: RootState) => state.goods.goodsOptionsSlice.goodsType.isLoading
+  );
+  const goodsSegment = useSelector((state: RootState) => state.goods.goodsOptionsSlice.goodsSegment.options);
+  const goodsSegmentIsLoading = useSelector(
+    (state: RootState) => state.goods.goodsOptionsSlice.goodsSegment.isLoading
+  );
 
   useEffect(() => {
     dispatch(getGoodsSegmentOptions());
     dispatch(getGoodsTypeOptions());
+    
   }, []);
 
   const formik = useFormik<GoodsSearchTemplate>({
-    initialValues: searchTemplate,
+    initialValues: searchRequest.template,
     enableReinitialize: true,
     onSubmit: (values) => {
       let query = queryString.stringify(values);
@@ -49,7 +53,8 @@ const FeatureSearchPage = () => {
       history.push(`/goods/list/?pageSize=25&page=1${query}`);
     },
     validate: (values) => {
-
+      let query = queryString.stringify(values);
+      history.replace(`?${query}`);
     },
   });
 
@@ -72,7 +77,7 @@ const FeatureSearchPage = () => {
           <Form.Control error={formik.errors.goodsTypeCode}>
             <ComboBox
               name="goodsTypeCode"
-              value={formik.values?.goodsTypeCode? formik.values.goodsTypeCode: []}
+              value={formik.values?.goodsTypeCode ? formik.values.goodsTypeCode : []}
               onSelectionChange={(name, value) => {
                 formik.setFieldValue("goodsTypeCode", value);
               }}
@@ -81,10 +86,10 @@ const FeatureSearchPage = () => {
               <ComboBoxItem value={undefined} label="" />
               {goodsType
                 ? goodsType.map((option) => {
-                  return (
-                    <ComboBoxItem key={option.value} value={option.value} label={option.name} />
-                  );
-                })
+                    return (
+                      <ComboBoxItem key={option.value} value={option.value} label={option.name} />
+                    );
+                  })
                 : null}
             </ComboBox>
           </Form.Control>
@@ -103,10 +108,8 @@ const FeatureSearchPage = () => {
             >
               {goodsSegment
                 ? goodsSegment.map((option) => {
-                  return (
-                    <CheckBox key={option.value} value={option.value} label={option.name} />
-                  );
-                })
+                    return <CheckBox key={option.value} value={option.value} label={option.name} />;
+                  })
                 : null}
             </CheckBoxGroup>
           </Form.Control>

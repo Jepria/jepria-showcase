@@ -1,3 +1,4 @@
+import { goodsReducer } from "./../features/goods/state/GoodsReducer";
 import { useDispatch } from "react-redux";
 import { Action, configureStore, getDefaultMiddleware, ThunkAction } from "@reduxjs/toolkit";
 import logger from "redux-logger";
@@ -11,6 +12,7 @@ export const store = configureStore({
   reducer: {
     feature: featureReducer,
     featureProcess: featureProcessReducer,
+    goods: goodsReducer,
   },
   middleware: [...getDefaultMiddleware().concat(logger)],
   preloadedState: FeatureInitialState,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { Route, useRouteMatch, useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -9,14 +9,16 @@ import GoodsSearchPage from "./pages/GoodsSearchPage";
 import GoodsListPage from "./pages/GoodsListPage";
 import GoodsEditPage from "./pages/GoodsEditPage";
 import GoodsToolbar from "./components/GoodsToolbar";
-import { selectCurrentRecord } from "./GoodsSlice";
 import { Goods } from "./api/GoodsTypes";
+import { RootState } from "../../app/store";
 
 function GoodsRoute() {
   const { path } = useRouteMatch();
   const history = useHistory();
   const { t } = useTranslation();
-  const currenRrecord: Goods = useSelector(selectCurrentRecord);
+  let formRef = useRef<HTMLFormElement>(null);
+  // const currenRrecord: Goods = useSelector(selectCurrentRecord);
+  const { currentRecord } = useSelector((state: RootState) => state.goods.goodsCrudSlice);
 
   return (
     <Panel>
@@ -25,33 +27,33 @@ function GoodsRoute() {
           <Tab
             selected={true}
             onClick={() => {
-              history.push(`/${path}/${currenRrecord?.goodsId}/detail`);
+              history.push(`/${path}/${currentRecord?.goodsId}/detail`);
             }}
           >
             {t("feature.header")}
           </Tab>
-          {currenRrecord?.goodsId ? (
+          {currentRecord?.goodsId ? (
             <Tab
               selected={false}
               onClick={() => {
-                history.push(`/${path}/${currenRrecord?.goodsId}/feature-process/list`);
+                history.push(`/${path}/${currentRecord?.goodsId}/feature-process/list`);
               }}
             >
               {t("feature-process.header")}
             </Tab>
           ) : null}
         </TabPanel>
-        <GoodsToolbar />
+        <GoodsToolbar formRef={formRef} />
       </Panel.Header>
       <Panel.Content>
         <Route path={`${path}`} exact>
-          <GoodsSearchPage />
+          <GoodsSearchPage formRef={formRef} />
         </Route>
         <Route path={`${path}/create`} exact>
-          <GoodsCreatePage />
+          <GoodsCreatePage formRef={formRef} />
         </Route>
         <Route path={`${path}/:featureId/edit`} exact>
-          <GoodsEditPage />
+          <GoodsEditPage formRef={formRef} />
         </Route>
         <Route path={`${path}/:featureId/detail`}>
           <GoodsDetailPage />

@@ -1,7 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { goodsOptionsApi } from "./api/GoodsOptionsApi";
-import { createOptionsSlice, OptionState } from "./../../app/common/optionsSlice";
-import { Options } from "./api/GoodsTypes";
+import { createOptionsSlice, OptionState } from "@jfront/core-redux-thunk";
+import { goodsOptionsApi } from "../api/GoodsOptionsApi";
+import { Options } from "../api/GoodsTypes";
 
 const initialState: OptionState<Options<string>> = {
   error: null,

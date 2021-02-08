@@ -5,47 +5,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
-import {
-  selectCurrentRecord,
-  selectSaveOnEditFeature,
-  setCurrentRecord,
-  submitSavedOnEditFeature,
-} from "../GoodsSlice";
 import { Goods, GoodsUpdate } from "../api/GoodsTypes";
 import { goodsCrudApi } from "../api/GoodsCrudApi";
+import { getRecordById } from "../state/GoodsCrudSlice";
+import { RootState } from "../../../app/store";
 
-const GoodsEditPage = () => {
+const GoodsEditPage = ({ formRef }) => {
   //----------------
-  let formRef = useRef(null) as any;
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   //----------------
 
-  let { featureId } = useParams();
-  const currentRecord: Goods = useSelector(selectCurrentRecord);
-
-  const onSaveFeature = useSelector(selectSaveOnEditFeature);
-  useEffect(() => {
-    if (onSaveFeature) {
-      dispatch(submitSavedOnEditFeature());
-      formRef.current?.dispatchEvent(new Event("submit"));
-    }
-  }, [onSaveFeature]);
+  let { goodsId } = useParams();
+  const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
 
   useEffect(() => {
-    goodsCrudApi.getRecordById(featureId).then((feature) => {
-      dispatch(setCurrentRecord(feature));
-    });
+    dispatch(getRecordById({ primaryKey: goodsId }));
   }, []);
 
   const formik = useFormik<GoodsUpdate>({
-    initialValues: {
-    },
+    initialValues: {},
     onSubmit: (values: GoodsUpdate) => {
-      if (featureId) {
-        goodsCrudApi.update(featureId.toString(), values).then(() => {
-          history.push(`/feature/${featureId}/detail`);
+      if (goodsId) {
+        goodsCrudApi.update(goodsId.toString(), values).then(() => {
+          history.push(`/feature/${goodsId}/detail`);
         });
       }
     },
