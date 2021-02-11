@@ -137,7 +137,7 @@
           <username>${deploy.username}</username>
           <password>${deploy.password}</password>
           <loadOperatorId>${deploy.loadOperatorId}</loadOperatorId>
-          <warFile>${project.basedir}/lib/JepRiaShowcase.war</warFile>
+          <warFile>${project.basedir}/lib/${project.artifactId}.war</warFile>
           <skipSaveInstallInfo>false</skipSaveInstallInfo>
         </configuration>
       </plugin>
