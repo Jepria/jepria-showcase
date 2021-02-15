@@ -35,6 +35,7 @@
     <deploy.path>/JepRiaShowcase</deploy.path>
     <deploy.username>admin</deploy.username>
     <deploy.password>admin0</deploy.password>
+    <deploy.loadOperatorId>nagornyys/123</deploy.loadOperatorId>
   </properties>
 
   <modules>
@@ -123,6 +124,21 @@
           <path>${deploy.path}</path>
           <warFile>${project.basedir}/lib/${project.artifactId}.war</warFile>
           <update>true</update>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jepria.tools.mavenplugin</groupId>
+        <artifactId>appinstall-maven-plugin</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <inherited>false</inherited>
+        <configuration>
+          <deploymentPath>${deploy.url}</deploymentPath>
+          <contextPath>${deploy.path}</contextPath>
+          <username>${deploy.username}</username>
+          <password>${deploy.password}</password>
+          <loadOperatorId>${deploy.loadOperatorId}</loadOperatorId>
+          <warFile>${project.basedir}/lib/${project.artifactId}.war</warFile>
+          <skipSaveInstallInfo>false</skipSaveInstallInfo>
         </configuration>
       </plugin>
     </plugins>
