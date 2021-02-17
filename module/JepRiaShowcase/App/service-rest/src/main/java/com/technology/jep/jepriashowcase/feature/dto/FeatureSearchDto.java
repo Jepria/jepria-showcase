@@ -1,20 +1,30 @@
 package com.technology.jep.jepriashowcase.feature.dto;
 
 import javax.validation.constraints.Pattern;
+import javax.ws.rs.QueryParam;
 import java.util.Date;
 import java.util.List;
 
 public class FeatureSearchDto {
+  @QueryParam("featureId")
   private Integer featureId;
+  @QueryParam("featureNameTemplate")
   @Pattern(regexp = "[^%]*", message = "template must not contain percent sign")
   private String featureNameTemplate;
+  @QueryParam("featureNameEnTemplate")
   @Pattern(regexp = "[^\u0400-\u04FF]*", message = "must not contain cyrillic symbols")
   private String featureNameEnTemplate;
+  @QueryParam("statusCodeList")
   private List<String> statusCodeList;
+  @QueryParam("authorId")
   private Integer authorId;
+  @QueryParam("responsibleId")
   private Integer responsibleId;
+  @QueryParam("dateInsFrom")
   private Date dateInsFrom;
+  @QueryParam("dateInsTo")
   private Date dateInsTo;
+  @QueryParam("maxRowCount")
   private Integer maxRowCount;
 
   public Integer getFeatureId() {

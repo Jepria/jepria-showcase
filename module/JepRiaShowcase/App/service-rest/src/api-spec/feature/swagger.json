@@ -140,105 +140,6 @@
         }
       }
     },
-    "/feature/search/{searchId}/resultset-size": {
-      "get": {
-        "tags": ["feature: search"],
-        "summary": "Get size of a resultset for a search request",
-        "description": "",
-        "operationId": "getSearchResultsetSize",
-        "parameters": [
-          {
-            "name": "searchId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Cache-Control",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json;charset=utf-8": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/feature/search/{searchId}/resultset/paged-by-{pageSize}/{page}": {
-      "get": {
-        "tags": ["feature: search"],
-        "summary": "Get paged resultset for a search request",
-        "description": "",
-        "operationId": "getResultsetPaged",
-        "parameters": [
-          {
-            "name": "searchId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "pattern": "\\d+"
-            }
-          },
-          {
-            "name": "page",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Cache-Control",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json;charset=utf-8": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FeatureDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/feature/option/feature-operator": {
       "get": {
         "tags": ["dict"],
@@ -319,56 +220,16 @@
       }
     },
     "/feature/search": {
-      "post": {
+      "get": {
         "tags": ["feature: search"],
-        "summary": "Post search request",
+        "summary": "Search",
         "description": "",
-        "operationId": "postSearch",
+        "operationId": "search",
         "parameters": [
-          {
-            "name": "Extended-Response",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "Cache-Control",
             "in": "header",
             "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json;charset=utf-8": {
-              "schema": {
-                "$ref": "#/components/schemas/SearchRequestDtoFeatureSearchDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "successful operation"
-          }
-        }
-      }
-    },
-    "/feature/search/{searchId}/resultset": {
-      "get": {
-        "tags": ["feature: search"],
-        "summary": "Get resultset for a search request",
-        "description": "",
-        "operationId": "getResultset",
-        "parameters": [
-          {
-            "name": "searchId",
-            "in": "path",
-            "required": true,
             "schema": {
               "type": "string"
             }
@@ -392,46 +253,98 @@
             }
           },
           {
-            "name": "Cache-Control",
-            "in": "header",
+            "name": "sort",
+            "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json;charset=utf-8": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FeatureDto"
-                  }
-                }
+              "type": "array",
+              "items": {
+                "type": "string"
               }
             }
-          }
-        }
-      }
-    },
-    "/feature/search/{searchId}": {
-      "get": {
-        "tags": ["feature: search"],
-        "summary": "Get search request by ID",
-        "description": "",
-        "operationId": "getSearchRequest",
-        "parameters": [
+          },
           {
-            "name": "searchId",
-            "in": "path",
-            "required": true,
+            "name": "featureId",
+            "in": "query",
+            "required": false,
             "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "featureNameTemplate",
+            "in": "query",
+            "required": false,
+            "schema" : {
               "type": "string"
             }
+          },
+          {
+            "name": "featureNameEnTemplate",
+            "in": "query",
+            "required": false,
+            "schema" : {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statusCodeList",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "authorId",
+            "in": "query",
+            "required": false,
+            "schema" : {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "responsibleId",
+            "in": "query",
+            "required": false,
+            "schema" : {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dateInsFrom",
+            "in": "query",
+            "required": false,
+            "schema" : {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateInsTo",
+            "in": "query",
+            "required": false,
+            "schema" : {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "maxRowCount",
+            "in": "query",
+            "required": false,
+            "schema" : {
+              "type": "integer",
+              "format": "int32"
+            }
           }
+          
         ],
         "responses": {
           "200": {
@@ -439,7 +352,19 @@
             "content": {
               "application/json;charset=utf-8": {
                 "schema": {
-                  "$ref": "#/components/schemas/SearchRequestDtoFeatureSearchDto"
+                  "type": "object",
+                  "properties": {
+                    "resultsetSize": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FeatureDto"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -697,86 +622,6 @@
           },
           "value": {
             "type": "string"
-          }
-        }
-      },
-      "ColumnSortConfigurationDto": {
-        "type": "object",
-        "properties": {
-          "columnName": {
-            "type": "string"
-          },
-          "sortOrder": {
-            "type": "string"
-          }
-        }
-      },
-      "FeatureSearchDto": {
-        "type": "object",
-        "properties": {
-          "featureId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "featureNameTemplate": {
-            "type": "string"
-          },
-          "featureNameEnTemplate": {
-            "type": "string"
-          },
-          "statusCodeList": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "authorId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "responsibleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "dateInsFrom": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "dateInsTo": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "maxRowCount": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "SearchRequestDto": {
-        "type": "object",
-        "properties": {
-          "template": {
-            "type": "object"
-          },
-          "listSortConfiguration": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ColumnSortConfigurationDto"
-            }
-          }
-        }
-      },
-      "SearchRequestDtoFeatureSearchDto": {
-        "type": "object",
-        "properties": {
-          "template": {
-            "$ref": "#/components/schemas/FeatureSearchDto"
-          },
-          "listSortConfiguration": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ColumnSortConfigurationDto"
-            }
           }
         }
       },
