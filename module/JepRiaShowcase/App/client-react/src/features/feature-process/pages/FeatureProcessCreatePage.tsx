@@ -18,7 +18,7 @@ const FeatureProcessCreatePage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   //----------------
-  let { featureId } = useParams();
+  let { featureId } = useParams<any>();
   const [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
 
   const onSave = useSelector(selectSaveOnCreateFeatureProcess);

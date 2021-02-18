@@ -15,7 +15,7 @@ const FeatureProcessListPage = () => {
   const dispatch = useDispatch();
   //----------------
   const [records, setRecords] = useState<FeatureProcess[]>();
-  let { featureId } = useParams();
+  let { featureId } = useParams<any>();
 
   useEffect(() => {
     if (featureId) {

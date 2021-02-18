@@ -1,43 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
-import { postSearch, postSearchRequest, search } from "../state/FeatureSearchSlice";
+import {
+  actions as searchActions,
+  querySearch,
+} from "../state/FeatureSearchSlice";
 import { actions as crudActions } from "../state/FeatureSlice";
 import { RootState } from "../../../app/store";
+import queryString from "query-string";
 
 const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
+  return queryString.parse(window.location.search, { arrayFormat: "bracket" });
 };
 
 const FeatureListPage = () => {
   //----------------
   const history = useHistory();
-  const location = useLocation();
   let query = useQuery();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   //----------------
   const [page, setPage] = useState({
-    pageSize: parseInt(query.get("pageSize") as string),
-    pageNumber: parseInt(query.get("page") as string),
+    pageSize: query?.pageSize ? parseInt(query.pageSize as string) : 25,
+    pageNumber: query?.page ? parseInt(query.page as string) : 1,
   });
-  console.log(`page: ${page.pageNumber}`)
-  const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
 
-  const { records, searchId, searchRequest, isLoading, resultSetSize } = useSelector(
+  const { currentRecord } = useSelector(
+    (state: RootState) => state.feature.featureCrudSlice
+  );
+
+  const { records, searchRequest, isLoading, resultSetSize } = useSelector(
     (state: RootState) => state.feature.featureSearchSlice
   );
 
   useEffect(() => {
-    if (searchId) {
+    if (searchRequest) {
       dispatch(
-        search({ searchId: searchId, pageSize: page.pageSize, pageNumber: page.pageNumber })
+        querySearch(
+          searchRequest.template,
+          searchRequest.listSortConfiguration,
+          page.pageSize,
+          page.pageNumber
+        )
       );
     }
-  }, [searchId, page, dispatch]);
+  }, [page, dispatch]);
 
   return (
     <>
@@ -91,8 +101,12 @@ const FeatureListPage = () => {
           if (records) {
             if (records.length === 1) {
               if (records[0] !== currentRecord) {
-                dispatch(crudActions.setCurrentRecord({ currentRecord: records[0] }));
-                dispatch(crudActions.selectRecords({ selectedRecords: records }));
+                dispatch(
+                  crudActions.setCurrentRecord({ currentRecord: records[0] })
+                );
+                dispatch(
+                  crudActions.selectRecords({ selectedRecords: records })
+                );
               }
             } else if (currentRecord) {
               dispatch(crudActions.setCurrentRecord({} as any));
@@ -110,19 +124,17 @@ const FeatureListPage = () => {
           });
         }}
         onSort={(sortConfig) => {
-          console.log("onSort!!!!!!!!!!")
-          const newSearchRequest = {
-            template: {
-              maxRowCount: 25,
-              ...query,
-              ...searchRequest?.template,
-            },
-            listSortConfiguration: sortConfig,
-          };
           dispatch(
-            postSearchRequest({
-              searchTemplate: newSearchRequest,
-            })
+            querySearch(
+              {
+                maxRowCount: 25,
+                ...query,
+                ...searchRequest?.template,
+              },
+              sortConfig,
+              page.pageSize,
+              page.pageNumber
+            )
           );
         }}
       />

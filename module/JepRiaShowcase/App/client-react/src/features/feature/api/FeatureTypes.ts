@@ -1,3 +1,5 @@
+import { ColumnSortConfiguration } from "@jfront/ui-core";
+
 //TODO interface to type?
 export interface Feature {
   featureId: number;
@@ -17,6 +19,11 @@ export interface Feature {
     name: string;
     value: number;
   };
+}
+
+export type ResultSet = {
+  resultsetSize: number
+  data?: Feature[]
 }
 
 export interface FeatureCreate {

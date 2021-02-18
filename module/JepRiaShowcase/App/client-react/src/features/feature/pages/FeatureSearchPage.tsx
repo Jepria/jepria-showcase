@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, NumberInput } from "@jfront/ui-core";
 import { DatePicker } from "@jfront/ui-core";
 import { CheckBoxGroup } from "@jfront/ui-core";
@@ -11,13 +11,20 @@ import { CheckBox } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
 import { FeatureSearchTemplate } from "../api/FeatureTypes";
 import { FeatureStatusOptions } from "../../feature-process/api/FeatureProcessTypes";
+import { actions } from "../state/FeatureSearchSlice";
 import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProcessApi";
 import { FeatureState } from "../state/FeatureReducer";
+
+const useQuery = () => {
+  return queryString.parse(window.location.search, {arrayFormat: 'bracket'})
+};
 
 const FeatureSearchPage = ({ formRef }) => {
   //----------------
   const { t } = useTranslation();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const template = useQuery();
   //----------------
 
   const [statusOptions, setStatusOptions] = useState<FeatureStatusOptions[]>();
@@ -33,14 +40,21 @@ const FeatureSearchPage = ({ formRef }) => {
   }, []);
 
   const formik = useFormik<FeatureSearchTemplate>({
-    initialValues: searchRequest.template,
+    initialValues: {maxRowCount: 25, ...template, ...searchRequest.template},
     enableReinitialize: true,
     onSubmit: (values) => {
-      let query = queryString.stringify(values);
+      dispatch(
+        actions.setSearchTemplate({
+          searchTemplate: {
+            template: values,
+          },
+        })
+      );
+      let query = queryString.stringify(values, {arrayFormat: 'bracket'});
       if (query) {
         query = "&" + query;
       }
-      history.push(`/feature/list/?pageSize=25&page=1${query}`);
+      history.push(`/feature/list/?pageSize=25&page=1${encodeURI(query)}`);
     },
     validate: (values) => {
       const errors: {
@@ -124,7 +138,11 @@ const FeatureSearchPage = ({ formRef }) => {
           <Form.Control error={formik.errors.statusCodeList as any}>
             <CheckBoxGroup
               name="statusCodeList"
-              values={formik.values?.statusCodeList ? formik.values.statusCodeList : []}
+              values={
+                formik.values?.statusCodeList
+                  ? formik.values.statusCodeList
+                  : []
+              }
               style={{ width: "142px" }}
               onChange={(name, newValue) => {
                 formik.setFieldValue("statusCodeList", newValue);
@@ -133,7 +151,13 @@ const FeatureSearchPage = ({ formRef }) => {
             >
               {statusOptions
                 ? statusOptions.map((option) => {
-                    return <CheckBox key={option.value} value={option.value} label={option.name} />;
+                    return (
+                      <CheckBox
+                        key={option.value}
+                        value={option.value}
+                        label={option.name}
+                      />
+                    );
                   })
                 : null}
             </CheckBoxGroup>

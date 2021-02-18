@@ -2,30 +2,43 @@ import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
-import {Provider} from "react-redux";
-import axios from 'axios'
-import {OAuthWebContext, OAuthSecuredFragment} from "@jfront/oauth-ui"
+import { Provider } from "react-redux";
+import axios from "axios";
+import { OAuthWebContext, OAuthSecuredFragment } from "@jfront/oauth-ui";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./i18n";
-import {store} from "./app/store";
-import {UserContextProvider} from "@jfront/oauth-user";
+import { store } from "./app/store";
+import { UserContextProvider } from "@jfront/oauth-user";
 
 ReactDOM.render(
   // <React.StrictMode>
   <OAuthWebContext
     clientId={"JepRiaShowcase"} //client_id приложения
-    redirectUri={"/JepRiaShowcase/react/oauth"} //Библиотека по умолчанию использует следующий формат URL’а scheme:[//authority]/context_path/oauth 
-    oauthContextPath={"/oauth/api"} //Ссылка на Context path сервисов oauth
+    redirectUri={
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/JepRiaShowcase/react/oauth"
+        : "/JepRiaShowcase/react/oauth"
+    } //Библиотека по умолчанию использует следующий формат URL’а scheme:[//authority]/context_path/oauth
+    oauthContextPath={
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:8080/oauth/api"
+        : "/oauth/api"
+    } //Ссылка на Context path сервисов oauth
     axiosInstance={axios}
     configureAxios
   >
     <Provider store={store}>
       <UserContextProvider
-        baseUrl={'/JepRiaShowcase/api'}>
+        baseUrl={
+          process.env.NODE_ENV === "development"
+            ? "http://localhost:8080/JepRiaShowcase/api"
+            : "/JepRiaShowcase/api"
+        }
+      >
         <OAuthSecuredFragment>
-          <App/>
+          <App />
         </OAuthSecuredFragment>
       </UserContextProvider>
     </Provider>

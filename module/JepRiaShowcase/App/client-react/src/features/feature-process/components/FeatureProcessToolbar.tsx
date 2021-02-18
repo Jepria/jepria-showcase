@@ -20,7 +20,7 @@ const FeatureProcessToolbar = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { featureId } = useParams();
+  const { featureId } = useParams<any>();
   //----------------
   const state: Workstates = useWorkstate(history.location.pathname);
   const currentFeatureProcess = useSelector(selectFeatureProcess);
@@ -45,7 +45,7 @@ const FeatureProcessToolbar = () => {
           if (currentFeatureProcess.featureId && currentFeatureProcess.featureProcessId) {
             deleteFeatureProcess(
               parseInt(currentFeatureProcess.featureId.toString()),
-              parseInt(currentFeatureProcess.featureProcessId)
+              parseInt(currentFeatureProcess.featureProcessId as any)
             ).then(() => {
               history.push(`/feature/${featureId}/feature-process/list`);
             });
