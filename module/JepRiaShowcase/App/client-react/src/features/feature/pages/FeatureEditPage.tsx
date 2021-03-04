@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
 import { FeatureUpdate } from "../api/FeatureTypes";
-import { featureCrudApi } from "../api/FeatureCrudApi";
-import { RootState } from "../../../app/store";
+import { RootState, useAppDispatch } from "../../../app/store";
+import { getRecordById, updateRecord } from "../state/FeatureSlice";
 
 const FeatureEditPage = ({ formRef }) => {
   //----------------
   const history = useHistory();
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   //----------------
 
   let { featureId } = useParams();
   const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
+
+  useEffect(() => {
+    dispatch(getRecordById({ primaryKey: featureId }));
+  }, []);
 
   const formik = useFormik<FeatureUpdate>({
     initialValues: {
@@ -26,9 +31,10 @@ const FeatureEditPage = ({ formRef }) => {
     },
     onSubmit: (values: FeatureUpdate) => {
       if (featureId) {
-        featureCrudApi.update(featureId.toString(), values).then(() => {
-          history.push(`/feature/${featureId}/detail`);
-        });
+        dispatch(updateRecord({ primaryKey: featureId, values: values }))
+          .then(() => {
+            history.push(`/feature/${featureId}/detail`);
+          });
       }
     },
     enableReinitialize: true,
