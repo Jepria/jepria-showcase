@@ -5,7 +5,7 @@ import {
   initialState as FeatureInitialState,
   featureReducer,
 } from "../features/feature/state/FeatureReducer";
-import featureProcessReducer from "../features/feature-process/featureProcessSlice";
+import featureProcessReducer from "../features/feature-process/state/featureProcessSlice";
 
 export const store = configureStore({
   reducer: {

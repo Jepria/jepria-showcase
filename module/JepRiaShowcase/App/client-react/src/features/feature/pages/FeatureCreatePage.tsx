@@ -4,13 +4,15 @@ import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import { Form } from "@jfront/ui-core";
 import { TextInput } from "@jfront/ui-core";
-import { Feature, FeatureCreate } from "../api/FeatureTypes";
-import { featureCrudApi } from "../api/FeatureCrudApi";
+import { FeatureCreate } from "../api/FeatureTypes";
+import { useAppDispatch } from "../../../app/store";
+import { createRecord } from "../state/FeatureSlice";
 
 const FeatureCreatePage = ({ formRef }) => {
   //----------------
   const history = useHistory();
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   //----------------
 
   const formik = useFormik<FeatureCreate>({
@@ -20,9 +22,10 @@ const FeatureCreatePage = ({ formRef }) => {
       featureNameEn: "",
     },
     onSubmit: (values: FeatureCreate) => {
-      featureCrudApi.create(values).then((feature: Feature) => {
-        history.push(`/feature/${feature.featureId}/detail`);
-      });
+      dispatch(createRecord({ values: values }))
+        .then((feature) => {
+          history.push(`/feature/${feature.featureId}/detail`);
+        });
     },
     validate: (values) => {
       const errors: {

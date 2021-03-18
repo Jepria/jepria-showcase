@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@jfront/ui-core";
 import { getFeatureProcess } from "../api/FeatureProcessApi";
-import { setCurrentFeatureProcess, selectFeatureProcess } from "../featureProcessSlice";
+import { setCurrentFeatureProcess, selectFeatureProcess } from "../state/featureProcessSlice";
+import { RootState } from "../../../app/store";
 
 const FeatureProcessDetailPage = () => {
   //----------------
@@ -13,7 +14,11 @@ const FeatureProcessDetailPage = () => {
   //----------------
   let { featureId, featureProcessId } = useParams();
 
-  const currentRecord = useSelector(selectFeatureProcess);
+  const { currentRecord, error } = useSelector(
+    (state: RootState) => state.featureProcess.currentFeatureProcess
+  );
+
+  // const currentRecord = useSelector(selectFeatureProcess);
 
   useEffect(() => {
     if (featureId && featureProcessId) {

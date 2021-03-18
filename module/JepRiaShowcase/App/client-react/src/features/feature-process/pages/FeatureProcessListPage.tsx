@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Grid } from "@jfront/ui-core";
 import { FeatureProcess } from "../api/FeatureProcessTypes";
 import { findFeatureProcess } from "../api/FeatureProcessApi";
-import { setCurrentFeatureProcess } from "../featureProcessSlice";
+import { setCurrentFeatureProcess } from "../state/featureProcessSlice";
 
 const FeatureProcessListPage = () => {
   //----------------
