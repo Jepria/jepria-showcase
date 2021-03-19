@@ -5,8 +5,9 @@
   "homepage": "/JepRiaShowcase/react",
   "dependencies": {
     "@jfront/core-common": "^0.1.0",
-    "@jfront/core-redux-thunk": "^0.1.2",
-    "@jfront/core-rest": "^0.1.2",
+    "@jfront/core-redux-thunk": "^0.1.4",
+    "@jfront/core-rest": "^0.1.4",
+    "@jfront/ui-core": "^0.7.0",
     "@jfront/oauth-ui": "^0.2.4",
     "@jfront/oauth-user": "0.1.4",
     "@jfront/ui-core": "^0.9.1",

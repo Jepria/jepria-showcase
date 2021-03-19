@@ -16,7 +16,7 @@ ReactDOM.render(
   // <React.StrictMode>
   <OAuthWebContext
     clientId={"JepRiaShowcase"} //client_id приложения
-    redirectUri={
+redirectUri={
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000/JepRiaShowcase/react/oauth"
         : "/JepRiaShowcase/react/oauth"

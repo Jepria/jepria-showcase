@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { FeatureProcess } from "./api/FeatureProcessTypes";
-import { AppThunk, RootState } from "./../../app/store";
+import { FeatureProcess } from "../api/FeatureProcessTypes";
+import { AppThunk, RootState } from "../../../app/store";
 
 interface FeatureProcessState {
   currentFeatureProcess: FeatureProcess;

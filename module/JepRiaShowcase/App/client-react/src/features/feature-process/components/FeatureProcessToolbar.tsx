@@ -11,7 +11,7 @@ import {
   ToolbarButtonView,
   ToolbarSplitter,
 } from "@jfront/ui-core";
-import { selectFeatureProcess, submitSaveOnCreateFeatureProcess } from "../featureProcessSlice";
+import { selectFeatureProcess, submitSaveOnCreateFeatureProcess } from "../state/featureProcessSlice";
 import { deleteFeatureProcess } from "../api/FeatureProcessApi";
 import { useWorkstate, Workstates } from "../../../app/common/useWorkstate";
 

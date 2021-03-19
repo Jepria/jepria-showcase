@@ -9,11 +9,11 @@ import { createFeatureProcess, getFeatureStatusOptions } from "../api/FeaturePro
 import {
   selectSaveOnCreateFeatureProcess,
   submitSavedOnCreateFeatureProcess,
-} from "../featureProcessSlice";
+} from "../state/featureProcessSlice";
 
-const FeatureProcessCreatePage = () => {
+const FeatureProcessCreatePage = ({ formRef }) => {
   //----------------
-  let formRef = useRef(null) as any;
+  // let formRef = useRef(null) as any;
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
