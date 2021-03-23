@@ -1,7 +1,8 @@
-import { Feature, FeatureSearchTemplate } from "./FeatureTypes";
+import axios, { AxiosInstance } from "axios";
 import { ConnectorSearch } from "@jfront/core-rest";
 import { API_PATH } from "../../../config";
-import axios, { AxiosInstance } from "axios";
+import { Feature, FeatureSearchTemplate } from "./FeatureTypes";
+
 class FeatureSearchApi extends ConnectorSearch<Feature, FeatureSearchTemplate> {
   constructor(
     baseUrl: string,

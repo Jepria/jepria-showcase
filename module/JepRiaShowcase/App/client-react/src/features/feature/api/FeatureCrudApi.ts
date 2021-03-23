@@ -1,5 +1,5 @@
-import { ConnectorCrud } from "@jfront/core-rest";
 import axios, { AxiosInstance } from "axios";
+import { ConnectorCrud } from "@jfront/core-rest";
 import { API_PATH } from "../../../config";
 import { Feature, FeatureCreate, FeatureUpdate } from "./FeatureTypes";
 
