@@ -1,18 +1,19 @@
-import { Feature, FeatureSearchTemplate, ResultSet } from "./FeatureTypes";
+import axios, { AxiosInstance } from "axios";
 import {
   buildError,
   ConnectorSearch,
   handleAxiosError,
 } from "@jfront/core-rest";
 import { API_PATH } from "../../../config";
-import axios, { AxiosInstance } from "axios";
+import { Feature, FeatureSearchTemplate, ResultSet } from "./FeatureTypes";
+
 class FeatureSearchApi extends ConnectorSearch<Feature, FeatureSearchTemplate> {
   constructor(
     baseUrl: string,
     withCrudentials = false,
     axiosInstance?: AxiosInstance
   ) {
-    super(baseUrl, true, axiosInstance);
+    super(baseUrl, withCrudentials, axiosInstance);
   }
 
   querySearch = (query: string) => {
@@ -37,8 +38,5 @@ class FeatureSearchApi extends ConnectorSearch<Feature, FeatureSearchTemplate> {
   };
 }
 
-export const featureSearchApi = new FeatureSearchApi(
-  API_PATH + "/feature",
-  false,
-  axios
-);
+export const featureSearchApi = new FeatureSearchApi(API_PATH + "/feature", false, axios);
+
