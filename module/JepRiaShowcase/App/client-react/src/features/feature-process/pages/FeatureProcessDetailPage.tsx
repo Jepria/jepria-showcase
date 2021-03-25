@@ -12,7 +12,7 @@ const FeatureProcessDetailPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   //----------------
-  let { featureId, featureProcessId } = useParams();
+  let { featureId, featureProcessId } = useParams<any>();
 
   const { currentRecord, error } = useSelector(
     (state: RootState) => state.featureProcess.currentFeatureProcess

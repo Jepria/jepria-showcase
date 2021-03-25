@@ -5,11 +5,10 @@ import com.technology.jep.jepriashowcase.feature.dto.FeatureCreateDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureSearchDto;
 import com.technology.jep.jepriashowcase.feature.dto.FeatureUpdateDto;
+import org.jepria.server.data.ColumnSortConfigurationDto;
 import org.jepria.server.data.OptionDto;
-import org.jepria.server.data.SearchRequestDto;
-import org.jepria.server.service.rest.ExtendedResponse;
+import org.jepria.server.data.SearchResultDto;
 import org.jepria.server.service.rest.JaxrsAdapterBase;
-import org.jepria.server.service.security.HttpBasic;
 import org.jepria.server.service.security.oauth.OAuth;
 
 import javax.annotation.security.RolesAllowed;
@@ -89,50 +88,17 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
 
   //------------ search methods ------------//
 
-  @POST
+  @GET
   @Path("/search")
-  public Response postSearch(SearchRequestDto<FeatureSearchDto> searchRequestDto,
-                             @Pattern(regexp = "(resultset/paged-by-\\d+/\\d+)|(resultset\\?pageSize\\d+&page=\\d+)|(resultset\\?page=\\d+&pageSize=\\d+)", message = "Bad Extended-Response header value")
-                             @HeaderParam(ExtendedResponse.REQUEST_HEADER_NAME) String extendedResponse,
-                             @HeaderParam("Cache-Control") String cacheControl) {
-    return searchEndpointAdapter.postSearch(searchRequestDto, extendedResponse, cacheControl);
-  }
-
-  @GET
-  @Path("/search/{searchId}")
-  public Response getSearchRequest(
-      @PathParam("searchId") String searchId) {
-    SearchRequestDto<FeatureSearchDto> result = (SearchRequestDto<FeatureSearchDto>) searchEndpointAdapter.getSearchRequest(searchId);
+  public Response searchSimple(
+          @QueryParam("pageSize") Integer pageSize,
+          @QueryParam("page") Integer page,
+          @QueryParam("sort") List<ColumnSortConfigurationDto> sortConfiguration,
+          @BeanParam FeatureSearchDto searchRequestDto,
+          @HeaderParam("Cache-Control") String cacheControl
+  ) {
+    SearchResultDto<FeatureDto> result = searchEndpointAdapter.search(pageSize, page, sortConfiguration, searchRequestDto, cacheControl); 
     return Response.ok(result).build();
   }
-
-  @GET
-  @Path("/search/{searchId}/resultset-size")
-  public Response getSearchResultsetSize(@PathParam("searchId") String searchId,
-                                         @HeaderParam("Cache-Control") String cacheControl) {
-    int result = searchEndpointAdapter.getSearchResultsetSize(searchId, cacheControl);
-    return Response.ok(result).build();
-  }
-
-  @GET
-  @Path("/search/{searchId}/resultset")
-  public Response getResultset(
-      @PathParam("searchId") String searchId,
-      @QueryParam("pageSize") Integer pageSize,
-      @QueryParam("page") Integer page,
-      @HeaderParam("Cache-Control") String cacheControl) {
-    List<FeatureDto> result = (List<FeatureDto>) searchEndpointAdapter.getResultset(searchId, pageSize, page, cacheControl);
-    return result == null ? Response.noContent().build() : Response.ok(result).build();
-  }
-
-  @GET
-  @Path("/search/{searchId}/resultset/paged-by-{pageSize:\\d+}/{page}")
-  public Response getResultsetPaged(
-      @PathParam("searchId") String searchId,
-      @PathParam("pageSize") Integer pageSize,
-      @PathParam("page") Integer page,
-      @HeaderParam("Cache-Control") String cacheControl) {
-    List<FeatureDto> result = (List<FeatureDto>) searchEndpointAdapter.getResultsetPaged(searchId, pageSize, page, cacheControl);
-    return result == null ? Response.noContent().build() : Response.ok(result).build();
-  }
+  
 }

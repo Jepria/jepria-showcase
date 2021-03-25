@@ -9,7 +9,7 @@ export const initialEntityState: EntityState<Feature> = {
   selectedRecords: [],
 };
 
-const entitySlice = createCrudSlice({
+const entitySlice = createCrudSlice<number, Feature>({
   name: "featureSlice",
   initialState: initialEntityState,
   reducers: {},
