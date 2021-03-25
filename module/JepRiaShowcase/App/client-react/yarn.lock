@@ -1348,14 +1348,14 @@
   resolved "https://registry.yarnpkg.com/@jfront/core-common/-/core-common-0.1.0.tgz#8fd8120935e88712a1b510fbeb0f33843bbda46d"
   integrity sha512-oKg8IE4ArRk57Iul/6bzRq7FEMCfd/jhjKsmQTTd+rJbUUOEd9mrYgya+H5qDPzMR0y+HS4+NkeiaKKmEkYATQ==
 
-"@jfront/core-redux-thunk@^0.1.2":
+"@jfront/core-redux-thunk@^0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@jfront/core-redux-thunk/-/core-redux-thunk-0.1.4.tgz#9ed1aa90976094c966ef765078b5a04a262db802"
   integrity sha512-S+rCk//QALE94+tlukiKFQN2GciQSr9AOiVpz1q6knMeNF2c2IXwcep4bLKj8NWvNEpt/XAVk3tGqYqdVwSsGg==
   dependencies:
     "@jfront/core-rest" "^0.1.4"
 
-"@jfront/core-rest@^0.1.2", "@jfront/core-rest@^0.1.4":
+"@jfront/core-rest@^0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@jfront/core-rest/-/core-rest-0.1.4.tgz#171f436b3d5427e5ca5ced98fcb97b0d9edbe98e"
   integrity sha512-XrssDfh32JJKC/ghu16MOTPu/zlPP5TIU92BQa9sw4OdaRF3qmWHHaq8KqvcpQhVctmCR5DgdjpG50/lV6sLOA==
@@ -2703,6 +2703,13 @@ axios@0.20.0:
   version "0.20.0"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.20.0.tgz#057ba30f04884694993a8cd07fa394cff11c50bd"
   integrity sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M/v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA==
+  dependencies:
+    follow-redirects "^1.10.0"
+
+axios@0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
   dependencies:
     follow-redirects "^1.10.0"
 
