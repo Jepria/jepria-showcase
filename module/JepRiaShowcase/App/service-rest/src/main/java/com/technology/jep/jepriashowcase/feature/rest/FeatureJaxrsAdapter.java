@@ -90,7 +90,7 @@ public class FeatureJaxrsAdapter extends JaxrsAdapterBase {
 
   @GET
   @Path("/search")
-  public Response searchSimple(
+  public Response search(
           @QueryParam("pageSize") Integer pageSize,
           @QueryParam("page") Integer page,
           @QueryParam("sort") List<ColumnSortConfigurationDto> sortConfiguration,
