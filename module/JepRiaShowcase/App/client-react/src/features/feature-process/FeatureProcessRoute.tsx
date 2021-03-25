@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Route, useRouteMatch, useHistory, useParams } from "react-router-dom";
 import FeatureProcessListPage from "./pages/FeatureProcessListPage";
 import FeatureProcessDetailPage from "./pages/FeatureProcessDetailPage";
@@ -12,6 +12,7 @@ function FeatureProcessRoute() {
   const { path } = useRouteMatch();
   const history = useHistory();
   const { t } = useTranslation();
+  let formRef = useRef<HTMLFormElement>(null);
 
   return (
     <Panel>
@@ -44,7 +45,7 @@ function FeatureProcessRoute() {
           <FeatureProcessDetailPage />
         </Route>
         <Route path={`${path}/create`} exact>
-          <FeatureProcessCreatePage />
+          <FeatureProcessCreatePage formRef={formRef}/>
         </Route>
       </Panel.Content>
     </Panel>

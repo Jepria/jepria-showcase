@@ -1,5 +1,5 @@
 import { createCrudSlice, EntityState } from "@jfront/core-redux-thunk";
-import { Feature } from "../api/FeatureTypes";
+import { Feature, FeatureCreate, FeatureUpdate } from "../api/FeatureTypes";
 import { featureCrudApi } from "../api/FeatureCrudApi";
 
 export const initialEntityState: EntityState<Feature> = {
@@ -9,7 +9,7 @@ export const initialEntityState: EntityState<Feature> = {
   selectedRecords: [],
 };
 
-const entitySlice = createCrudSlice<number, Feature>({
+const entitySlice = createCrudSlice<number, Feature, FeatureCreate, FeatureUpdate>({
   name: "featureSlice",
   initialState: initialEntityState,
   reducers: {},

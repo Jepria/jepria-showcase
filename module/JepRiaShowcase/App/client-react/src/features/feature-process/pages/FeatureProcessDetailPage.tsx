@@ -14,9 +14,7 @@ const FeatureProcessDetailPage = () => {
   //----------------
   let { featureId, featureProcessId } = useParams<any>();
 
-  const { currentRecord, error } = useSelector(
-    (state: RootState) => state.featureProcess.currentFeatureProcess
-  );
+  const currentRecord = useSelector(selectFeatureProcess);
 
   // const currentRecord = useSelector(selectFeatureProcess);
 
