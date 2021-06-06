@@ -7,7 +7,7 @@ import {
 import { API_PATH } from "../../../config";
 import { Feature, FeatureSearchTemplate, ResultSet } from "./FeatureTypes";
 
-class FeatureSearchApi extends ConnectorSearch<Feature, FeatureSearchTemplate> {
+class FeatureSearchApi extends ConnectorSearch<Feature> {
   constructor(
     baseUrl: string,
     withCrudentials = false,

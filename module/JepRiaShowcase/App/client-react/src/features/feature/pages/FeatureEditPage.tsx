@@ -16,11 +16,11 @@ const FeatureEditPage = ({ formRef }) => {
   const dispatch = useAppDispatch();
   //----------------
 
-  let { featureId } = useParams();
+  let { featureId } = useParams<any>();
   const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
 
   useEffect(() => {
-    dispatch(getRecordById({ primaryKey: featureId }));
+    dispatch(getRecordById(featureId));
   }, []);
 
   const formik = useFormik<FeatureUpdate>({
@@ -31,10 +31,9 @@ const FeatureEditPage = ({ formRef }) => {
     },
     onSubmit: (values: FeatureUpdate) => {
       if (featureId) {
-        dispatch(updateRecord({ primaryKey: featureId, values: values }))
-          .then(() => {
-            history.push(`/feature/${featureId}/detail`);
-          });
+        dispatch(updateRecord(featureId, values)).then(() => {
+          history.push(`/feature/${featureId}/detail`);
+        });
       }
     },
     enableReinitialize: true,

@@ -8,7 +8,7 @@ import { Panel, Tab, TabPanel } from "@jfront/ui-core";
 import { useTranslation } from "react-i18next";
 
 function FeatureProcessRoute() {
-  const { featureId } = useParams();
+  const { featureId } = useParams<any>();
   const { path } = useRouteMatch();
   const history = useHistory();
   const { t } = useTranslation();

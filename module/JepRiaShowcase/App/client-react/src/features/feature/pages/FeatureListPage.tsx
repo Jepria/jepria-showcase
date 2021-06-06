@@ -4,10 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
-import {
-  actions as searchActions,
-  querySearch,
-} from "../state/FeatureSearchSlice";
+import { actions as searchActions, search } from "../state/FeatureSearchSlice";
 import { actions as crudActions } from "../state/FeatureSlice";
 import { RootState } from "../../../app/store";
 import queryString from "query-string";
@@ -28,9 +25,7 @@ const FeatureListPage = () => {
     pageNumber: query?.page ? parseInt(query.page as string) : 1,
   });
 
-  const { currentRecord } = useSelector(
-    (state: RootState) => state.feature.featureCrudSlice
-  );
+  const { currentRecord } = useSelector((state: RootState) => state.feature.featureCrudSlice);
 
   const { records, searchRequest, isLoading, resultSetSize } = useSelector(
     (state: RootState) => state.feature.featureSearchSlice
@@ -38,14 +33,7 @@ const FeatureListPage = () => {
 
   useEffect(() => {
     if (searchRequest) {
-      dispatch(
-        querySearch(
-          searchRequest.template,
-          searchRequest.listSortConfiguration,
-          page.pageSize,
-          page.pageNumber
-        )
-      );
+      dispatch(search(searchRequest, page.pageSize, page.pageNumber));
     }
   }, [page, dispatch]);
 
@@ -60,8 +48,7 @@ const FeatureListPage = () => {
           },
           {
             Header: t("feature.fields.featureStatus"),
-            id: "featureStatus",
-            accessor: "featureStatus.name",
+            accessor: "featureStatus.name" as any,
           },
           {
             Header: t("feature.fields.workSequence"),
@@ -101,12 +88,8 @@ const FeatureListPage = () => {
           if (records) {
             if (records.length === 1) {
               if (records[0] !== currentRecord) {
-                dispatch(
-                  crudActions.setCurrentRecord({ currentRecord: records[0] })
-                );
-                dispatch(
-                  crudActions.selectRecords({ selectedRecords: records })
-                );
+                dispatch(crudActions.setCurrentRecord({ currentRecord: records[0] }));
+                dispatch(crudActions.selectRecords({ selectedRecords: records }));
               }
             } else if (currentRecord) {
               dispatch(crudActions.setCurrentRecord({} as any));
@@ -123,19 +106,18 @@ const FeatureListPage = () => {
             pageSize: pageSize,
           });
         }}
-        onSort={(sortConfig) => {
-          dispatch(
-            querySearch(
-              {
-                maxRowCount: 25,
-                ...query,
-                ...searchRequest?.template,
-              },
-              sortConfig,
-              page.pageSize,
-              page.pageNumber
-            )
-          );
+        manualPaging
+        manualSort
+        fetchData={(pageNumber, pageSize, sortConfig) => {
+          const newSearchRequest = {
+            template: {
+              maxRowCount: 25,
+              ...query,
+              ...searchRequest?.template,
+            },
+            listSortConfiguration: sortConfig,
+          };
+          dispatch(search(newSearchRequest, page.pageSize, page.pageNumber));
         }}
       />
     </>

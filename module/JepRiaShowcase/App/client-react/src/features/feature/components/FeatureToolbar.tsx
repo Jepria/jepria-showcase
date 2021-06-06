@@ -31,7 +31,9 @@ const FeatureToolbar = ({ formRef }) => {
   const dispatch = useAppDispatch();
   //----------------
 
-  const { records, searchId, pageSize, pageNumber, } = useSelector((state: RootState) => state.feature.featureSearchSlice);
+  const { records, pageSize, pageNumber, searchRequest } = useSelector(
+    (state: RootState) => state.feature.featureSearchSlice
+  );
   const { currentRecord, selectedRecords } = useSelector(
     (state: RootState) => state.feature.featureCrudSlice
   );
@@ -59,12 +61,10 @@ const FeatureToolbar = ({ formRef }) => {
         disabled={!currentRecord}
         onClick={() => {
           dispatch(
-            deleteRecord({
-              primaryKeys: selectedRecords.map((selectRecord: Feature) => selectRecord.featureId),
-            })
+            deleteRecord(selectedRecords.map((selectRecord: Feature) => selectRecord.featureId))
           ).then(() => {
-            if (pathname.endsWith("/list") && searchId) {
-              dispatch(search({ searchId, pageSize: pageSize, pageNumber: pageNumber }));
+            if (pathname.endsWith("/list") && searchRequest) {
+              dispatch(search(searchRequest, pageSize, pageNumber));
             } else {
               history.push(`/feature/list?pageSize=${pageSize}&page=${pageNumber}`);
             }

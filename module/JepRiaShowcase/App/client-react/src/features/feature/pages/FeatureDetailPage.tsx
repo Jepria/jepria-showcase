@@ -12,13 +12,13 @@ const FeatureDetailPage = () => {
   const dispatch = useDispatch();
   //----------------
 
-  let { featureId } = useParams();
+  let { featureId } = useParams<any>();
   const { currentRecord, error } = useSelector(
     (state: RootState) => state.feature.featureCrudSlice
   );
 
   useEffect(() => {
-    dispatch(getRecordById({ primaryKey: featureId }));
+    dispatch(getRecordById(featureId));
   }, []);
 
   return (
