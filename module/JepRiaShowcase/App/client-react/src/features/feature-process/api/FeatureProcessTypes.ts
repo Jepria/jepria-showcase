@@ -3,7 +3,7 @@ export interface FeatureProcess {
   featureProcessId: number;
   featureStatusCode: string;
   featureStatusName: string;
-  dateIns: Date;
+  dateIns: string;
 }
 
 export interface FeatureProcessCreate {

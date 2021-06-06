@@ -35,7 +35,7 @@ function FeatureProcessRoute() {
             {t("feature-process.header")}
           </Tab>
         </TabPanel>
-        <FeatureProcessToolbar />
+        <FeatureProcessToolbar formRef={formRef}/>
       </Panel.Header>
       <Panel.Content>
         <Route path={`${path}/list`} exact>
