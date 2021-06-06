@@ -18,6 +18,7 @@ import { Workstates, useWorkstate } from "../../../app/common/useWorkstate";
 import { deleteRecord } from "../state/FeatureSlice";
 import { RootState, useAppDispatch } from "../../../app/store";
 import { search } from "../state/FeatureSearchSlice";
+import { createEvent } from "@jfront/core-common";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -48,7 +49,7 @@ const FeatureToolbar = ({ formRef }) => {
       <ToolbarButtonSave
         disabled={Workstates.Create !== state && Workstates.Edit !== state}
         onClick={() => {
-          formRef.current?.dispatchEvent(new Event("submit"));
+          formRef.current?.dispatchEvent(createEvent("submit"));
         }}
       />
       <ToolbarButtonEdit
@@ -79,7 +80,7 @@ const FeatureToolbar = ({ formRef }) => {
       <ToolbarButtonBase
         disabled={Workstates.List !== state && records ? records.length === 0 : true}
         onClick={
-          () => history.push(`/feature/list/?pageSize=${pageSize}&page=${pageNumber}`) // TODO full template
+          () => history.push(`/feature/list/?pageSize=${pageSize}&page=${pageNumber}&maxRowCount=25`) // TODO full template
         }
       >
         {t("toolbar.list")}
@@ -92,7 +93,7 @@ const FeatureToolbar = ({ formRef }) => {
         disabled={state !== Workstates.Search}
         type="submit"
         onClick={() => {
-          formRef.current?.dispatchEvent(new Event("submit"));
+          formRef.current?.dispatchEvent(createEvent("submit"));
         }}
       >
         {t("toolbar.find")}

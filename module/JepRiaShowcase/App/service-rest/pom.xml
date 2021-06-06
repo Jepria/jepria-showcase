@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>jepriashowcase-service-rest</artifactId>
-  <version>12.3.0_s-SNAPSHOT</version>
+  <version>12.3.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <properties>
@@ -14,7 +14,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <jersey.version>2.29</jersey.version>
     <antcontrib.version>1.0b3</antcontrib.version>
-    <jepria.version>12.3.0_s-SNAPSHOT</jepria.version>
+    <jepria.version>12.3.0-SNAPSHOT</jepria.version>
     <jepriatoolkit.version>7.15.0</jepriatoolkit.version>
     <tomcat.version>7.0.68</tomcat.version>
     <log4j.version>1.2.17</log4j.version>
@@ -218,18 +218,6 @@
       <artifactId>mockito-junit-jupiter</artifactId>
       <version>${mockito.version}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jepria.jepria-rest</groupId>
-      <artifactId>jepria-rest</artifactId>
-      <version>12.3.0_s-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jepria.jepria-rest</groupId>
-      <artifactId>jepria-rest</artifactId>
-      <version>12.3.0_s-SNAPSHOT</version>
-      <scope>compile</scope>
     </dependency>
 
   </dependencies>

@@ -16,7 +16,7 @@ import { getFeatureStatusOptions } from "../../feature-process/api/FeatureProces
 import { FeatureState } from "../state/FeatureReducer";
 
 const useQuery = () => {
-  return queryString.parse(window.location.search, {arrayFormat: 'bracket'})
+  return queryString.parse(window.location.search, { arrayFormat: 'bracket' })
 };
 
 const FeatureSearchPage = ({ formRef }) => {
@@ -40,17 +40,14 @@ const FeatureSearchPage = ({ formRef }) => {
   }, []);
 
   const formik = useFormik<FeatureSearchTemplate>({
-    initialValues: {maxRowCount: 25, ...template, ...searchRequest.template},
+    initialValues: {
+      maxRowCount: 25,
+      // ...template, ...searchRequest.template,
+      statusCodeList: []
+    },
     enableReinitialize: true,
     onSubmit: (values) => {
-      dispatch(
-        actions.setSearchTemplate({
-          searchTemplate: {
-            template: values,
-          },
-        })
-      );
-      let query = queryString.stringify(values, {arrayFormat: 'bracket'});
+      let query = queryString.stringify(values, { arrayFormat: 'bracket' });
       if (query) {
         query = "&" + query;
       }
@@ -71,7 +68,7 @@ const FeatureSearchPage = ({ formRef }) => {
       return errors;
     },
   });
-
+  console.log(formik.values.statusCodeList)
   return (
     <>
       <Form onSubmit={formik.handleSubmit} ref={formRef}>
@@ -139,26 +136,25 @@ const FeatureSearchPage = ({ formRef }) => {
             <CheckBoxGroup
               name="statusCodeList"
               values={
-                formik.values?.statusCodeList
-                  ? formik.values.statusCodeList
-                  : []
+                formik.values.statusCodeList ? formik.values.statusCodeList : []
               }
               style={{ width: "142px" }}
               onChange={(name, newValue) => {
+                console.log(newValue)
                 formik.setFieldValue("statusCodeList", newValue);
               }}
               isLoading={isLoading}
             >
               {statusOptions
                 ? statusOptions.map((option) => {
-                    return (
-                      <CheckBox
-                        key={option.value}
-                        value={option.value}
-                        label={option.name}
-                      />
-                    );
-                  })
+                  return (
+                    <CheckBox
+                      key={option.value}
+                      value={option.value}
+                      label={option.name}
+                    />
+                  );
+                })
                 : null}
             </CheckBoxGroup>
           </Form.Control>

@@ -1553,7 +1553,7 @@
     "@jfront/ui-popup" "^0.2.6"
     react-id-generator "3.0.1"
 
-"@jfront/ui-core@^0.10.6":
+"@jfront/ui-core@^0.10.7":
   version "0.10.7"
   resolved "https://registry.yarnpkg.com/@jfront/ui-core/-/ui-core-0.10.7.tgz#50db189c8864792bc3c879d321af5a74c0ffd93f"
   integrity sha512-SeTIs2AnS6KFYNVEvIUiAseglRSHPdzbPypxkRxXurigUEhMRUK6fYDsAHrLZnnDADJ4UrR8PpmiLd0yVarjfw==
