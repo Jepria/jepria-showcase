@@ -12,7 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <jersey.version>2.29</jersey.version>
+    <jersey.version>2.34</jersey.version>
     <antcontrib.version>1.0b3</antcontrib.version>
     <jepria.version>12.3.0-SNAPSHOT</jepria.version>
     <jepriatoolkit.version>7.15.0</jepriatoolkit.version>
