@@ -58,12 +58,6 @@
               <targetPath>react</targetPath>
             </resource>
 
-            <!-- actuator -->
-            <resource>
-              <directory>${project.build.directory}/actuator</directory>
-              <targetPath>actuator</targetPath>
-            </resource>
-
           </webResources>
           <packagingExcludes>WEB-INF/classes/</packagingExcludes>
 
@@ -186,24 +180,6 @@
         </configuration>
       </plugin>
       -->
-
-      <plugin>
-        <groupId>org.jepria.tools.mavenplugin</groupId>
-        <artifactId>actuator-maven-plugin</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <configuration>
-          <jsonFilePath>${project.build.directory}/actuator/version.json</jsonFilePath>
-        </configuration>
-        <executions>
-          <execution>
-            <id>generate-version-info-json</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>appsign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
 
     </plugins>
   </build>

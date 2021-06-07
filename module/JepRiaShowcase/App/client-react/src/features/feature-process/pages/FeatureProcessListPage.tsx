@@ -6,6 +6,8 @@ import { Grid } from "@jfront/ui-core";
 import { FeatureProcess } from "../api/FeatureProcessTypes";
 import { findFeatureProcess } from "../api/FeatureProcessApi";
 import { setCurrentFeatureProcess } from "../state/featureProcessSlice";
+import { toLocaleDate } from "../../../app/common/dateUtils";
+import { TextCell } from "../../../app/common/components/TextCell";
 
 const FeatureProcessListPage = () => {
   //----------------
@@ -37,6 +39,7 @@ const FeatureProcessListPage = () => {
           {
             Header: t("feature-process.fields.dateIns"),
             accessor: "dateIns",
+            Cell: ({ value }: any) => <TextCell>{toLocaleDate(value)}</TextCell>,
           },
         ]}
         data={records ? records : []} //todo: bug in library

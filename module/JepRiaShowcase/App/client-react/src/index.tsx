@@ -16,18 +16,15 @@ ReactDOM.render(
   // <React.StrictMode>
   <OAuthWebContext
     clientId={"JepRiaShowcase"} //client_id приложения
-redirectUri={
+    redirectUri={
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000/JepRiaShowcase/react/oauth"
         : "/JepRiaShowcase/react/oauth"
     } //Библиотека по умолчанию использует следующий формат URL’а scheme:[//authority]/context_path/oauth
     oauthContextPath={
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:8080/oauth/api"
-        : "/oauth/api"
+      process.env.NODE_ENV === "development" ? "http://localhost:8080/oauth/api" : "/oauth/api"
     } //Ссылка на Context path сервисов oauth
     axiosInstance={axios}
-    configureAxios
   >
     <Provider store={store}>
       <UserContextProvider
