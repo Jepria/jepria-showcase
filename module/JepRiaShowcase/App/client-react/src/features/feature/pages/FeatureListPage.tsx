@@ -4,13 +4,12 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@jfront/ui-core";
 import { Feature } from "../api/FeatureTypes";
-import {
-  actions as searchActions,
-  querySearch,
-} from "../state/FeatureSearchSlice";
+import { actions as searchActions, search } from "../state/FeatureSearchSlice";
 import { actions as crudActions } from "../state/FeatureSlice";
 import { RootState } from "../../../app/store";
 import queryString from "query-string";
+import { toLocaleDate } from "../../../app/common/dateUtils";
+import { TextCell } from "../../../app/common/components/TextCell";
 
 const useQuery = () => {
   return queryString.parse(window.location.search, { arrayFormat: "bracket" });
@@ -28,26 +27,11 @@ const FeatureListPage = () => {
     pageNumber: query?.page ? parseInt(query.page as string) : 1,
   });
 
-  const { currentRecord } = useSelector(
-    (state: RootState) => state.feature.featureCrudSlice
-  );
+  const { currentRecord, selectedRecords } = useSelector((state: RootState) => state.feature.featureCrudSlice);
 
   const { records, searchRequest, isLoading, resultSetSize } = useSelector(
     (state: RootState) => state.feature.featureSearchSlice
   );
-
-  useEffect(() => {
-    if (searchRequest) {
-      dispatch(
-        querySearch(
-          searchRequest.template,
-          searchRequest.listSortConfiguration,
-          page.pageSize,
-          page.pageNumber
-        )
-      );
-    }
-  }, [page, dispatch]);
 
   return (
     <>
@@ -60,8 +44,7 @@ const FeatureListPage = () => {
           },
           {
             Header: t("feature.fields.featureStatus"),
-            id: "featureStatus",
-            accessor: "featureStatus.name",
+            accessor: "featureStatus.name" as any,
           },
           {
             Header: t("feature.fields.workSequence"),
@@ -82,6 +65,7 @@ const FeatureListPage = () => {
           {
             Header: t("feature.fields.dateIns"),
             accessor: "dateIns",
+            Cell: ({ value }: any) => <TextCell>{toLocaleDate(value)}</TextCell>,
           },
           {
             Header: t("feature.fields.author"),
@@ -99,18 +83,15 @@ const FeatureListPage = () => {
         defaultPageNumber={page.pageNumber}
         onSelection={(records) => {
           if (records) {
-            if (records.length === 1) {
-              if (records[0] !== currentRecord) {
-                dispatch(
-                  crudActions.setCurrentRecord({ currentRecord: records[0] })
-                );
-                dispatch(
-                  crudActions.selectRecords({ selectedRecords: records })
-                );
-              }
-            } else if (currentRecord) {
+            if (records.join() !== selectedRecords.join()) {
               dispatch(crudActions.setCurrentRecord({} as any));
               dispatch(crudActions.selectRecords({ selectedRecords: records }));
+            }
+            if (records.length === 1) {
+              if (records[0] !== currentRecord) {
+                dispatch(crudActions.setCurrentRecord({ currentRecord: records[0] }));
+                dispatch(crudActions.selectRecords({ selectedRecords: records }));
+              }
             }
           }
         }}
@@ -123,19 +104,17 @@ const FeatureListPage = () => {
             pageSize: pageSize,
           });
         }}
-        onSort={(sortConfig) => {
-          dispatch(
-            querySearch(
-              {
-                maxRowCount: 25,
-                ...query,
-                ...searchRequest?.template,
-              },
-              sortConfig,
-              page.pageSize,
-              page.pageNumber
-            )
-          );
+        manualPaging
+        manualSort
+        fetchData={(pageNumber, pageSize, sortConfig) => {
+          const newSearchRequest = {
+            template: {
+              maxRowCount: 25,
+              ...query,
+            },
+            listSortConfiguration: sortConfig,
+          };
+          dispatch(search(newSearchRequest, pageSize, pageNumber));
         }}
       />
     </>

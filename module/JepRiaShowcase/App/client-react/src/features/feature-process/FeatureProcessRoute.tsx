@@ -8,7 +8,7 @@ import { Panel, Tab, TabPanel } from "@jfront/ui-core";
 import { useTranslation } from "react-i18next";
 
 function FeatureProcessRoute() {
-  const { featureId } = useParams();
+  const { featureId } = useParams<any>();
   const { path } = useRouteMatch();
   const history = useHistory();
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ function FeatureProcessRoute() {
             {t("feature-process.header")}
           </Tab>
         </TabPanel>
-        <FeatureProcessToolbar />
+        <FeatureProcessToolbar formRef={formRef}/>
       </Panel.Header>
       <Panel.Content>
         <Route path={`${path}/list`} exact>

@@ -22,10 +22,9 @@ const FeatureCreatePage = ({ formRef }) => {
       featureNameEn: "",
     },
     onSubmit: (values: FeatureCreate) => {
-      dispatch(createRecord({ values: values }))
-        .then((feature) => {
-          history.push(`/feature/${feature.featureId}/detail`);
-        });
+      dispatch(createRecord(values)).then((feature) => {
+        history.push(`/feature/${feature.featureId}/detail`);
+      });
     },
     validate: (values) => {
       const errors: {

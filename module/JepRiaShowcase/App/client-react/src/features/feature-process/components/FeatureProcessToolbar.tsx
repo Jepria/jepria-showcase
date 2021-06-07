@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useHistory, useParams } from "react-router-dom";
+import { createEvent } from "@jfront/core-common";
 import {
   Toolbar,
   ToolbarButtonBase,
@@ -11,11 +12,11 @@ import {
   ToolbarButtonView,
   ToolbarSplitter,
 } from "@jfront/ui-core";
-import { selectFeatureProcess, submitSaveOnCreateFeatureProcess } from "../state/featureProcessSlice";
+import { selectFeatureProcess } from "../state/featureProcessSlice";
 import { deleteFeatureProcess } from "../api/FeatureProcessApi";
 import { useWorkstate, Workstates } from "../../../app/common/useWorkstate";
 
-const FeatureProcessToolbar = () => {
+const FeatureProcessToolbar = ({ formRef }) => {
   //----------------
   const { t } = useTranslation();
   const history = useHistory();
@@ -35,7 +36,7 @@ const FeatureProcessToolbar = () => {
         disabled={Workstates.Create !== state}
         onClick={() => {
           if (Workstates.Create === state) {
-            dispatch(submitSaveOnCreateFeatureProcess());
+            formRef.current?.dispatchEvent(createEvent("submit"));
           }
         }}
       />
