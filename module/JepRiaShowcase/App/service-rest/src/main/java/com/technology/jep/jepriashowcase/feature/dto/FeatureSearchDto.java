@@ -1,5 +1,7 @@
 package com.technology.jep.jepriashowcase.feature.dto;
 
+import io.swagger.v3.oas.annotations.Parameter;
+
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.QueryParam;
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.List;
 
 public class FeatureSearchDto {
   @QueryParam("featureId")
+  @Parameter(required = true)
   private Integer featureId;
   @QueryParam("featureNameTemplate")
   @Pattern(regexp = "[^%]*", message = "template must not contain percent sign")

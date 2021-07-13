@@ -29,6 +29,8 @@
     <project.build.finalName>jepriashowcase-service-rest</project.build.finalName>
     <project.build.outputDirectory>res</project.build.outputDirectory>
     <mockito.version>3.5.7</mockito.version>
+    <generatedApiSpecPath>${basedir}/src/generated-api-spec</generatedApiSpecPath>
+    <generatedApiConfigPath>${basedir}/src/main/resources/swagger-config</generatedApiConfigPath>
   </properties>
 
   <parent>
@@ -220,6 +222,17 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- Зависимости для автоматической генерации swagger по аннотациям Jersey -->
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-jaxrs2</artifactId>
+      <version>2.1.9</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-jaxrs2-servlet-initializer</artifactId>
+      <version>2.1.9</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -282,7 +295,7 @@
           </execution>
         </executions>
       </plugin>
-
+<!---->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -293,6 +306,11 @@
               <directory>src/api-spec</directory>
               <targetPath>WEB-INF/api-spec</targetPath>
             </resource>
+            <resource>
+              <directory>src/generated-api-spec</directory>
+              <targetPath>WEB-INF/generated-api-spec</targetPath>
+            </resource>
+
             <resource>
               <directory>${project.build.directory}/swagger-ui</directory>
               <targetPath>/swagger-ui</targetPath>
@@ -482,6 +500,42 @@
         </executions>
       </plugin>
 
+      <!-- Плагин для генерации swagger файла при сборке -->
+      <plugin>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-maven-plugin</artifactId>
+        <version>2.1.9</version>
+        <executions>
+          <execution>
+            <configuration>
+              <outputFileName>swagger</outputFileName>
+              <outputPath>${generatedApiSpecPath}/feature</outputPath>
+              <configurationFilePath>${generatedApiConfigPath}/FeatureApiConfig.yaml</configurationFilePath>
+              <sortOutput>true</sortOutput>
+              <contextId>featureSwagger</contextId>
+            </configuration>
+            <phase>compile</phase>
+            <id>1</id>
+            <goals>
+              <goal>resolve</goal>
+            </goals>
+          </execution>
+          <execution>
+            <configuration>
+              <outputFileName>swagger</outputFileName>
+              <outputPath>${generatedApiSpecPath}/goods</outputPath>
+              <configurationFilePath>${generatedApiConfigPath}/GoodsApiConfig.yaml</configurationFilePath>
+              <sortOutput>true</sortOutput>
+              <contextId>goodsSwagger</contextId>
+            </configuration>
+            <id>2</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>resolve</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>	
   </build>
 

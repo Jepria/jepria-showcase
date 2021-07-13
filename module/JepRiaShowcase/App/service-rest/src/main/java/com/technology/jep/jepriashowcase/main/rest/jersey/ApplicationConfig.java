@@ -15,6 +15,7 @@ import com.technology.jep.jepriashowcase.goods.GoodsServerFactoryImpl;
 import com.technology.jep.jepriashowcase.goods.dao.GoodsDao;
 import com.technology.jep.jepriashowcase.goods.dao.GoodsDaoImpl;
 import com.technology.jep.jepriashowcase.goods.rest.GoodsJaxrsAdapter;
+import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.process.internal.RequestScoped;
 import org.jepria.compat.shared.exceptions.ApplicationException;
@@ -59,6 +60,7 @@ public class ApplicationConfig extends ApplicationConfigBase {
       }
     });
     register(FeatureJaxrsAdapter.class);
+    register(new OpenApiResource().configLocation("src/api-spec/testgen/feature/ApiConfig.yaml"));
   }
   
   protected void registerFeatureProcess() {
@@ -91,5 +93,6 @@ public class ApplicationConfig extends ApplicationConfigBase {
       }
     });
     register(GoodsJaxrsAdapter.class);
+    register(new OpenApiResource().configLocation("src/api-spec/testgen/goods/ApiConfig.yaml"));
   }
 }
