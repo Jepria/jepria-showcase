@@ -1,0 +1,11 @@
+resourcePackages:
+  - com.technology.jep.jepriashowcase.feature
+  - com.technology.jep.jepriashowcase.featureprocess
+prettyPrint: true
+cacheTTL: 0
+openAPI:
+  info:
+    version: '1.0.0'
+    title: JepRiaShowcase Feature REST API
+    description: 'This is a JepRiaShowcase generated specification'
+

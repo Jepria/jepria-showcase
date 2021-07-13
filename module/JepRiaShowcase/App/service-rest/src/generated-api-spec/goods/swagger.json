@@ -1,0 +1,300 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "description" : "This is a JepRiaShowcase generated specification",
+    "title" : "JepRiaShowcase Goods REST API",
+    "version" : "1.0.0"
+  },
+  "paths" : {
+    "/goods" : {
+      "post" : {
+        "operationId" : "create",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=utf-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/GoodsCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json;charset=utf-8" : { }
+            },
+            "description" : "default response"
+          }
+        }
+      }
+    },
+    "/goods/search" : {
+      "get" : {
+        "operationId" : "searchSimple",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "pageSize",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "sort",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ColumnSortConfigurationDto"
+            }
+          }
+        }, {
+          "in" : "query",
+          "name" : "featureId",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "featureNameTemplate",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "[^%]*"
+          }
+        }, {
+          "in" : "query",
+          "name" : "featureNameEnTemplate",
+          "schema" : {
+            "type" : "string",
+            "pattern" : "[^Ѐ-ӿ]*"
+          }
+        }, {
+          "in" : "query",
+          "name" : "statusCodeList",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "in" : "query",
+          "name" : "authorId",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "responsibleId",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "dateInsFrom",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "dateInsTo",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "maxRowCount",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "header",
+          "name" : "Cache-Control",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json;charset=utf-8" : { }
+            },
+            "description" : "default response"
+          }
+        }
+      }
+    },
+    "/goods/{recordId}" : {
+      "delete" : {
+        "operationId" : "deleteRecordById",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "recordId",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "\\d+"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json;charset=utf-8" : { }
+            },
+            "description" : "default response"
+          }
+        }
+      },
+      "get" : {
+        "operationId" : "getRecordById",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "recordId",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "\\d+"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json;charset=utf-8" : { }
+            },
+            "description" : "default response"
+          }
+        }
+      },
+      "put" : {
+        "operationId" : "update",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "recordId",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "\\d+"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=utf-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/GoodsUpdateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json;charset=utf-8" : { }
+            },
+            "description" : "default response"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ColumnSortConfigurationDto" : {
+        "type" : "object",
+        "properties" : {
+          "columnName" : {
+            "type" : "string"
+          },
+          "sortOrder" : {
+            "type" : "string"
+          }
+        }
+      },
+      "GoodsCreateDto" : {
+        "type" : "object",
+        "properties" : {
+          "goodsName" : {
+            "type" : "string"
+          },
+          "goodsPhotoExtension" : {
+            "type" : "string"
+          },
+          "goodsPhotoMimeType" : {
+            "type" : "string"
+          },
+          "goodsPortfolioExtension" : {
+            "type" : "string"
+          },
+          "goodsPortfolioMimeType" : {
+            "type" : "string"
+          },
+          "goodsTypeCode" : {
+            "type" : "string"
+          },
+          "motivationTypeCode" : {
+            "type" : "string"
+          },
+          "purchasingPrice" : {
+            "type" : "number"
+          },
+          "supplierId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "unitCode" : {
+            "type" : "string"
+          }
+        }
+      },
+      "GoodsUpdateDto" : {
+        "type" : "object",
+        "properties" : {
+          "goodsName" : {
+            "type" : "string"
+          },
+          "goodsPhotoExtension" : {
+            "type" : "string"
+          },
+          "goodsPhotoMimeType" : {
+            "type" : "string"
+          },
+          "goodsPortfolioExtension" : {
+            "type" : "string"
+          },
+          "goodsPortfolioMimeType" : {
+            "type" : "string"
+          },
+          "goodsTypeCode" : {
+            "type" : "string"
+          },
+          "motivationTypeCode" : {
+            "type" : "string"
+          },
+          "purchasingPrice" : {
+            "type" : "number"
+          },
+          "supplierId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "unitCode" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

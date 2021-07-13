@@ -1,0 +1,10 @@
+resourcePackages:
+  - com.technology.jep.jepriashowcase.goods
+prettyPrint: true
+cacheTTL: 0
+openAPI:
+  info:
+    version: '1.0.0'
+    title: JepRiaShowcase Goods REST API
+    description: 'This is a JepRiaShowcase generated specification'
+

@@ -1,0 +1,515 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "description" : "This is a JepRiaShowcase generated specification",
+    "title" : "JepRiaShowcase Feature REST API",
+    "version" : "1.0.0"
+  },
+  "paths" : {
+    "/feature" : {
+      "post" : {
+        "operationId" : "create",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=utf-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FeatureCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Create"
+          }
+        },
+        "summary" : "Create record",
+        "tags" : [ "feature: entity" ]
+      }
+    },
+    "/feature/option/feature-operator" : {
+      "get" : {
+        "operationId" : "getFeatureOperator",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OptionDto"
+                }
+              }
+            },
+            "description" : "successful operation"
+          }
+        },
+        "summary" : "Get feature operator options",
+        "tags" : [ "dict" ]
+      }
+    },
+    "/feature/option/feature-status" : {
+      "get" : {
+        "operationId" : "getFeatureStatus",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OptionDto"
+                }
+              }
+            },
+            "description" : "Get feature status options"
+          }
+        },
+        "summary" : "Get feature operator options",
+        "tags" : [ "dict" ]
+      }
+    },
+    "/feature/search" : {
+      "get" : {
+        "operationId" : "search",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "pageSize",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "page",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "sort",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ColumnSortConfigurationDto"
+            }
+          }
+        }, {
+          "in" : "query",
+          "name" : "featureId",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "featureNameTemplate",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "[^%]*"
+          }
+        }, {
+          "in" : "query",
+          "name" : "featureNameEnTemplate",
+          "schema" : {
+            "type" : "string",
+            "pattern" : "[^Ѐ-ӿ]*"
+          }
+        }, {
+          "in" : "query",
+          "name" : "statusCodeList",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "in" : "query",
+          "name" : "authorId",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "responsibleId",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "dateInsFrom",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "dateInsTo",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "in" : "query",
+          "name" : "maxRowCount",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "header",
+          "name" : "Cache-Control",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FeatureDto"
+                }
+              }
+            },
+            "description" : "successful operation"
+          }
+        },
+        "summary" : "Search",
+        "tags" : [ "feature: search" ]
+      }
+    },
+    "/feature/{featureId}/feature-process" : {
+      "get" : {
+        "operationId" : "findFeatureProcess",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "featureId",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json;charset=utf-8" : { }
+            },
+            "description" : "default response"
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "create_1",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "featureId",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=utf-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FeatureProcessCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json;charset=utf-8" : { }
+            },
+            "description" : "default response"
+          }
+        }
+      }
+    },
+    "/feature/{featureId}/feature-process/{recordId}" : {
+      "delete" : {
+        "operationId" : "deleteRecordById_1",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "featureId",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "path",
+          "name" : "recordId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json;charset=utf-8" : { }
+            },
+            "description" : "default response"
+          }
+        }
+      },
+      "get" : {
+        "operationId" : "getRecordById_1",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "featureId",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "path",
+          "name" : "recordId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json;charset=utf-8" : { }
+            },
+            "description" : "default response"
+          }
+        }
+      }
+    },
+    "/feature/{featureId}/set-feature-responsible" : {
+      "post" : {
+        "operationId" : "setFeatureResponsible",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "featureId",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "query",
+          "name" : "responsibleId",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Created"
+          }
+        },
+        "summary" : "Set responsible operator for the feature",
+        "tags" : [ "other" ]
+      }
+    },
+    "/feature/{recordId}" : {
+      "delete" : {
+        "operationId" : "deleteRecordById",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "recordId",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "\\d+"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        },
+        "summary" : "Delete record by ID",
+        "tags" : [ "feature: entity" ]
+      },
+      "get" : {
+        "operationId" : "getRecordById",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "recordId",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "\\d+"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json;charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FeatureDto"
+                }
+              }
+            },
+            "description" : "Get feature status options"
+          }
+        },
+        "summary" : "Get record by ID",
+        "tags" : [ "feature: entity" ]
+      },
+      "put" : {
+        "operationId" : "update",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "recordId",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "\\d+"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=utf-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FeatureUpdateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        },
+        "summary" : "Update record",
+        "tags" : [ "feature: entity" ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ColumnSortConfigurationDto" : {
+        "type" : "object",
+        "properties" : {
+          "columnName" : {
+            "type" : "string"
+          },
+          "sortOrder" : {
+            "type" : "string"
+          }
+        }
+      },
+      "FeatureCreateDto" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "featureName" : {
+            "type" : "string"
+          },
+          "featureNameEn" : {
+            "type" : "string"
+          }
+        }
+      },
+      "FeatureDto" : {
+        "type" : "object",
+        "properties" : {
+          "author" : {
+            "$ref" : "#/components/schemas/OptionDtoInteger"
+          },
+          "dateIns" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "featureId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "featureName" : {
+            "type" : "string"
+          },
+          "featureNameEn" : {
+            "type" : "string"
+          },
+          "featureStatus" : {
+            "$ref" : "#/components/schemas/OptionDtoString"
+          },
+          "responsible" : {
+            "$ref" : "#/components/schemas/OptionDtoInteger"
+          }
+        }
+      },
+      "FeatureProcessCreateDto" : {
+        "type" : "object",
+        "properties" : {
+          "featureStatusCode" : {
+            "type" : "string"
+          }
+        }
+      },
+      "FeatureUpdateDto" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "featureName" : {
+            "type" : "string"
+          },
+          "featureNameEn" : {
+            "type" : "string"
+          },
+          "responsibleId" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "OptionDto" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "object"
+          }
+        }
+      },
+      "OptionDtoInteger" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "OptionDtoString" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
